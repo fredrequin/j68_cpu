@@ -1,0 +1,11 @@
+obj_dir
+*.vcd
+*.log
+*.bmp
+*.bak
+*.qws
+*.o
+syn/db
+syn/incremental_db/**
+syn/output_files
+syn/blackbox_tmp

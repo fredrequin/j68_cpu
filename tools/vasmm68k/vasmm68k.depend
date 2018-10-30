@@ -1,0 +1,179 @@
+# depslib dependency file v1.0
+1483885549 source:d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\atom.c
+	"vasm.h"
+
+1485341964 d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\vasm.h
+	<stdlib.h>
+	<stddef.h>
+	<stdint.h>
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	"cpu.h"
+	"symbol.h"
+	"reloc.h"
+	"syntax.h"
+	"symtab.h"
+	"expr.h"
+	"parse.h"
+	"atom.h"
+	"error.h"
+	"cond.h"
+	"supp.h"
+
+1490893514 d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\cpu.h
+
+1491687892 d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\symbol.h
+
+1472377367 d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\reloc.h
+
+1485340029 d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\syntax.h
+
+1397738232 d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\symtab.h
+	<stdlib.h>
+
+1438708565 d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\expr.h
+	"hugeint.h"
+
+1407928795 d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\hugeint.h
+	"tfloat.h"
+
+1417527996 d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\tfloat.h
+
+1482058112 d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\parse.h
+
+1483885549 d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\atom.h
+
+1445981637 d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\error.h
+
+1426605550 d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\cond.h
+
+1490864172 d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\supp.h
+
+1426605550 source:d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\cond.c
+	"vasm.h"
+
+1491687892 source:d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\cpu.c
+	<math.h>
+	"vasm.h"
+	"operands.h"
+	"specregs.h"
+	"opcodes.h"
+	"cpu_models.h"
+
+1490872040 d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\operands.h
+
+1493296494 d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\specregs.h
+
+1487153977 d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\opcodes.h
+
+1487153977 d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\cpu_models.h
+
+1483362625 source:d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\error.c
+	<stdarg.h>
+	"vasm.h"
+	"general_errors.h"
+	"syntax_errors.h"
+	"cpu_errors.h"
+	"output_errors.h"
+
+1483011451 d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\general_errors.h
+
+1466596544 d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\syntax_errors.h
+
+1488475046 d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\cpu_errors.h
+
+1445981638 d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\output_errors.h
+
+1487612649 source:d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\expr.c
+	"vasm.h"
+
+1450088871 source:d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\hugeint.c
+	<stdint.h>
+	<stddef.h>
+	"vasm.h"
+
+1481713804 source:d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\output_aout.c
+	"vasm.h"
+	"output_aout.h"
+
+1439813951 d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\output_aout.h
+	"stabs.h"
+
+1439813951 d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\stabs.h
+
+1484908288 source:d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\output_bin.c
+	"vasm.h"
+
+1482236384 source:d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\output_elf.c
+	"vasm.h"
+	"output_elf.h"
+	"stabs.h"
+	"elf_reloc_68k.h"
+	"elf_reloc_ppc.h"
+	"elf_reloc_arm.h"
+	"elf_reloc_x86_64.h"
+	"elf_reloc_386.h"
+	"elf_reloc_jag.h"
+
+1482146761 d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\output_elf.h
+
+1472322435 d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\elf_reloc_68k.h
+
+1472322435 d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\elf_reloc_ppc.h
+
+1472322435 d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\elf_reloc_arm.h
+
+1472322435 d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\elf_reloc_x86_64.h
+
+1472322435 d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\elf_reloc_386.h
+
+1472322435 d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\elf_reloc_jag.h
+
+1487791300 source:d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\output_hunk.c
+	"vasm.h"
+	"output_hunk.h"
+
+1425042727 d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\output_hunk.h
+
+1441300514 source:d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\output_srec.c
+	"vasm.h"
+
+1097530971 source:d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\output_test.c
+	"vasm.h"
+
+1472322436 source:d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\output_tos.c
+	"vasm.h"
+	"output_tos.h"
+
+1408109133 d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\output_tos.h
+
+1472322436 source:d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\output_vobj.c
+	"vasm.h"
+
+1488747003 source:d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\parse.c
+	"vasm.h"
+
+1485603316 source:d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\reloc.c
+	"vasm.h"
+
+1490864172 source:d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\supp.c
+	<math.h>
+	"vasm.h"
+	"supp.h"
+
+1485422218 source:d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\symbol.c
+	"vasm.h"
+
+1397738232 source:d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\symtab.c
+	"vasm.h"
+
+1491687892 source:d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\syntax.c
+	"vasm.h"
+
+1494668409 source:d:\frederic\enciris\repo_ip_core\ip_cpu_j68\tool\vasmm68k\vasm.c
+	<stdlib.h>
+	<stdio.h>
+	"vasm.h"
+	"stabs.h"
+

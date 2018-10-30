@@ -1,0 +1,7304 @@
+Terminals unused in grammar
+
+   TOK_BIT
+   TOK_WRL
+   TOK_WRH
+   TOK_EA1B
+   TOK_EA2B
+   TOK_RN
+
+
+Grammar
+
+    0 $accept: input $end
+
+    1 input: /* empty */
+    2      | input line
+
+    3 line: '\n'
+    4     | expr '\n'
+
+    5 expr: org
+    6     | table
+    7     | label
+    8     | jump
+    9     | lit
+   10     | flg
+   11     | loop
+   12     | alu
+   13     | mem
+   14     | reg
+
+   15 label: TOK_IDENT ':'
+
+   16 table: TOK_TABLE TOK_IDENT ',' TOK_IDENT ',' TOK_IDENT ',' TOK_NUMBER
+
+   17 org: TOK_ORG TOK_NUMBER
+
+   18 jump: TOK_JUMPN cond ',' TOK_IDENT
+   19     | TOK_JUMPN cond ',' TOK_NUMBER
+   20     | TOK_JUMP cond ',' TOK_IDENT
+   21     | TOK_JUMP cond ',' TOK_NUMBER
+   22     | TOK_CALLN cond ',' TOK_IDENT
+   23     | TOK_CALLN cond ',' TOK_NUMBER
+   24     | TOK_CALL cond ',' TOK_IDENT
+   25     | TOK_CALL cond ',' TOK_NUMBER
+   26     | TOK_JUMP TOK_IDENT
+   27     | TOK_JUMP TOK_NUMBER
+   28     | TOK_CALL TOK_IDENT
+   29     | TOK_CALL TOK_NUMBER
+   30     | TOK_JUMP TOK_IDENT '(' TOK_RT ')'
+   31     | TOK_JUMP TOK_NUMBER '(' TOK_RT ')'
+   32     | TOK_CALL TOK_IDENT '(' TOK_RT ')'
+   33     | TOK_CALL TOK_NUMBER '(' TOK_RT ')'
+
+   34 cond: TOK_Z_FLG
+   35     | TOK_N_FLG
+   36     | TOK_G_FLG
+   37     | TOK_T0
+   38     | TOK_EA1_4
+   39     | TOK_EA1_7
+   40     | TOK_EXT11
+   41     | TOK_V_SR
+   42     | TOK_N_SR
+   43     | TOK_B_SR
+   44     | TOK_I_SR
+   45     | TOK_A_SR
+   46     | TOK_S_SR
+   47     | TOK_T_SR
+
+   48 lit: litop TOK_RTS
+   49    | litop
+
+   50 litop: TOK_LIT '#' TOK_NUMBER
+   51      | TOK_LIT '#' TOK_IDENT
+
+   52 flg: flgop TOK_RTS
+   53    | flgop
+
+   54 flgop: TOK_FLAG TOK_MASK cin
+
+   55 cin: /* empty */
+   56    | ',' TOK_CIN '=' TOK_CLR
+   57    | ',' TOK_CIN '=' TOK_C_ADD
+   58    | ',' TOK_CIN '=' TOK_C_FLG
+   59    | ',' TOK_CIN '=' TOK_X_SR
+   60    | ',' TOK_CIN '=' TOK_N_B
+   61    | ',' TOK_CIN '=' TOK_N_W
+   62    | ',' TOK_CIN '=' TOK_N_SR
+   63    | ',' TOK_CIN '=' TOK_T0
+   64    | ',' TOK_CIN '=' TOK_T7
+   65    | ',' TOK_CIN '=' TOK_T15
+   66    | ',' TOK_CIN '=' TOK_N0
+   67    | ',' TOK_CIN '=' TOK_N7
+   68    | ',' TOK_CIN '=' TOK_N15
+
+   69 loop: TOK_LOOP16
+   70     | TOK_LOOPT
+   71     | TOK_ENDLOOP
+
+   72 alu: aluop '.' TOK_RTS
+   73    | aluop TOK_RTS
+   74    | aluop '.'
+   75    | aluop
+
+   76 aluop: TOK_DROP
+   77      | TOK_NIP
+   78      | TOK_SWAP
+   79      | TOK_DUP
+   80      | TOK_OVER
+   81      | TOK_ADDB
+   82      | TOK_ADDW
+   83      | TOK_ADDL
+   84      | TOK_ADDCB
+   85      | TOK_ADDCW
+   86      | TOK_ADDCL
+   87      | TOK_SUBB
+   88      | TOK_SUBW
+   89      | TOK_SUBL
+   90      | TOK_SUBCB
+   91      | TOK_SUBCW
+   92      | TOK_SUBCL
+   93      | TOK_SUB2B
+   94      | TOK_SUB2W
+   95      | TOK_SUB2L
+   96      | TOK_SUBC2B
+   97      | TOK_SUBC2W
+   98      | TOK_SUBC2L
+   99      | TOK_NEGB
+  100      | TOK_NEGW
+  101      | TOK_NEGL
+  102      | TOK_NEGCB
+  103      | TOK_NEGCW
+  104      | TOK_NEGCL
+  105      | TOK_DECW
+  106      | TOK_EXTW
+  107      | TOK_ANDB
+  108      | TOK_ANDW
+  109      | TOK_ANDL
+  110      | TOK_ORB
+  111      | TOK_ORW
+  112      | TOK_ORL
+  113      | TOK_XORB
+  114      | TOK_XORW
+  115      | TOK_XORL
+  116      | TOK_MSKB
+  117      | TOK_MSKW
+  118      | TOK_MSKL
+  119      | TOK_BANDB
+  120      | TOK_BANDW
+  121      | TOK_BANDL
+  122      | TOK_BORB
+  123      | TOK_BORW
+  124      | TOK_BORL
+  125      | TOK_BXORB
+  126      | TOK_BXORW
+  127      | TOK_BXORL
+  128      | TOK_BMSKB
+  129      | TOK_BMSKW
+  130      | TOK_BMSKL
+  131      | TOK_NOTB
+  132      | TOK_NOTW
+  133      | TOK_NOTL
+  134      | TOK_TSTB
+  135      | TOK_TSTW
+  136      | TOK_TSTL
+  137      | TOK_LSHB
+  138      | TOK_LSHW
+  139      | TOK_LSHL
+  140      | TOK_RSHB
+  141      | TOK_RSHW
+  142      | TOK_RSHL
+  143      | TOK_MUL
+  144      | TOK_DIV
+  145      | TOK_NOP
+
+  146 mem: memop '.' TOK_RTS
+  147    | memop TOK_RTS
+  148    | memop '.'
+  149    | memop
+
+  150 memop: TOK_LDB '(' TOK_EA1 ')'
+  151      | TOK_LDB '(' TOK_EA1 ')' '+'
+  152      | TOK_LDB '-' '(' TOK_EA1 ')'
+  153      | TOK_LDB '+' '(' TOK_EA1 ')'
+  154      | TOK_LDW '(' TOK_EA1 ')'
+  155      | TOK_LDW '(' TOK_EA1 ')' '+'
+  156      | TOK_LDW '-' '(' TOK_EA1 ')'
+  157      | TOK_LDW '+' '(' TOK_EA1 ')'
+  158      | TOK_LDH '(' TOK_EA1 ')'
+  159      | TOK_LDH '(' TOK_EA1 ')' '+'
+  160      | TOK_LDH '-' '(' TOK_EA1 ')'
+  161      | TOK_LDH '+' '(' TOK_EA1 ')'
+  162      | TOK_LDL '(' TOK_EA1 ')'
+  163      | TOK_LDL '(' TOK_EA1 ')' '+'
+  164      | TOK_LDL '-' '(' TOK_EA1 ')'
+  165      | TOK_LDL '+' '(' TOK_EA1 ')'
+  166      | TOK_LDB '(' TOK_EA2 ')'
+  167      | TOK_LDB '(' TOK_EA2 ')' '+'
+  168      | TOK_LDB '-' '(' TOK_EA2 ')'
+  169      | TOK_LDB '+' '(' TOK_EA2 ')'
+  170      | TOK_LDW '(' TOK_EA2 ')'
+  171      | TOK_LDW '(' TOK_EA2 ')' '+'
+  172      | TOK_LDW '-' '(' TOK_EA2 ')'
+  173      | TOK_LDW '+' '(' TOK_EA2 ')'
+  174      | TOK_STB '(' TOK_EA1 ')'
+  175      | TOK_STB '(' TOK_EA1 ')' '+'
+  176      | TOK_STB '-' '(' TOK_EA1 ')'
+  177      | TOK_STB '+' '(' TOK_EA1 ')'
+  178      | TOK_STW '(' TOK_EA1 ')'
+  179      | TOK_STW '(' TOK_EA1 ')' '+'
+  180      | TOK_STW '-' '(' TOK_EA1 ')'
+  181      | TOK_STW '+' '(' TOK_EA1 ')'
+  182      | TOK_STH '(' TOK_EA1 ')'
+  183      | TOK_STH '(' TOK_EA1 ')' '+'
+  184      | TOK_STH '-' '(' TOK_EA1 ')'
+  185      | TOK_STH '+' '(' TOK_EA1 ')'
+  186      | TOK_STL '(' TOK_EA1 ')'
+  187      | TOK_STL '(' TOK_EA1 ')' '+'
+  188      | TOK_STL '-' '(' TOK_EA1 ')'
+  189      | TOK_STL '+' '(' TOK_EA1 ')'
+  190      | TOK_STB '(' TOK_EA2 ')'
+  191      | TOK_STB '(' TOK_EA2 ')' '+'
+  192      | TOK_STB '-' '(' TOK_EA2 ')'
+  193      | TOK_STB '+' '(' TOK_EA2 ')'
+  194      | TOK_STW '(' TOK_EA2 ')'
+  195      | TOK_STW '(' TOK_EA2 ')' '+'
+  196      | TOK_STW '-' '(' TOK_EA2 ')'
+  197      | TOK_STW '+' '(' TOK_EA2 ')'
+  198      | TOK_LDW '(' TOK_VEC ')' '+'
+  199      | TOK_LDI '(' TOK_PC ')' '+'
+  200      | TOK_LDE '(' TOK_PC ')' '+'
+  201      | TOK_LDW '(' TOK_PC ')' '+'
+  202      | TOK_FTI '(' TOK_PC ')' '+'
+  203      | TOK_FTE '(' TOK_PC ')' '+'
+  204      | TOK_FTW '(' TOK_PC ')' '+'
+
+  205 reg: regop '.' TOK_RTS
+  206    | regop TOK_RTS
+  207    | regop '.'
+  208    | regop
+
+  209 regop: TOK_LDB TOK_RDL '[' TOK_EA1 ']'
+  210      | TOK_LDB TOK_RAL '[' TOK_EA1 ']'
+  211      | TOK_LDB TOK_RL '[' TOK_EA1 ']'
+  212      | TOK_LDB TOK_RDL '[' TOK_EA2 ']'
+  213      | TOK_LDB TOK_RAL '[' TOK_EA2 ']'
+  214      | TOK_LDB TOK_RL '[' TOK_EA2 ']'
+  215      | TOK_LDB TOK_RL '[' TOK_CNT ']'
+  216      | TOK_LDB TOK_RDL '[' TOK_EXT ']'
+  217      | TOK_LDB TOK_RAL '[' TOK_EXT ']'
+  218      | TOK_LDB TOK_RL '[' TOK_EXT ']'
+  219      | TOK_LDB TOK_VBRL
+  220      | TOK_LDB TOK_TMP1L
+  221      | TOK_LDB TOK_TMP2L
+  222      | TOK_LDB TOK_USPL
+  223      | TOK_LDB TOK_SSPL
+  224      | TOK_LDB TOK_RDH '[' TOK_EA1 ']'
+  225      | TOK_LDB TOK_RAH '[' TOK_EA1 ']'
+  226      | TOK_LDB TOK_RH '[' TOK_EA1 ']'
+  227      | TOK_LDB TOK_RDH '[' TOK_EA2 ']'
+  228      | TOK_LDB TOK_RAH '[' TOK_EA2 ']'
+  229      | TOK_LDB TOK_RH '[' TOK_EA2 ']'
+  230      | TOK_LDB TOK_RH '[' TOK_CNT ']'
+  231      | TOK_LDB TOK_RDH '[' TOK_EXT ']'
+  232      | TOK_LDB TOK_RAH '[' TOK_EXT ']'
+  233      | TOK_LDB TOK_RH '[' TOK_EXT ']'
+  234      | TOK_LDB TOK_VBRH
+  235      | TOK_LDB TOK_TMP1H
+  236      | TOK_LDB TOK_TMP2H
+  237      | TOK_LDB TOK_USPH
+  238      | TOK_LDB TOK_SSPH
+  239      | TOK_LDW TOK_RDL '[' TOK_EA1 ']'
+  240      | TOK_LDW TOK_RAL '[' TOK_EA1 ']'
+  241      | TOK_LDW TOK_RL '[' TOK_EA1 ']'
+  242      | TOK_LDW TOK_A7L
+  243      | TOK_LDW TOK_RDL '[' TOK_EA2 ']'
+  244      | TOK_LDW TOK_RAL '[' TOK_EA2 ']'
+  245      | TOK_LDW TOK_RL '[' TOK_EA2 ']'
+  246      | TOK_LDW TOK_RL '[' TOK_CNT ']'
+  247      | TOK_LDW TOK_RDL '[' TOK_EXT ']'
+  248      | TOK_LDW TOK_RAL '[' TOK_EXT ']'
+  249      | TOK_LDW TOK_RL '[' TOK_EXT ']'
+  250      | TOK_LDW TOK_VBRL
+  251      | TOK_LDW TOK_TMP1L
+  252      | TOK_LDW TOK_TMP2L
+  253      | TOK_LDW TOK_USPL
+  254      | TOK_LDW TOK_SSPL
+  255      | TOK_LDW TOK_RDH '[' TOK_EA1 ']'
+  256      | TOK_LDW TOK_RAH '[' TOK_EA1 ']'
+  257      | TOK_LDW TOK_RH '[' TOK_EA1 ']'
+  258      | TOK_LDW TOK_A7H
+  259      | TOK_LDW TOK_RDH '[' TOK_EA2 ']'
+  260      | TOK_LDW TOK_RAH '[' TOK_EA2 ']'
+  261      | TOK_LDW TOK_RH '[' TOK_EA2 ']'
+  262      | TOK_LDW TOK_RH '[' TOK_CNT ']'
+  263      | TOK_LDW TOK_RDH '[' TOK_EXT ']'
+  264      | TOK_LDW TOK_RAH '[' TOK_EXT ']'
+  265      | TOK_LDW TOK_RH '[' TOK_EXT ']'
+  266      | TOK_LDW TOK_VBRH
+  267      | TOK_LDW TOK_TMP1H
+  268      | TOK_LDW TOK_TMP2H
+  269      | TOK_LDW TOK_USPH
+  270      | TOK_LDW TOK_SSPH
+  271      | TOK_STB TOK_RDL '[' TOK_EA1 ']'
+  272      | TOK_STB TOK_RAL '[' TOK_EA1 ']'
+  273      | TOK_STB TOK_RL '[' TOK_EA1 ']'
+  274      | TOK_STB TOK_RDL '[' TOK_EA2 ']'
+  275      | TOK_STB TOK_RAL '[' TOK_EA2 ']'
+  276      | TOK_STB TOK_RL '[' TOK_EA2 ']'
+  277      | TOK_STB TOK_RL '[' TOK_CNT ']'
+  278      | TOK_STB TOK_RDL '[' TOK_EXT ']'
+  279      | TOK_STB TOK_RAL '[' TOK_EXT ']'
+  280      | TOK_STB TOK_RL '[' TOK_EXT ']'
+  281      | TOK_STB TOK_VBRL
+  282      | TOK_STB TOK_TMP1L
+  283      | TOK_STB TOK_TMP2L
+  284      | TOK_STB TOK_USPL
+  285      | TOK_STB TOK_SSPL
+  286      | TOK_STB TOK_RDH '[' TOK_EA1 ']'
+  287      | TOK_STB TOK_RAH '[' TOK_EA1 ']'
+  288      | TOK_STB TOK_RH '[' TOK_EA1 ']'
+  289      | TOK_STB TOK_RDH '[' TOK_EA2 ']'
+  290      | TOK_STB TOK_RAH '[' TOK_EA2 ']'
+  291      | TOK_STB TOK_RH '[' TOK_EA2 ']'
+  292      | TOK_STB TOK_RH '[' TOK_CNT ']'
+  293      | TOK_STB TOK_RDH '[' TOK_EXT ']'
+  294      | TOK_STB TOK_RAH '[' TOK_EXT ']'
+  295      | TOK_STB TOK_RH '[' TOK_EXT ']'
+  296      | TOK_STB TOK_VBRH
+  297      | TOK_STB TOK_TMP1H
+  298      | TOK_STB TOK_TMP2H
+  299      | TOK_STB TOK_USPH
+  300      | TOK_STB TOK_SSPH
+  301      | TOK_STW TOK_RDL '[' TOK_EA1 ']'
+  302      | TOK_STW TOK_RAL '[' TOK_EA1 ']'
+  303      | TOK_STW TOK_RL '[' TOK_EA1 ']'
+  304      | TOK_STW TOK_A7L
+  305      | TOK_STW TOK_RDL '[' TOK_EA2 ']'
+  306      | TOK_STW TOK_RAL '[' TOK_EA2 ']'
+  307      | TOK_STW TOK_RL '[' TOK_EA2 ']'
+  308      | TOK_STW TOK_RL '[' TOK_CNT ']'
+  309      | TOK_STW TOK_RDL '[' TOK_EXT ']'
+  310      | TOK_STW TOK_RAL '[' TOK_EXT ']'
+  311      | TOK_STW TOK_RL '[' TOK_EXT ']'
+  312      | TOK_STW TOK_VBRL
+  313      | TOK_STW TOK_TMP1L
+  314      | TOK_STW TOK_TMP2L
+  315      | TOK_STW TOK_USPL
+  316      | TOK_STW TOK_SSPL
+  317      | TOK_STW TOK_RDH '[' TOK_EA1 ']'
+  318      | TOK_STW TOK_RAH '[' TOK_EA1 ']'
+  319      | TOK_STW TOK_RH '[' TOK_EA1 ']'
+  320      | TOK_STW TOK_A7H
+  321      | TOK_STW TOK_RDH '[' TOK_EA2 ']'
+  322      | TOK_STW TOK_RAH '[' TOK_EA2 ']'
+  323      | TOK_STW TOK_RH '[' TOK_EA2 ']'
+  324      | TOK_STW TOK_RH '[' TOK_CNT ']'
+  325      | TOK_STW TOK_RDH '[' TOK_EXT ']'
+  326      | TOK_STW TOK_RAH '[' TOK_EXT ']'
+  327      | TOK_STW TOK_RH '[' TOK_EXT ']'
+  328      | TOK_STW TOK_VBRH
+  329      | TOK_STW TOK_TMP1H
+  330      | TOK_STW TOK_TMP2H
+  331      | TOK_STW TOK_USPH
+  332      | TOK_STW TOK_SSPH
+  333      | TOK_WRB TOK_RDL '[' TOK_EA1 ']'
+  334      | TOK_WRB TOK_RAL '[' TOK_EA1 ']'
+  335      | TOK_WRB TOK_RL '[' TOK_EA1 ']'
+  336      | TOK_WRB TOK_RDL '[' TOK_EA2 ']'
+  337      | TOK_WRB TOK_RAL '[' TOK_EA2 ']'
+  338      | TOK_WRB TOK_RL '[' TOK_EA2 ']'
+  339      | TOK_WRB TOK_RL '[' TOK_CNT ']'
+  340      | TOK_WRB TOK_RDL '[' TOK_EXT ']'
+  341      | TOK_WRB TOK_RAL '[' TOK_EXT ']'
+  342      | TOK_WRB TOK_RL '[' TOK_EXT ']'
+  343      | TOK_WRB TOK_VBRL
+  344      | TOK_WRB TOK_TMP1L
+  345      | TOK_WRB TOK_TMP2L
+  346      | TOK_WRB TOK_USPL
+  347      | TOK_WRB TOK_SSPL
+  348      | TOK_WRB TOK_RDH '[' TOK_EA1 ']'
+  349      | TOK_WRB TOK_RAH '[' TOK_EA1 ']'
+  350      | TOK_WRB TOK_RH '[' TOK_EA1 ']'
+  351      | TOK_WRB TOK_RDH '[' TOK_EA2 ']'
+  352      | TOK_WRB TOK_RAH '[' TOK_EA2 ']'
+  353      | TOK_WRB TOK_RH '[' TOK_EA2 ']'
+  354      | TOK_WRB TOK_RH '[' TOK_CNT ']'
+  355      | TOK_WRB TOK_RDH '[' TOK_EXT ']'
+  356      | TOK_WRB TOK_RAH '[' TOK_EXT ']'
+  357      | TOK_WRB TOK_RH '[' TOK_EXT ']'
+  358      | TOK_WRB TOK_VBRH
+  359      | TOK_WRB TOK_TMP1H
+  360      | TOK_WRB TOK_TMP2H
+  361      | TOK_WRB TOK_USPH
+  362      | TOK_WRB TOK_SSPH
+  363      | TOK_WRW TOK_RDL '[' TOK_EA1 ']'
+  364      | TOK_WRW TOK_RAL '[' TOK_EA1 ']'
+  365      | TOK_WRW TOK_RL '[' TOK_EA1 ']'
+  366      | TOK_WRW TOK_A7L
+  367      | TOK_WRW TOK_RDL '[' TOK_EA2 ']'
+  368      | TOK_WRW TOK_RAL '[' TOK_EA2 ']'
+  369      | TOK_WRW TOK_RL '[' TOK_EA2 ']'
+  370      | TOK_WRW TOK_RL '[' TOK_CNT ']'
+  371      | TOK_WRW TOK_RDL '[' TOK_EXT ']'
+  372      | TOK_WRW TOK_RAL '[' TOK_EXT ']'
+  373      | TOK_WRW TOK_RL '[' TOK_EXT ']'
+  374      | TOK_WRW TOK_VBRL
+  375      | TOK_WRW TOK_TMP1L
+  376      | TOK_WRW TOK_TMP2L
+  377      | TOK_WRW TOK_USPL
+  378      | TOK_WRW TOK_SSPL
+  379      | TOK_WRW TOK_RDH '[' TOK_EA1 ']'
+  380      | TOK_WRW TOK_RAH '[' TOK_EA1 ']'
+  381      | TOK_WRW TOK_RH '[' TOK_EA1 ']'
+  382      | TOK_WRW TOK_A7H
+  383      | TOK_WRW TOK_RDH '[' TOK_EA2 ']'
+  384      | TOK_WRW TOK_RAH '[' TOK_EA2 ']'
+  385      | TOK_WRW TOK_RH '[' TOK_EA2 ']'
+  386      | TOK_WRW TOK_RH '[' TOK_CNT ']'
+  387      | TOK_WRW TOK_RDH '[' TOK_EXT ']'
+  388      | TOK_WRW TOK_RAH '[' TOK_EXT ']'
+  389      | TOK_WRW TOK_RH '[' TOK_EXT ']'
+  390      | TOK_WRW TOK_VBRH
+  391      | TOK_WRW TOK_TMP1H
+  392      | TOK_WRW TOK_TMP2H
+  393      | TOK_WRW TOK_USPH
+  394      | TOK_WRW TOK_SSPH
+  395      | TOK_LDW TOK_EA1L
+  396      | TOK_LDW TOK_EA1H
+  397      | TOK_LDW TOK_EA2L
+  398      | TOK_LDW TOK_EA2H
+  399      | TOK_LDW TOK_PCL
+  400      | TOK_LDW TOK_PCH
+  401      | TOK_LDW TOK_VECL
+  402      | TOK_LDW TOK_CPUS
+  403      | TOK_LDW TOK_IMMR
+  404      | TOK_LDW TOK_LSHR
+  405      | TOK_LDW TOK_ACCL
+  406      | TOK_LDW TOK_ACCH
+  407      | TOK_LDW TOK_DECJ
+  408      | TOK_LDW TOK_EA1J
+  409      | TOK_LDW TOK_EA2J
+  410      | TOK_LDW TOK_SR
+  411      | TOK_LDB TOK_SR
+  412      | TOK_STW TOK_EA1L
+  413      | TOK_STW TOK_EA1H
+  414      | TOK_STW TOK_EA2L
+  415      | TOK_STW TOK_EA2H
+  416      | TOK_STW TOK_PCL
+  417      | TOK_STW TOK_PCH
+  418      | TOK_STW TOK_VECL
+  419      | TOK_STW TOK_VECH
+  420      | TOK_STW TOK_LSHR
+  421      | TOK_STW TOK_ACCL
+  422      | TOK_STW TOK_ACCH
+  423      | TOK_STW TOK_SR
+  424      | TOK_STB TOK_SR
+  425      | TOK_WRW TOK_EA1L
+  426      | TOK_WRW TOK_EA1H
+  427      | TOK_WRW TOK_EA2L
+  428      | TOK_WRW TOK_EA2H
+  429      | TOK_WRW TOK_PCL
+  430      | TOK_WRW TOK_PCH
+  431      | TOK_WRW TOK_VECL
+  432      | TOK_WRW TOK_VECH
+  433      | TOK_WRW TOK_LSHR
+  434      | TOK_WRW TOK_ACCL
+  435      | TOK_WRW TOK_ACCH
+  436      | TOK_WRW TOK_SR
+  437      | TOK_WRB TOK_SR
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'\n' (10) 3 4
+'#' (35) 50 51
+'(' (40) 30 31 32 33 150 151 152 153 154 155 156 157 158 159 160 161
+    162 163 164 165 166 167 168 169 170 171 172 173 174 175 176 177
+    178 179 180 181 182 183 184 185 186 187 188 189 190 191 192 193
+    194 195 196 197 198 199 200 201 202 203 204
+')' (41) 30 31 32 33 150 151 152 153 154 155 156 157 158 159 160 161
+    162 163 164 165 166 167 168 169 170 171 172 173 174 175 176 177
+    178 179 180 181 182 183 184 185 186 187 188 189 190 191 192 193
+    194 195 196 197 198 199 200 201 202 203 204
+'+' (43) 151 153 155 157 159 161 163 165 167 169 171 173 175 177 179
+    181 183 185 187 189 191 193 195 197 198 199 200 201 202 203 204
+',' (44) 16 18 19 20 21 22 23 24 25 56 57 58 59 60 61 62 63 64 65 66
+    67 68
+'-' (45) 152 156 160 164 168 172 176 180 184 188 192 196
+'.' (46) 72 74 146 148 205 207
+':' (58) 15
+'=' (61) 56 57 58 59 60 61 62 63 64 65 66 67 68
+'[' (91) 209 210 211 212 213 214 215 216 217 218 224 225 226 227 228
+    229 230 231 232 233 239 240 241 243 244 245 246 247 248 249 255
+    256 257 259 260 261 262 263 264 265 271 272 273 274 275 276 277
+    278 279 280 286 287 288 289 290 291 292 293 294 295 301 302 303
+    305 306 307 308 309 310 311 317 318 319 321 322 323 324 325 326
+    327 333 334 335 336 337 338 339 340 341 342 348 349 350 351 352
+    353 354 355 356 357 363 364 365 367 368 369 370 371 372 373 379
+    380 381 383 384 385 386 387 388 389
+']' (93) 209 210 211 212 213 214 215 216 217 218 224 225 226 227 228
+    229 230 231 232 233 239 240 241 243 244 245 246 247 248 249 255
+    256 257 259 260 261 262 263 264 265 271 272 273 274 275 276 277
+    278 279 280 286 287 288 289 290 291 292 293 294 295 301 302 303
+    305 306 307 308 309 310 311 317 318 319 321 322 323 324 325 326
+    327 333 334 335 336 337 338 339 340 341 342 348 349 350 351 352
+    353 354 355 356 357 363 364 365 367 368 369 370 371 372 373 379
+    380 381 383 384 385 386 387 388 389
+error (256)
+TOK_JUMPN (258) 18 19
+TOK_JUMP (259) 20 21 26 27 30 31
+TOK_CALLN (260) 22 23
+TOK_CALL (261) 24 25 28 29 32 33
+TOK_RTS (262) 48 52 72 73 146 147 205 206
+TOK_LIT (263) 50 51
+TOK_FLAG (264) 54
+TOK_BIT (265)
+TOK_LOOPT (266) 70
+TOK_LOOP16 (267) 69
+TOK_ENDLOOP (268) 71
+TOK_DROP (269) 76
+TOK_NIP (270) 77
+TOK_SWAP (271) 78
+TOK_DUP (272) 79
+TOK_OVER (273) 80
+TOK_ADDB (274) 81
+TOK_ADDW (275) 82
+TOK_ADDL (276) 83
+TOK_ADDCB (277) 84
+TOK_ADDCW (278) 85
+TOK_ADDCL (279) 86
+TOK_SUBB (280) 87
+TOK_SUBW (281) 88
+TOK_SUBL (282) 89
+TOK_SUBCB (283) 90
+TOK_SUBCW (284) 91
+TOK_SUBCL (285) 92
+TOK_SUB2B (286) 93
+TOK_SUB2W (287) 94
+TOK_SUB2L (288) 95
+TOK_SUBC2B (289) 96
+TOK_SUBC2W (290) 97
+TOK_SUBC2L (291) 98
+TOK_NEGB (292) 99
+TOK_NEGW (293) 100
+TOK_NEGL (294) 101
+TOK_NEGCB (295) 102
+TOK_NEGCW (296) 103
+TOK_NEGCL (297) 104
+TOK_DECW (298) 105
+TOK_EXTW (299) 106
+TOK_ANDB (300) 107
+TOK_ANDW (301) 108
+TOK_ANDL (302) 109
+TOK_ORB (303) 110
+TOK_ORW (304) 111
+TOK_ORL (305) 112
+TOK_XORB (306) 113
+TOK_XORW (307) 114
+TOK_XORL (308) 115
+TOK_MSKB (309) 116
+TOK_MSKW (310) 117
+TOK_MSKL (311) 118
+TOK_BANDB (312) 119
+TOK_BANDW (313) 120
+TOK_BANDL (314) 121
+TOK_BORB (315) 122
+TOK_BORW (316) 123
+TOK_BORL (317) 124
+TOK_BXORB (318) 125
+TOK_BXORW (319) 126
+TOK_BXORL (320) 127
+TOK_BMSKB (321) 128
+TOK_BMSKW (322) 129
+TOK_BMSKL (323) 130
+TOK_NOTB (324) 131
+TOK_NOTW (325) 132
+TOK_NOTL (326) 133
+TOK_TSTB (327) 134
+TOK_TSTW (328) 135
+TOK_TSTL (329) 136
+TOK_LSHB (330) 137
+TOK_LSHW (331) 138
+TOK_LSHL (332) 139
+TOK_RSHB (333) 140
+TOK_RSHW (334) 141
+TOK_RSHL (335) 142
+TOK_MUL (336) 143
+TOK_DIV (337) 144
+TOK_NOP (338) 145
+TOK_LDB (339) 150 151 152 153 166 167 168 169 209 210 211 212 213 214
+    215 216 217 218 219 220 221 222 223 224 225 226 227 228 229 230
+    231 232 233 234 235 236 237 238 411
+TOK_STB (340) 174 175 176 177 190 191 192 193 271 272 273 274 275 276
+    277 278 279 280 281 282 283 284 285 286 287 288 289 290 291 292
+    293 294 295 296 297 298 299 300 424
+TOK_WRB (341) 333 334 335 336 337 338 339 340 341 342 343 344 345 346
+    347 348 349 350 351 352 353 354 355 356 357 358 359 360 361 362
+    437
+TOK_FTW (342) 204
+TOK_LDW (343) 154 155 156 157 170 171 172 173 198 201 239 240 241 242
+    243 244 245 246 247 248 249 250 251 252 253 254 255 256 257 258
+    259 260 261 262 263 264 265 266 267 268 269 270 395 396 397 398
+    399 400 401 402 403 404 405 406 407 408 409 410
+TOK_STW (344) 178 179 180 181 194 195 196 197 301 302 303 304 305 306
+    307 308 309 310 311 312 313 314 315 316 317 318 319 320 321 322
+    323 324 325 326 327 328 329 330 331 332 412 413 414 415 416 417
+    418 419 420 421 422 423
+TOK_WRW (345) 363 364 365 366 367 368 369 370 371 372 373 374 375 376
+    377 378 379 380 381 382 383 384 385 386 387 388 389 390 391 392
+    393 394 425 426 427 428 429 430 431 432 433 434 435 436
+TOK_LDI (346) 199
+TOK_FTI (347) 202
+TOK_LDE (348) 200
+TOK_FTE (349) 203
+TOK_LDL (350) 162 163 164 165
+TOK_STL (351) 186 187 188 189
+TOK_WRL (352)
+TOK_LDH (353) 158 159 160 161
+TOK_STH (354) 182 183 184 185
+TOK_WRH (355)
+TOK_PC (356) 199 200 201 202 203 204
+TOK_VEC (357) 198
+TOK_EA1 (358) 150 151 152 153 154 155 156 157 158 159 160 161 162 163
+    164 165 174 175 176 177 178 179 180 181 182 183 184 185 186 187
+    188 189 209 210 211 224 225 226 239 240 241 255 256 257 271 272
+    273 286 287 288 301 302 303 317 318 319 333 334 335 348 349 350
+    363 364 365 379 380 381
+TOK_EA2 (359) 166 167 168 169 170 171 172 173 190 191 192 193 194 195
+    196 197 212 213 214 227 228 229 243 244 245 259 260 261 274 275
+    276 289 290 291 305 306 307 321 322 323 336 337 338 351 352 353
+    367 368 369 383 384 385
+TOK_CNT (360) 215 230 246 262 277 292 308 324 339 354 370 386
+TOK_EXT (361) 216 217 218 231 232 233 247 248 249 263 264 265 278 279
+    280 293 294 295 309 310 311 325 326 327 340 341 342 355 356 357
+    371 372 373 387 388 389
+TOK_T_SR (362) 47
+TOK_S_SR (363) 46
+TOK_A_SR (364) 45
+TOK_I_SR (365) 44
+TOK_B_SR (366) 43
+TOK_X_SR (367) 59
+TOK_N_SR (368) 42 62
+TOK_V_SR (369) 41
+TOK_CIN (370) 56 57 58 59 60 61 62 63 64 65 66 67 68
+TOK_CLR (371) 56
+TOK_C_ADD (372) 57
+TOK_C_FLG (373) 58
+TOK_Z_FLG (374) 34
+TOK_N_FLG (375) 35
+TOK_G_FLG (376) 36
+TOK_N_B (377) 60
+TOK_N_W (378) 61
+TOK_T0 (379) 37 63
+TOK_T7 (380) 64
+TOK_T15 (381) 65
+TOK_N0 (382) 66
+TOK_N7 (383) 67
+TOK_N15 (384) 68
+TOK_EA1_4 (385) 38
+TOK_EA1_7 (386) 39
+TOK_EXT11 (387) 40
+TOK_EA1L (388) 395 412 425
+TOK_EA1H (389) 396 413 426
+TOK_EA2L (390) 397 414 427
+TOK_EA2H (391) 398 415 428
+TOK_PCL (392) 399 416 429
+TOK_PCH (393) 400 417 430
+TOK_VECL (394) 401 418 431
+TOK_VECH (395) 419 432
+TOK_CPUS (396) 402
+TOK_LSHR (397) 404 420 433
+TOK_ACCL (398) 405 421 434
+TOK_ACCH (399) 406 422 435
+TOK_IMMR (400) 403
+TOK_DECJ (401) 407
+TOK_EA1J (402) 408
+TOK_EA2J (403) 409
+TOK_EA1B (404)
+TOK_EA2B (405)
+TOK_SR (406) 410 411 423 424 436 437
+TOK_RT (407) 30 31 32 33
+TOK_RN (408)
+TOK_MASK (409) 54
+TOK_NUMBER (410) 16 17 19 21 23 25 27 29 31 33 50
+TOK_IDENT (411) 15 16 18 20 22 24 26 28 30 32 51
+TOK_RAL (412) 210 213 217 240 244 248 272 275 279 302 306 310 334 337
+    341 364 368 372
+TOK_RDL (413) 209 212 216 239 243 247 271 274 278 301 305 309 333 336
+    340 363 367 371
+TOK_RAH (414) 225 228 232 256 260 264 287 290 294 318 322 326 349 352
+    356 380 384 388
+TOK_RDH (415) 224 227 231 255 259 263 286 289 293 317 321 325 348 351
+    355 379 383 387
+TOK_RL (416) 211 214 215 218 241 245 246 249 273 276 277 280 303 307
+    308 311 335 338 339 342 365 369 370 373
+TOK_RH (417) 226 229 230 233 257 261 262 265 288 291 292 295 319 323
+    324 327 350 353 354 357 381 385 386 389
+TOK_A7L (418) 242 304 366
+TOK_A7H (419) 258 320 382
+TOK_USPL (420) 222 253 284 315 346 377
+TOK_USPH (421) 237 269 299 331 361 393
+TOK_SSPL (422) 223 254 285 316 347 378
+TOK_SSPH (423) 238 270 300 332 362 394
+TOK_TMP1L (424) 220 251 282 313 344 375
+TOK_TMP1H (425) 235 267 297 329 359 391
+TOK_TMP2L (426) 221 252 283 314 345 376
+TOK_TMP2H (427) 236 268 298 330 360 392
+TOK_VBRL (428) 219 250 281 312 343 374
+TOK_VBRH (429) 234 266 296 328 358 390
+TOK_ORG (430) 17
+TOK_TABLE (431) 16
+
+
+Nonterminals, with rules where they appear
+
+$accept (189)
+    on left: 0
+input (190)
+    on left: 1 2, on right: 0 2
+line (191)
+    on left: 3 4, on right: 2
+expr (192)
+    on left: 5 6 7 8 9 10 11 12 13 14, on right: 4
+label (193)
+    on left: 15, on right: 7
+table (194)
+    on left: 16, on right: 6
+org (195)
+    on left: 17, on right: 5
+jump (196)
+    on left: 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33, on right:
+    8
+cond (197)
+    on left: 34 35 36 37 38 39 40 41 42 43 44 45 46 47, on right: 18
+    19 20 21 22 23 24 25
+lit (198)
+    on left: 48 49, on right: 9
+litop (199)
+    on left: 50 51, on right: 48 49
+flg (200)
+    on left: 52 53, on right: 10
+flgop (201)
+    on left: 54, on right: 52 53
+cin (202)
+    on left: 55 56 57 58 59 60 61 62 63 64 65 66 67 68, on right: 54
+loop (203)
+    on left: 69 70 71, on right: 11
+alu (204)
+    on left: 72 73 74 75, on right: 12
+aluop (205)
+    on left: 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93
+    94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111
+    112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127
+    128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143
+    144 145, on right: 72 73 74 75
+mem (206)
+    on left: 146 147 148 149, on right: 13
+memop (207)
+    on left: 150 151 152 153 154 155 156 157 158 159 160 161 162 163
+    164 165 166 167 168 169 170 171 172 173 174 175 176 177 178 179
+    180 181 182 183 184 185 186 187 188 189 190 191 192 193 194 195
+    196 197 198 199 200 201 202 203 204, on right: 146 147 148 149
+reg (208)
+    on left: 205 206 207 208, on right: 14
+regop (209)
+    on left: 209 210 211 212 213 214 215 216 217 218 219 220 221 222
+    223 224 225 226 227 228 229 230 231 232 233 234 235 236 237 238
+    239 240 241 242 243 244 245 246 247 248 249 250 251 252 253 254
+    255 256 257 258 259 260 261 262 263 264 265 266 267 268 269 270
+    271 272 273 274 275 276 277 278 279 280 281 282 283 284 285 286
+    287 288 289 290 291 292 293 294 295 296 297 298 299 300 301 302
+    303 304 305 306 307 308 309 310 311 312 313 314 315 316 317 318
+    319 320 321 322 323 324 325 326 327 328 329 330 331 332 333 334
+    335 336 337 338 339 340 341 342 343 344 345 346 347 348 349 350
+    351 352 353 354 355 356 357 358 359 360 361 362 363 364 365 366
+    367 368 369 370 371 372 373 374 375 376 377 378 379 380 381 382
+    383 384 385 386 387 388 389 390 391 392 393 394 395 396 397 398
+    399 400 401 402 403 404 405 406 407 408 409 410 411 412 413 414
+    415 416 417 418 419 420 421 422 423 424 425 426 427 428 429 430
+    431 432 433 434 435 436 437, on right: 205 206 207 208
+
+
+state 0
+
+    0 $accept: . input $end
+
+    $default  reduce using rule 1 (input)
+
+    input  go to state 1
+
+
+state 1
+
+    0 $accept: input . $end
+    2 input: input . line
+
+    $end         shift, and go to state 2
+    TOK_JUMPN    shift, and go to state 3
+    TOK_JUMP     shift, and go to state 4
+    TOK_CALLN    shift, and go to state 5
+    TOK_CALL     shift, and go to state 6
+    TOK_LIT      shift, and go to state 7
+    TOK_FLAG     shift, and go to state 8
+    TOK_LOOPT    shift, and go to state 9
+    TOK_LOOP16   shift, and go to state 10
+    TOK_ENDLOOP  shift, and go to state 11
+    TOK_DROP     shift, and go to state 12
+    TOK_NIP      shift, and go to state 13
+    TOK_SWAP     shift, and go to state 14
+    TOK_DUP      shift, and go to state 15
+    TOK_OVER     shift, and go to state 16
+    TOK_ADDB     shift, and go to state 17
+    TOK_ADDW     shift, and go to state 18
+    TOK_ADDL     shift, and go to state 19
+    TOK_ADDCB    shift, and go to state 20
+    TOK_ADDCW    shift, and go to state 21
+    TOK_ADDCL    shift, and go to state 22
+    TOK_SUBB     shift, and go to state 23
+    TOK_SUBW     shift, and go to state 24
+    TOK_SUBL     shift, and go to state 25
+    TOK_SUBCB    shift, and go to state 26
+    TOK_SUBCW    shift, and go to state 27
+    TOK_SUBCL    shift, and go to state 28
+    TOK_SUB2B    shift, and go to state 29
+    TOK_SUB2W    shift, and go to state 30
+    TOK_SUB2L    shift, and go to state 31
+    TOK_SUBC2B   shift, and go to state 32
+    TOK_SUBC2W   shift, and go to state 33
+    TOK_SUBC2L   shift, and go to state 34
+    TOK_NEGB     shift, and go to state 35
+    TOK_NEGW     shift, and go to state 36
+    TOK_NEGL     shift, and go to state 37
+    TOK_NEGCB    shift, and go to state 38
+    TOK_NEGCW    shift, and go to state 39
+    TOK_NEGCL    shift, and go to state 40
+    TOK_DECW     shift, and go to state 41
+    TOK_EXTW     shift, and go to state 42
+    TOK_ANDB     shift, and go to state 43
+    TOK_ANDW     shift, and go to state 44
+    TOK_ANDL     shift, and go to state 45
+    TOK_ORB      shift, and go to state 46
+    TOK_ORW      shift, and go to state 47
+    TOK_ORL      shift, and go to state 48
+    TOK_XORB     shift, and go to state 49
+    TOK_XORW     shift, and go to state 50
+    TOK_XORL     shift, and go to state 51
+    TOK_MSKB     shift, and go to state 52
+    TOK_MSKW     shift, and go to state 53
+    TOK_MSKL     shift, and go to state 54
+    TOK_BANDB    shift, and go to state 55
+    TOK_BANDW    shift, and go to state 56
+    TOK_BANDL    shift, and go to state 57
+    TOK_BORB     shift, and go to state 58
+    TOK_BORW     shift, and go to state 59
+    TOK_BORL     shift, and go to state 60
+    TOK_BXORB    shift, and go to state 61
+    TOK_BXORW    shift, and go to state 62
+    TOK_BXORL    shift, and go to state 63
+    TOK_BMSKB    shift, and go to state 64
+    TOK_BMSKW    shift, and go to state 65
+    TOK_BMSKL    shift, and go to state 66
+    TOK_NOTB     shift, and go to state 67
+    TOK_NOTW     shift, and go to state 68
+    TOK_NOTL     shift, and go to state 69
+    TOK_TSTB     shift, and go to state 70
+    TOK_TSTW     shift, and go to state 71
+    TOK_TSTL     shift, and go to state 72
+    TOK_LSHB     shift, and go to state 73
+    TOK_LSHW     shift, and go to state 74
+    TOK_LSHL     shift, and go to state 75
+    TOK_RSHB     shift, and go to state 76
+    TOK_RSHW     shift, and go to state 77
+    TOK_RSHL     shift, and go to state 78
+    TOK_MUL      shift, and go to state 79
+    TOK_DIV      shift, and go to state 80
+    TOK_NOP      shift, and go to state 81
+    TOK_LDB      shift, and go to state 82
+    TOK_STB      shift, and go to state 83
+    TOK_WRB      shift, and go to state 84
+    TOK_FTW      shift, and go to state 85
+    TOK_LDW      shift, and go to state 86
+    TOK_STW      shift, and go to state 87
+    TOK_WRW      shift, and go to state 88
+    TOK_LDI      shift, and go to state 89
+    TOK_FTI      shift, and go to state 90
+    TOK_LDE      shift, and go to state 91
+    TOK_FTE      shift, and go to state 92
+    TOK_LDL      shift, and go to state 93
+    TOK_STL      shift, and go to state 94
+    TOK_LDH      shift, and go to state 95
+    TOK_STH      shift, and go to state 96
+    TOK_IDENT    shift, and go to state 97
+    TOK_ORG      shift, and go to state 98
+    TOK_TABLE    shift, and go to state 99
+    '\n'         shift, and go to state 100
+
+    line   go to state 101
+    expr   go to state 102
+    label  go to state 103
+    table  go to state 104
+    org    go to state 105
+    jump   go to state 106
+    lit    go to state 107
+    litop  go to state 108
+    flg    go to state 109
+    flgop  go to state 110
+    loop   go to state 111
+    alu    go to state 112
+    aluop  go to state 113
+    mem    go to state 114
+    memop  go to state 115
+    reg    go to state 116
+    regop  go to state 117
+
+
+state 2
+
+    0 $accept: input $end .
+
+    $default  accept
+
+
+state 3
+
+   18 jump: TOK_JUMPN . cond ',' TOK_IDENT
+   19     | TOK_JUMPN . cond ',' TOK_NUMBER
+
+    TOK_T_SR   shift, and go to state 118
+    TOK_S_SR   shift, and go to state 119
+    TOK_A_SR   shift, and go to state 120
+    TOK_I_SR   shift, and go to state 121
+    TOK_B_SR   shift, and go to state 122
+    TOK_N_SR   shift, and go to state 123
+    TOK_V_SR   shift, and go to state 124
+    TOK_Z_FLG  shift, and go to state 125
+    TOK_N_FLG  shift, and go to state 126
+    TOK_G_FLG  shift, and go to state 127
+    TOK_T0     shift, and go to state 128
+    TOK_EA1_4  shift, and go to state 129
+    TOK_EA1_7  shift, and go to state 130
+    TOK_EXT11  shift, and go to state 131
+
+    cond  go to state 132
+
+
+state 4
+
+   20 jump: TOK_JUMP . cond ',' TOK_IDENT
+   21     | TOK_JUMP . cond ',' TOK_NUMBER
+   26     | TOK_JUMP . TOK_IDENT
+   27     | TOK_JUMP . TOK_NUMBER
+   30     | TOK_JUMP . TOK_IDENT '(' TOK_RT ')'
+   31     | TOK_JUMP . TOK_NUMBER '(' TOK_RT ')'
+
+    TOK_T_SR    shift, and go to state 118
+    TOK_S_SR    shift, and go to state 119
+    TOK_A_SR    shift, and go to state 120
+    TOK_I_SR    shift, and go to state 121
+    TOK_B_SR    shift, and go to state 122
+    TOK_N_SR    shift, and go to state 123
+    TOK_V_SR    shift, and go to state 124
+    TOK_Z_FLG   shift, and go to state 125
+    TOK_N_FLG   shift, and go to state 126
+    TOK_G_FLG   shift, and go to state 127
+    TOK_T0      shift, and go to state 128
+    TOK_EA1_4   shift, and go to state 129
+    TOK_EA1_7   shift, and go to state 130
+    TOK_EXT11   shift, and go to state 131
+    TOK_NUMBER  shift, and go to state 133
+    TOK_IDENT   shift, and go to state 134
+
+    cond  go to state 135
+
+
+state 5
+
+   22 jump: TOK_CALLN . cond ',' TOK_IDENT
+   23     | TOK_CALLN . cond ',' TOK_NUMBER
+
+    TOK_T_SR   shift, and go to state 118
+    TOK_S_SR   shift, and go to state 119
+    TOK_A_SR   shift, and go to state 120
+    TOK_I_SR   shift, and go to state 121
+    TOK_B_SR   shift, and go to state 122
+    TOK_N_SR   shift, and go to state 123
+    TOK_V_SR   shift, and go to state 124
+    TOK_Z_FLG  shift, and go to state 125
+    TOK_N_FLG  shift, and go to state 126
+    TOK_G_FLG  shift, and go to state 127
+    TOK_T0     shift, and go to state 128
+    TOK_EA1_4  shift, and go to state 129
+    TOK_EA1_7  shift, and go to state 130
+    TOK_EXT11  shift, and go to state 131
+
+    cond  go to state 136
+
+
+state 6
+
+   24 jump: TOK_CALL . cond ',' TOK_IDENT
+   25     | TOK_CALL . cond ',' TOK_NUMBER
+   28     | TOK_CALL . TOK_IDENT
+   29     | TOK_CALL . TOK_NUMBER
+   32     | TOK_CALL . TOK_IDENT '(' TOK_RT ')'
+   33     | TOK_CALL . TOK_NUMBER '(' TOK_RT ')'
+
+    TOK_T_SR    shift, and go to state 118
+    TOK_S_SR    shift, and go to state 119
+    TOK_A_SR    shift, and go to state 120
+    TOK_I_SR    shift, and go to state 121
+    TOK_B_SR    shift, and go to state 122
+    TOK_N_SR    shift, and go to state 123
+    TOK_V_SR    shift, and go to state 124
+    TOK_Z_FLG   shift, and go to state 125
+    TOK_N_FLG   shift, and go to state 126
+    TOK_G_FLG   shift, and go to state 127
+    TOK_T0      shift, and go to state 128
+    TOK_EA1_4   shift, and go to state 129
+    TOK_EA1_7   shift, and go to state 130
+    TOK_EXT11   shift, and go to state 131
+    TOK_NUMBER  shift, and go to state 137
+    TOK_IDENT   shift, and go to state 138
+
+    cond  go to state 139
+
+
+state 7
+
+   50 litop: TOK_LIT . '#' TOK_NUMBER
+   51      | TOK_LIT . '#' TOK_IDENT
+
+    '#'  shift, and go to state 140
+
+
+state 8
+
+   54 flgop: TOK_FLAG . TOK_MASK cin
+
+    TOK_MASK  shift, and go to state 141
+
+
+state 9
+
+   70 loop: TOK_LOOPT .
+
+    $default  reduce using rule 70 (loop)
+
+
+state 10
+
+   69 loop: TOK_LOOP16 .
+
+    $default  reduce using rule 69 (loop)
+
+
+state 11
+
+   71 loop: TOK_ENDLOOP .
+
+    $default  reduce using rule 71 (loop)
+
+
+state 12
+
+   76 aluop: TOK_DROP .
+
+    $default  reduce using rule 76 (aluop)
+
+
+state 13
+
+   77 aluop: TOK_NIP .
+
+    $default  reduce using rule 77 (aluop)
+
+
+state 14
+
+   78 aluop: TOK_SWAP .
+
+    $default  reduce using rule 78 (aluop)
+
+
+state 15
+
+   79 aluop: TOK_DUP .
+
+    $default  reduce using rule 79 (aluop)
+
+
+state 16
+
+   80 aluop: TOK_OVER .
+
+    $default  reduce using rule 80 (aluop)
+
+
+state 17
+
+   81 aluop: TOK_ADDB .
+
+    $default  reduce using rule 81 (aluop)
+
+
+state 18
+
+   82 aluop: TOK_ADDW .
+
+    $default  reduce using rule 82 (aluop)
+
+
+state 19
+
+   83 aluop: TOK_ADDL .
+
+    $default  reduce using rule 83 (aluop)
+
+
+state 20
+
+   84 aluop: TOK_ADDCB .
+
+    $default  reduce using rule 84 (aluop)
+
+
+state 21
+
+   85 aluop: TOK_ADDCW .
+
+    $default  reduce using rule 85 (aluop)
+
+
+state 22
+
+   86 aluop: TOK_ADDCL .
+
+    $default  reduce using rule 86 (aluop)
+
+
+state 23
+
+   87 aluop: TOK_SUBB .
+
+    $default  reduce using rule 87 (aluop)
+
+
+state 24
+
+   88 aluop: TOK_SUBW .
+
+    $default  reduce using rule 88 (aluop)
+
+
+state 25
+
+   89 aluop: TOK_SUBL .
+
+    $default  reduce using rule 89 (aluop)
+
+
+state 26
+
+   90 aluop: TOK_SUBCB .
+
+    $default  reduce using rule 90 (aluop)
+
+
+state 27
+
+   91 aluop: TOK_SUBCW .
+
+    $default  reduce using rule 91 (aluop)
+
+
+state 28
+
+   92 aluop: TOK_SUBCL .
+
+    $default  reduce using rule 92 (aluop)
+
+
+state 29
+
+   93 aluop: TOK_SUB2B .
+
+    $default  reduce using rule 93 (aluop)
+
+
+state 30
+
+   94 aluop: TOK_SUB2W .
+
+    $default  reduce using rule 94 (aluop)
+
+
+state 31
+
+   95 aluop: TOK_SUB2L .
+
+    $default  reduce using rule 95 (aluop)
+
+
+state 32
+
+   96 aluop: TOK_SUBC2B .
+
+    $default  reduce using rule 96 (aluop)
+
+
+state 33
+
+   97 aluop: TOK_SUBC2W .
+
+    $default  reduce using rule 97 (aluop)
+
+
+state 34
+
+   98 aluop: TOK_SUBC2L .
+
+    $default  reduce using rule 98 (aluop)
+
+
+state 35
+
+   99 aluop: TOK_NEGB .
+
+    $default  reduce using rule 99 (aluop)
+
+
+state 36
+
+  100 aluop: TOK_NEGW .
+
+    $default  reduce using rule 100 (aluop)
+
+
+state 37
+
+  101 aluop: TOK_NEGL .
+
+    $default  reduce using rule 101 (aluop)
+
+
+state 38
+
+  102 aluop: TOK_NEGCB .
+
+    $default  reduce using rule 102 (aluop)
+
+
+state 39
+
+  103 aluop: TOK_NEGCW .
+
+    $default  reduce using rule 103 (aluop)
+
+
+state 40
+
+  104 aluop: TOK_NEGCL .
+
+    $default  reduce using rule 104 (aluop)
+
+
+state 41
+
+  105 aluop: TOK_DECW .
+
+    $default  reduce using rule 105 (aluop)
+
+
+state 42
+
+  106 aluop: TOK_EXTW .
+
+    $default  reduce using rule 106 (aluop)
+
+
+state 43
+
+  107 aluop: TOK_ANDB .
+
+    $default  reduce using rule 107 (aluop)
+
+
+state 44
+
+  108 aluop: TOK_ANDW .
+
+    $default  reduce using rule 108 (aluop)
+
+
+state 45
+
+  109 aluop: TOK_ANDL .
+
+    $default  reduce using rule 109 (aluop)
+
+
+state 46
+
+  110 aluop: TOK_ORB .
+
+    $default  reduce using rule 110 (aluop)
+
+
+state 47
+
+  111 aluop: TOK_ORW .
+
+    $default  reduce using rule 111 (aluop)
+
+
+state 48
+
+  112 aluop: TOK_ORL .
+
+    $default  reduce using rule 112 (aluop)
+
+
+state 49
+
+  113 aluop: TOK_XORB .
+
+    $default  reduce using rule 113 (aluop)
+
+
+state 50
+
+  114 aluop: TOK_XORW .
+
+    $default  reduce using rule 114 (aluop)
+
+
+state 51
+
+  115 aluop: TOK_XORL .
+
+    $default  reduce using rule 115 (aluop)
+
+
+state 52
+
+  116 aluop: TOK_MSKB .
+
+    $default  reduce using rule 116 (aluop)
+
+
+state 53
+
+  117 aluop: TOK_MSKW .
+
+    $default  reduce using rule 117 (aluop)
+
+
+state 54
+
+  118 aluop: TOK_MSKL .
+
+    $default  reduce using rule 118 (aluop)
+
+
+state 55
+
+  119 aluop: TOK_BANDB .
+
+    $default  reduce using rule 119 (aluop)
+
+
+state 56
+
+  120 aluop: TOK_BANDW .
+
+    $default  reduce using rule 120 (aluop)
+
+
+state 57
+
+  121 aluop: TOK_BANDL .
+
+    $default  reduce using rule 121 (aluop)
+
+
+state 58
+
+  122 aluop: TOK_BORB .
+
+    $default  reduce using rule 122 (aluop)
+
+
+state 59
+
+  123 aluop: TOK_BORW .
+
+    $default  reduce using rule 123 (aluop)
+
+
+state 60
+
+  124 aluop: TOK_BORL .
+
+    $default  reduce using rule 124 (aluop)
+
+
+state 61
+
+  125 aluop: TOK_BXORB .
+
+    $default  reduce using rule 125 (aluop)
+
+
+state 62
+
+  126 aluop: TOK_BXORW .
+
+    $default  reduce using rule 126 (aluop)
+
+
+state 63
+
+  127 aluop: TOK_BXORL .
+
+    $default  reduce using rule 127 (aluop)
+
+
+state 64
+
+  128 aluop: TOK_BMSKB .
+
+    $default  reduce using rule 128 (aluop)
+
+
+state 65
+
+  129 aluop: TOK_BMSKW .
+
+    $default  reduce using rule 129 (aluop)
+
+
+state 66
+
+  130 aluop: TOK_BMSKL .
+
+    $default  reduce using rule 130 (aluop)
+
+
+state 67
+
+  131 aluop: TOK_NOTB .
+
+    $default  reduce using rule 131 (aluop)
+
+
+state 68
+
+  132 aluop: TOK_NOTW .
+
+    $default  reduce using rule 132 (aluop)
+
+
+state 69
+
+  133 aluop: TOK_NOTL .
+
+    $default  reduce using rule 133 (aluop)
+
+
+state 70
+
+  134 aluop: TOK_TSTB .
+
+    $default  reduce using rule 134 (aluop)
+
+
+state 71
+
+  135 aluop: TOK_TSTW .
+
+    $default  reduce using rule 135 (aluop)
+
+
+state 72
+
+  136 aluop: TOK_TSTL .
+
+    $default  reduce using rule 136 (aluop)
+
+
+state 73
+
+  137 aluop: TOK_LSHB .
+
+    $default  reduce using rule 137 (aluop)
+
+
+state 74
+
+  138 aluop: TOK_LSHW .
+
+    $default  reduce using rule 138 (aluop)
+
+
+state 75
+
+  139 aluop: TOK_LSHL .
+
+    $default  reduce using rule 139 (aluop)
+
+
+state 76
+
+  140 aluop: TOK_RSHB .
+
+    $default  reduce using rule 140 (aluop)
+
+
+state 77
+
+  141 aluop: TOK_RSHW .
+
+    $default  reduce using rule 141 (aluop)
+
+
+state 78
+
+  142 aluop: TOK_RSHL .
+
+    $default  reduce using rule 142 (aluop)
+
+
+state 79
+
+  143 aluop: TOK_MUL .
+
+    $default  reduce using rule 143 (aluop)
+
+
+state 80
+
+  144 aluop: TOK_DIV .
+
+    $default  reduce using rule 144 (aluop)
+
+
+state 81
+
+  145 aluop: TOK_NOP .
+
+    $default  reduce using rule 145 (aluop)
+
+
+state 82
+
+  150 memop: TOK_LDB . '(' TOK_EA1 ')'
+  151      | TOK_LDB . '(' TOK_EA1 ')' '+'
+  152      | TOK_LDB . '-' '(' TOK_EA1 ')'
+  153      | TOK_LDB . '+' '(' TOK_EA1 ')'
+  166      | TOK_LDB . '(' TOK_EA2 ')'
+  167      | TOK_LDB . '(' TOK_EA2 ')' '+'
+  168      | TOK_LDB . '-' '(' TOK_EA2 ')'
+  169      | TOK_LDB . '+' '(' TOK_EA2 ')'
+  209 regop: TOK_LDB . TOK_RDL '[' TOK_EA1 ']'
+  210      | TOK_LDB . TOK_RAL '[' TOK_EA1 ']'
+  211      | TOK_LDB . TOK_RL '[' TOK_EA1 ']'
+  212      | TOK_LDB . TOK_RDL '[' TOK_EA2 ']'
+  213      | TOK_LDB . TOK_RAL '[' TOK_EA2 ']'
+  214      | TOK_LDB . TOK_RL '[' TOK_EA2 ']'
+  215      | TOK_LDB . TOK_RL '[' TOK_CNT ']'
+  216      | TOK_LDB . TOK_RDL '[' TOK_EXT ']'
+  217      | TOK_LDB . TOK_RAL '[' TOK_EXT ']'
+  218      | TOK_LDB . TOK_RL '[' TOK_EXT ']'
+  219      | TOK_LDB . TOK_VBRL
+  220      | TOK_LDB . TOK_TMP1L
+  221      | TOK_LDB . TOK_TMP2L
+  222      | TOK_LDB . TOK_USPL
+  223      | TOK_LDB . TOK_SSPL
+  224      | TOK_LDB . TOK_RDH '[' TOK_EA1 ']'
+  225      | TOK_LDB . TOK_RAH '[' TOK_EA1 ']'
+  226      | TOK_LDB . TOK_RH '[' TOK_EA1 ']'
+  227      | TOK_LDB . TOK_RDH '[' TOK_EA2 ']'
+  228      | TOK_LDB . TOK_RAH '[' TOK_EA2 ']'
+  229      | TOK_LDB . TOK_RH '[' TOK_EA2 ']'
+  230      | TOK_LDB . TOK_RH '[' TOK_CNT ']'
+  231      | TOK_LDB . TOK_RDH '[' TOK_EXT ']'
+  232      | TOK_LDB . TOK_RAH '[' TOK_EXT ']'
+  233      | TOK_LDB . TOK_RH '[' TOK_EXT ']'
+  234      | TOK_LDB . TOK_VBRH
+  235      | TOK_LDB . TOK_TMP1H
+  236      | TOK_LDB . TOK_TMP2H
+  237      | TOK_LDB . TOK_USPH
+  238      | TOK_LDB . TOK_SSPH
+  411      | TOK_LDB . TOK_SR
+
+    TOK_SR     shift, and go to state 142
+    TOK_RAL    shift, and go to state 143
+    TOK_RDL    shift, and go to state 144
+    TOK_RAH    shift, and go to state 145
+    TOK_RDH    shift, and go to state 146
+    TOK_RL     shift, and go to state 147
+    TOK_RH     shift, and go to state 148
+    TOK_USPL   shift, and go to state 149
+    TOK_USPH   shift, and go to state 150
+    TOK_SSPL   shift, and go to state 151
+    TOK_SSPH   shift, and go to state 152
+    TOK_TMP1L  shift, and go to state 153
+    TOK_TMP1H  shift, and go to state 154
+    TOK_TMP2L  shift, and go to state 155
+    TOK_TMP2H  shift, and go to state 156
+    TOK_VBRL   shift, and go to state 157
+    TOK_VBRH   shift, and go to state 158
+    '('        shift, and go to state 159
+    '+'        shift, and go to state 160
+    '-'        shift, and go to state 161
+
+
+state 83
+
+  174 memop: TOK_STB . '(' TOK_EA1 ')'
+  175      | TOK_STB . '(' TOK_EA1 ')' '+'
+  176      | TOK_STB . '-' '(' TOK_EA1 ')'
+  177      | TOK_STB . '+' '(' TOK_EA1 ')'
+  190      | TOK_STB . '(' TOK_EA2 ')'
+  191      | TOK_STB . '(' TOK_EA2 ')' '+'
+  192      | TOK_STB . '-' '(' TOK_EA2 ')'
+  193      | TOK_STB . '+' '(' TOK_EA2 ')'
+  271 regop: TOK_STB . TOK_RDL '[' TOK_EA1 ']'
+  272      | TOK_STB . TOK_RAL '[' TOK_EA1 ']'
+  273      | TOK_STB . TOK_RL '[' TOK_EA1 ']'
+  274      | TOK_STB . TOK_RDL '[' TOK_EA2 ']'
+  275      | TOK_STB . TOK_RAL '[' TOK_EA2 ']'
+  276      | TOK_STB . TOK_RL '[' TOK_EA2 ']'
+  277      | TOK_STB . TOK_RL '[' TOK_CNT ']'
+  278      | TOK_STB . TOK_RDL '[' TOK_EXT ']'
+  279      | TOK_STB . TOK_RAL '[' TOK_EXT ']'
+  280      | TOK_STB . TOK_RL '[' TOK_EXT ']'
+  281      | TOK_STB . TOK_VBRL
+  282      | TOK_STB . TOK_TMP1L
+  283      | TOK_STB . TOK_TMP2L
+  284      | TOK_STB . TOK_USPL
+  285      | TOK_STB . TOK_SSPL
+  286      | TOK_STB . TOK_RDH '[' TOK_EA1 ']'
+  287      | TOK_STB . TOK_RAH '[' TOK_EA1 ']'
+  288      | TOK_STB . TOK_RH '[' TOK_EA1 ']'
+  289      | TOK_STB . TOK_RDH '[' TOK_EA2 ']'
+  290      | TOK_STB . TOK_RAH '[' TOK_EA2 ']'
+  291      | TOK_STB . TOK_RH '[' TOK_EA2 ']'
+  292      | TOK_STB . TOK_RH '[' TOK_CNT ']'
+  293      | TOK_STB . TOK_RDH '[' TOK_EXT ']'
+  294      | TOK_STB . TOK_RAH '[' TOK_EXT ']'
+  295      | TOK_STB . TOK_RH '[' TOK_EXT ']'
+  296      | TOK_STB . TOK_VBRH
+  297      | TOK_STB . TOK_TMP1H
+  298      | TOK_STB . TOK_TMP2H
+  299      | TOK_STB . TOK_USPH
+  300      | TOK_STB . TOK_SSPH
+  424      | TOK_STB . TOK_SR
+
+    TOK_SR     shift, and go to state 162
+    TOK_RAL    shift, and go to state 163
+    TOK_RDL    shift, and go to state 164
+    TOK_RAH    shift, and go to state 165
+    TOK_RDH    shift, and go to state 166
+    TOK_RL     shift, and go to state 167
+    TOK_RH     shift, and go to state 168
+    TOK_USPL   shift, and go to state 169
+    TOK_USPH   shift, and go to state 170
+    TOK_SSPL   shift, and go to state 171
+    TOK_SSPH   shift, and go to state 172
+    TOK_TMP1L  shift, and go to state 173
+    TOK_TMP1H  shift, and go to state 174
+    TOK_TMP2L  shift, and go to state 175
+    TOK_TMP2H  shift, and go to state 176
+    TOK_VBRL   shift, and go to state 177
+    TOK_VBRH   shift, and go to state 178
+    '('        shift, and go to state 179
+    '+'        shift, and go to state 180
+    '-'        shift, and go to state 181
+
+
+state 84
+
+  333 regop: TOK_WRB . TOK_RDL '[' TOK_EA1 ']'
+  334      | TOK_WRB . TOK_RAL '[' TOK_EA1 ']'
+  335      | TOK_WRB . TOK_RL '[' TOK_EA1 ']'
+  336      | TOK_WRB . TOK_RDL '[' TOK_EA2 ']'
+  337      | TOK_WRB . TOK_RAL '[' TOK_EA2 ']'
+  338      | TOK_WRB . TOK_RL '[' TOK_EA2 ']'
+  339      | TOK_WRB . TOK_RL '[' TOK_CNT ']'
+  340      | TOK_WRB . TOK_RDL '[' TOK_EXT ']'
+  341      | TOK_WRB . TOK_RAL '[' TOK_EXT ']'
+  342      | TOK_WRB . TOK_RL '[' TOK_EXT ']'
+  343      | TOK_WRB . TOK_VBRL
+  344      | TOK_WRB . TOK_TMP1L
+  345      | TOK_WRB . TOK_TMP2L
+  346      | TOK_WRB . TOK_USPL
+  347      | TOK_WRB . TOK_SSPL
+  348      | TOK_WRB . TOK_RDH '[' TOK_EA1 ']'
+  349      | TOK_WRB . TOK_RAH '[' TOK_EA1 ']'
+  350      | TOK_WRB . TOK_RH '[' TOK_EA1 ']'
+  351      | TOK_WRB . TOK_RDH '[' TOK_EA2 ']'
+  352      | TOK_WRB . TOK_RAH '[' TOK_EA2 ']'
+  353      | TOK_WRB . TOK_RH '[' TOK_EA2 ']'
+  354      | TOK_WRB . TOK_RH '[' TOK_CNT ']'
+  355      | TOK_WRB . TOK_RDH '[' TOK_EXT ']'
+  356      | TOK_WRB . TOK_RAH '[' TOK_EXT ']'
+  357      | TOK_WRB . TOK_RH '[' TOK_EXT ']'
+  358      | TOK_WRB . TOK_VBRH
+  359      | TOK_WRB . TOK_TMP1H
+  360      | TOK_WRB . TOK_TMP2H
+  361      | TOK_WRB . TOK_USPH
+  362      | TOK_WRB . TOK_SSPH
+  437      | TOK_WRB . TOK_SR
+
+    TOK_SR     shift, and go to state 182
+    TOK_RAL    shift, and go to state 183
+    TOK_RDL    shift, and go to state 184
+    TOK_RAH    shift, and go to state 185
+    TOK_RDH    shift, and go to state 186
+    TOK_RL     shift, and go to state 187
+    TOK_RH     shift, and go to state 188
+    TOK_USPL   shift, and go to state 189
+    TOK_USPH   shift, and go to state 190
+    TOK_SSPL   shift, and go to state 191
+    TOK_SSPH   shift, and go to state 192
+    TOK_TMP1L  shift, and go to state 193
+    TOK_TMP1H  shift, and go to state 194
+    TOK_TMP2L  shift, and go to state 195
+    TOK_TMP2H  shift, and go to state 196
+    TOK_VBRL   shift, and go to state 197
+    TOK_VBRH   shift, and go to state 198
+
+
+state 85
+
+  204 memop: TOK_FTW . '(' TOK_PC ')' '+'
+
+    '('  shift, and go to state 199
+
+
+state 86
+
+  154 memop: TOK_LDW . '(' TOK_EA1 ')'
+  155      | TOK_LDW . '(' TOK_EA1 ')' '+'
+  156      | TOK_LDW . '-' '(' TOK_EA1 ')'
+  157      | TOK_LDW . '+' '(' TOK_EA1 ')'
+  170      | TOK_LDW . '(' TOK_EA2 ')'
+  171      | TOK_LDW . '(' TOK_EA2 ')' '+'
+  172      | TOK_LDW . '-' '(' TOK_EA2 ')'
+  173      | TOK_LDW . '+' '(' TOK_EA2 ')'
+  198      | TOK_LDW . '(' TOK_VEC ')' '+'
+  201      | TOK_LDW . '(' TOK_PC ')' '+'
+  239 regop: TOK_LDW . TOK_RDL '[' TOK_EA1 ']'
+  240      | TOK_LDW . TOK_RAL '[' TOK_EA1 ']'
+  241      | TOK_LDW . TOK_RL '[' TOK_EA1 ']'
+  242      | TOK_LDW . TOK_A7L
+  243      | TOK_LDW . TOK_RDL '[' TOK_EA2 ']'
+  244      | TOK_LDW . TOK_RAL '[' TOK_EA2 ']'
+  245      | TOK_LDW . TOK_RL '[' TOK_EA2 ']'
+  246      | TOK_LDW . TOK_RL '[' TOK_CNT ']'
+  247      | TOK_LDW . TOK_RDL '[' TOK_EXT ']'
+  248      | TOK_LDW . TOK_RAL '[' TOK_EXT ']'
+  249      | TOK_LDW . TOK_RL '[' TOK_EXT ']'
+  250      | TOK_LDW . TOK_VBRL
+  251      | TOK_LDW . TOK_TMP1L
+  252      | TOK_LDW . TOK_TMP2L
+  253      | TOK_LDW . TOK_USPL
+  254      | TOK_LDW . TOK_SSPL
+  255      | TOK_LDW . TOK_RDH '[' TOK_EA1 ']'
+  256      | TOK_LDW . TOK_RAH '[' TOK_EA1 ']'
+  257      | TOK_LDW . TOK_RH '[' TOK_EA1 ']'
+  258      | TOK_LDW . TOK_A7H
+  259      | TOK_LDW . TOK_RDH '[' TOK_EA2 ']'
+  260      | TOK_LDW . TOK_RAH '[' TOK_EA2 ']'
+  261      | TOK_LDW . TOK_RH '[' TOK_EA2 ']'
+  262      | TOK_LDW . TOK_RH '[' TOK_CNT ']'
+  263      | TOK_LDW . TOK_RDH '[' TOK_EXT ']'
+  264      | TOK_LDW . TOK_RAH '[' TOK_EXT ']'
+  265      | TOK_LDW . TOK_RH '[' TOK_EXT ']'
+  266      | TOK_LDW . TOK_VBRH
+  267      | TOK_LDW . TOK_TMP1H
+  268      | TOK_LDW . TOK_TMP2H
+  269      | TOK_LDW . TOK_USPH
+  270      | TOK_LDW . TOK_SSPH
+  395      | TOK_LDW . TOK_EA1L
+  396      | TOK_LDW . TOK_EA1H
+  397      | TOK_LDW . TOK_EA2L
+  398      | TOK_LDW . TOK_EA2H
+  399      | TOK_LDW . TOK_PCL
+  400      | TOK_LDW . TOK_PCH
+  401      | TOK_LDW . TOK_VECL
+  402      | TOK_LDW . TOK_CPUS
+  403      | TOK_LDW . TOK_IMMR
+  404      | TOK_LDW . TOK_LSHR
+  405      | TOK_LDW . TOK_ACCL
+  406      | TOK_LDW . TOK_ACCH
+  407      | TOK_LDW . TOK_DECJ
+  408      | TOK_LDW . TOK_EA1J
+  409      | TOK_LDW . TOK_EA2J
+  410      | TOK_LDW . TOK_SR
+
+    TOK_EA1L   shift, and go to state 200
+    TOK_EA1H   shift, and go to state 201
+    TOK_EA2L   shift, and go to state 202
+    TOK_EA2H   shift, and go to state 203
+    TOK_PCL    shift, and go to state 204
+    TOK_PCH    shift, and go to state 205
+    TOK_VECL   shift, and go to state 206
+    TOK_CPUS   shift, and go to state 207
+    TOK_LSHR   shift, and go to state 208
+    TOK_ACCL   shift, and go to state 209
+    TOK_ACCH   shift, and go to state 210
+    TOK_IMMR   shift, and go to state 211
+    TOK_DECJ   shift, and go to state 212
+    TOK_EA1J   shift, and go to state 213
+    TOK_EA2J   shift, and go to state 214
+    TOK_SR     shift, and go to state 215
+    TOK_RAL    shift, and go to state 216
+    TOK_RDL    shift, and go to state 217
+    TOK_RAH    shift, and go to state 218
+    TOK_RDH    shift, and go to state 219
+    TOK_RL     shift, and go to state 220
+    TOK_RH     shift, and go to state 221
+    TOK_A7L    shift, and go to state 222
+    TOK_A7H    shift, and go to state 223
+    TOK_USPL   shift, and go to state 224
+    TOK_USPH   shift, and go to state 225
+    TOK_SSPL   shift, and go to state 226
+    TOK_SSPH   shift, and go to state 227
+    TOK_TMP1L  shift, and go to state 228
+    TOK_TMP1H  shift, and go to state 229
+    TOK_TMP2L  shift, and go to state 230
+    TOK_TMP2H  shift, and go to state 231
+    TOK_VBRL   shift, and go to state 232
+    TOK_VBRH   shift, and go to state 233
+    '('        shift, and go to state 234
+    '+'        shift, and go to state 235
+    '-'        shift, and go to state 236
+
+
+state 87
+
+  178 memop: TOK_STW . '(' TOK_EA1 ')'
+  179      | TOK_STW . '(' TOK_EA1 ')' '+'
+  180      | TOK_STW . '-' '(' TOK_EA1 ')'
+  181      | TOK_STW . '+' '(' TOK_EA1 ')'
+  194      | TOK_STW . '(' TOK_EA2 ')'
+  195      | TOK_STW . '(' TOK_EA2 ')' '+'
+  196      | TOK_STW . '-' '(' TOK_EA2 ')'
+  197      | TOK_STW . '+' '(' TOK_EA2 ')'
+  301 regop: TOK_STW . TOK_RDL '[' TOK_EA1 ']'
+  302      | TOK_STW . TOK_RAL '[' TOK_EA1 ']'
+  303      | TOK_STW . TOK_RL '[' TOK_EA1 ']'
+  304      | TOK_STW . TOK_A7L
+  305      | TOK_STW . TOK_RDL '[' TOK_EA2 ']'
+  306      | TOK_STW . TOK_RAL '[' TOK_EA2 ']'
+  307      | TOK_STW . TOK_RL '[' TOK_EA2 ']'
+  308      | TOK_STW . TOK_RL '[' TOK_CNT ']'
+  309      | TOK_STW . TOK_RDL '[' TOK_EXT ']'
+  310      | TOK_STW . TOK_RAL '[' TOK_EXT ']'
+  311      | TOK_STW . TOK_RL '[' TOK_EXT ']'
+  312      | TOK_STW . TOK_VBRL
+  313      | TOK_STW . TOK_TMP1L
+  314      | TOK_STW . TOK_TMP2L
+  315      | TOK_STW . TOK_USPL
+  316      | TOK_STW . TOK_SSPL
+  317      | TOK_STW . TOK_RDH '[' TOK_EA1 ']'
+  318      | TOK_STW . TOK_RAH '[' TOK_EA1 ']'
+  319      | TOK_STW . TOK_RH '[' TOK_EA1 ']'
+  320      | TOK_STW . TOK_A7H
+  321      | TOK_STW . TOK_RDH '[' TOK_EA2 ']'
+  322      | TOK_STW . TOK_RAH '[' TOK_EA2 ']'
+  323      | TOK_STW . TOK_RH '[' TOK_EA2 ']'
+  324      | TOK_STW . TOK_RH '[' TOK_CNT ']'
+  325      | TOK_STW . TOK_RDH '[' TOK_EXT ']'
+  326      | TOK_STW . TOK_RAH '[' TOK_EXT ']'
+  327      | TOK_STW . TOK_RH '[' TOK_EXT ']'
+  328      | TOK_STW . TOK_VBRH
+  329      | TOK_STW . TOK_TMP1H
+  330      | TOK_STW . TOK_TMP2H
+  331      | TOK_STW . TOK_USPH
+  332      | TOK_STW . TOK_SSPH
+  412      | TOK_STW . TOK_EA1L
+  413      | TOK_STW . TOK_EA1H
+  414      | TOK_STW . TOK_EA2L
+  415      | TOK_STW . TOK_EA2H
+  416      | TOK_STW . TOK_PCL
+  417      | TOK_STW . TOK_PCH
+  418      | TOK_STW . TOK_VECL
+  419      | TOK_STW . TOK_VECH
+  420      | TOK_STW . TOK_LSHR
+  421      | TOK_STW . TOK_ACCL
+  422      | TOK_STW . TOK_ACCH
+  423      | TOK_STW . TOK_SR
+
+    TOK_EA1L   shift, and go to state 237
+    TOK_EA1H   shift, and go to state 238
+    TOK_EA2L   shift, and go to state 239
+    TOK_EA2H   shift, and go to state 240
+    TOK_PCL    shift, and go to state 241
+    TOK_PCH    shift, and go to state 242
+    TOK_VECL   shift, and go to state 243
+    TOK_VECH   shift, and go to state 244
+    TOK_LSHR   shift, and go to state 245
+    TOK_ACCL   shift, and go to state 246
+    TOK_ACCH   shift, and go to state 247
+    TOK_SR     shift, and go to state 248
+    TOK_RAL    shift, and go to state 249
+    TOK_RDL    shift, and go to state 250
+    TOK_RAH    shift, and go to state 251
+    TOK_RDH    shift, and go to state 252
+    TOK_RL     shift, and go to state 253
+    TOK_RH     shift, and go to state 254
+    TOK_A7L    shift, and go to state 255
+    TOK_A7H    shift, and go to state 256
+    TOK_USPL   shift, and go to state 257
+    TOK_USPH   shift, and go to state 258
+    TOK_SSPL   shift, and go to state 259
+    TOK_SSPH   shift, and go to state 260
+    TOK_TMP1L  shift, and go to state 261
+    TOK_TMP1H  shift, and go to state 262
+    TOK_TMP2L  shift, and go to state 263
+    TOK_TMP2H  shift, and go to state 264
+    TOK_VBRL   shift, and go to state 265
+    TOK_VBRH   shift, and go to state 266
+    '('        shift, and go to state 267
+    '+'        shift, and go to state 268
+    '-'        shift, and go to state 269
+
+
+state 88
+
+  363 regop: TOK_WRW . TOK_RDL '[' TOK_EA1 ']'
+  364      | TOK_WRW . TOK_RAL '[' TOK_EA1 ']'
+  365      | TOK_WRW . TOK_RL '[' TOK_EA1 ']'
+  366      | TOK_WRW . TOK_A7L
+  367      | TOK_WRW . TOK_RDL '[' TOK_EA2 ']'
+  368      | TOK_WRW . TOK_RAL '[' TOK_EA2 ']'
+  369      | TOK_WRW . TOK_RL '[' TOK_EA2 ']'
+  370      | TOK_WRW . TOK_RL '[' TOK_CNT ']'
+  371      | TOK_WRW . TOK_RDL '[' TOK_EXT ']'
+  372      | TOK_WRW . TOK_RAL '[' TOK_EXT ']'
+  373      | TOK_WRW . TOK_RL '[' TOK_EXT ']'
+  374      | TOK_WRW . TOK_VBRL
+  375      | TOK_WRW . TOK_TMP1L
+  376      | TOK_WRW . TOK_TMP2L
+  377      | TOK_WRW . TOK_USPL
+  378      | TOK_WRW . TOK_SSPL
+  379      | TOK_WRW . TOK_RDH '[' TOK_EA1 ']'
+  380      | TOK_WRW . TOK_RAH '[' TOK_EA1 ']'
+  381      | TOK_WRW . TOK_RH '[' TOK_EA1 ']'
+  382      | TOK_WRW . TOK_A7H
+  383      | TOK_WRW . TOK_RDH '[' TOK_EA2 ']'
+  384      | TOK_WRW . TOK_RAH '[' TOK_EA2 ']'
+  385      | TOK_WRW . TOK_RH '[' TOK_EA2 ']'
+  386      | TOK_WRW . TOK_RH '[' TOK_CNT ']'
+  387      | TOK_WRW . TOK_RDH '[' TOK_EXT ']'
+  388      | TOK_WRW . TOK_RAH '[' TOK_EXT ']'
+  389      | TOK_WRW . TOK_RH '[' TOK_EXT ']'
+  390      | TOK_WRW . TOK_VBRH
+  391      | TOK_WRW . TOK_TMP1H
+  392      | TOK_WRW . TOK_TMP2H
+  393      | TOK_WRW . TOK_USPH
+  394      | TOK_WRW . TOK_SSPH
+  425      | TOK_WRW . TOK_EA1L
+  426      | TOK_WRW . TOK_EA1H
+  427      | TOK_WRW . TOK_EA2L
+  428      | TOK_WRW . TOK_EA2H
+  429      | TOK_WRW . TOK_PCL
+  430      | TOK_WRW . TOK_PCH
+  431      | TOK_WRW . TOK_VECL
+  432      | TOK_WRW . TOK_VECH
+  433      | TOK_WRW . TOK_LSHR
+  434      | TOK_WRW . TOK_ACCL
+  435      | TOK_WRW . TOK_ACCH
+  436      | TOK_WRW . TOK_SR
+
+    TOK_EA1L   shift, and go to state 270
+    TOK_EA1H   shift, and go to state 271
+    TOK_EA2L   shift, and go to state 272
+    TOK_EA2H   shift, and go to state 273
+    TOK_PCL    shift, and go to state 274
+    TOK_PCH    shift, and go to state 275
+    TOK_VECL   shift, and go to state 276
+    TOK_VECH   shift, and go to state 277
+    TOK_LSHR   shift, and go to state 278
+    TOK_ACCL   shift, and go to state 279
+    TOK_ACCH   shift, and go to state 280
+    TOK_SR     shift, and go to state 281
+    TOK_RAL    shift, and go to state 282
+    TOK_RDL    shift, and go to state 283
+    TOK_RAH    shift, and go to state 284
+    TOK_RDH    shift, and go to state 285
+    TOK_RL     shift, and go to state 286
+    TOK_RH     shift, and go to state 287
+    TOK_A7L    shift, and go to state 288
+    TOK_A7H    shift, and go to state 289
+    TOK_USPL   shift, and go to state 290
+    TOK_USPH   shift, and go to state 291
+    TOK_SSPL   shift, and go to state 292
+    TOK_SSPH   shift, and go to state 293
+    TOK_TMP1L  shift, and go to state 294
+    TOK_TMP1H  shift, and go to state 295
+    TOK_TMP2L  shift, and go to state 296
+    TOK_TMP2H  shift, and go to state 297
+    TOK_VBRL   shift, and go to state 298
+    TOK_VBRH   shift, and go to state 299
+
+
+state 89
+
+  199 memop: TOK_LDI . '(' TOK_PC ')' '+'
+
+    '('  shift, and go to state 300
+
+
+state 90
+
+  202 memop: TOK_FTI . '(' TOK_PC ')' '+'
+
+    '('  shift, and go to state 301
+
+
+state 91
+
+  200 memop: TOK_LDE . '(' TOK_PC ')' '+'
+
+    '('  shift, and go to state 302
+
+
+state 92
+
+  203 memop: TOK_FTE . '(' TOK_PC ')' '+'
+
+    '('  shift, and go to state 303
+
+
+state 93
+
+  162 memop: TOK_LDL . '(' TOK_EA1 ')'
+  163      | TOK_LDL . '(' TOK_EA1 ')' '+'
+  164      | TOK_LDL . '-' '(' TOK_EA1 ')'
+  165      | TOK_LDL . '+' '(' TOK_EA1 ')'
+
+    '('  shift, and go to state 304
+    '+'  shift, and go to state 305
+    '-'  shift, and go to state 306
+
+
+state 94
+
+  186 memop: TOK_STL . '(' TOK_EA1 ')'
+  187      | TOK_STL . '(' TOK_EA1 ')' '+'
+  188      | TOK_STL . '-' '(' TOK_EA1 ')'
+  189      | TOK_STL . '+' '(' TOK_EA1 ')'
+
+    '('  shift, and go to state 307
+    '+'  shift, and go to state 308
+    '-'  shift, and go to state 309
+
+
+state 95
+
+  158 memop: TOK_LDH . '(' TOK_EA1 ')'
+  159      | TOK_LDH . '(' TOK_EA1 ')' '+'
+  160      | TOK_LDH . '-' '(' TOK_EA1 ')'
+  161      | TOK_LDH . '+' '(' TOK_EA1 ')'
+
+    '('  shift, and go to state 310
+    '+'  shift, and go to state 311
+    '-'  shift, and go to state 312
+
+
+state 96
+
+  182 memop: TOK_STH . '(' TOK_EA1 ')'
+  183      | TOK_STH . '(' TOK_EA1 ')' '+'
+  184      | TOK_STH . '-' '(' TOK_EA1 ')'
+  185      | TOK_STH . '+' '(' TOK_EA1 ')'
+
+    '('  shift, and go to state 313
+    '+'  shift, and go to state 314
+    '-'  shift, and go to state 315
+
+
+state 97
+
+   15 label: TOK_IDENT . ':'
+
+    ':'  shift, and go to state 316
+
+
+state 98
+
+   17 org: TOK_ORG . TOK_NUMBER
+
+    TOK_NUMBER  shift, and go to state 317
+
+
+state 99
+
+   16 table: TOK_TABLE . TOK_IDENT ',' TOK_IDENT ',' TOK_IDENT ',' TOK_NUMBER
+
+    TOK_IDENT  shift, and go to state 318
+
+
+state 100
+
+    3 line: '\n' .
+
+    $default  reduce using rule 3 (line)
+
+
+state 101
+
+    2 input: input line .
+
+    $default  reduce using rule 2 (input)
+
+
+state 102
+
+    4 line: expr . '\n'
+
+    '\n'  shift, and go to state 319
+
+
+state 103
+
+    7 expr: label .
+
+    $default  reduce using rule 7 (expr)
+
+
+state 104
+
+    6 expr: table .
+
+    $default  reduce using rule 6 (expr)
+
+
+state 105
+
+    5 expr: org .
+
+    $default  reduce using rule 5 (expr)
+
+
+state 106
+
+    8 expr: jump .
+
+    $default  reduce using rule 8 (expr)
+
+
+state 107
+
+    9 expr: lit .
+
+    $default  reduce using rule 9 (expr)
+
+
+state 108
+
+   48 lit: litop . TOK_RTS
+   49    | litop .
+
+    TOK_RTS  shift, and go to state 320
+
+    $default  reduce using rule 49 (lit)
+
+
+state 109
+
+   10 expr: flg .
+
+    $default  reduce using rule 10 (expr)
+
+
+state 110
+
+   52 flg: flgop . TOK_RTS
+   53    | flgop .
+
+    TOK_RTS  shift, and go to state 321
+
+    $default  reduce using rule 53 (flg)
+
+
+state 111
+
+   11 expr: loop .
+
+    $default  reduce using rule 11 (expr)
+
+
+state 112
+
+   12 expr: alu .
+
+    $default  reduce using rule 12 (expr)
+
+
+state 113
+
+   72 alu: aluop . '.' TOK_RTS
+   73    | aluop . TOK_RTS
+   74    | aluop . '.'
+   75    | aluop .
+
+    TOK_RTS  shift, and go to state 322
+    '.'      shift, and go to state 323
+
+    $default  reduce using rule 75 (alu)
+
+
+state 114
+
+   13 expr: mem .
+
+    $default  reduce using rule 13 (expr)
+
+
+state 115
+
+  146 mem: memop . '.' TOK_RTS
+  147    | memop . TOK_RTS
+  148    | memop . '.'
+  149    | memop .
+
+    TOK_RTS  shift, and go to state 324
+    '.'      shift, and go to state 325
+
+    $default  reduce using rule 149 (mem)
+
+
+state 116
+
+   14 expr: reg .
+
+    $default  reduce using rule 14 (expr)
+
+
+state 117
+
+  205 reg: regop . '.' TOK_RTS
+  206    | regop . TOK_RTS
+  207    | regop . '.'
+  208    | regop .
+
+    TOK_RTS  shift, and go to state 326
+    '.'      shift, and go to state 327
+
+    $default  reduce using rule 208 (reg)
+
+
+state 118
+
+   47 cond: TOK_T_SR .
+
+    $default  reduce using rule 47 (cond)
+
+
+state 119
+
+   46 cond: TOK_S_SR .
+
+    $default  reduce using rule 46 (cond)
+
+
+state 120
+
+   45 cond: TOK_A_SR .
+
+    $default  reduce using rule 45 (cond)
+
+
+state 121
+
+   44 cond: TOK_I_SR .
+
+    $default  reduce using rule 44 (cond)
+
+
+state 122
+
+   43 cond: TOK_B_SR .
+
+    $default  reduce using rule 43 (cond)
+
+
+state 123
+
+   42 cond: TOK_N_SR .
+
+    $default  reduce using rule 42 (cond)
+
+
+state 124
+
+   41 cond: TOK_V_SR .
+
+    $default  reduce using rule 41 (cond)
+
+
+state 125
+
+   34 cond: TOK_Z_FLG .
+
+    $default  reduce using rule 34 (cond)
+
+
+state 126
+
+   35 cond: TOK_N_FLG .
+
+    $default  reduce using rule 35 (cond)
+
+
+state 127
+
+   36 cond: TOK_G_FLG .
+
+    $default  reduce using rule 36 (cond)
+
+
+state 128
+
+   37 cond: TOK_T0 .
+
+    $default  reduce using rule 37 (cond)
+
+
+state 129
+
+   38 cond: TOK_EA1_4 .
+
+    $default  reduce using rule 38 (cond)
+
+
+state 130
+
+   39 cond: TOK_EA1_7 .
+
+    $default  reduce using rule 39 (cond)
+
+
+state 131
+
+   40 cond: TOK_EXT11 .
+
+    $default  reduce using rule 40 (cond)
+
+
+state 132
+
+   18 jump: TOK_JUMPN cond . ',' TOK_IDENT
+   19     | TOK_JUMPN cond . ',' TOK_NUMBER
+
+    ','  shift, and go to state 328
+
+
+state 133
+
+   27 jump: TOK_JUMP TOK_NUMBER .
+   31     | TOK_JUMP TOK_NUMBER . '(' TOK_RT ')'
+
+    '('  shift, and go to state 329
+
+    $default  reduce using rule 27 (jump)
+
+
+state 134
+
+   26 jump: TOK_JUMP TOK_IDENT .
+   30     | TOK_JUMP TOK_IDENT . '(' TOK_RT ')'
+
+    '('  shift, and go to state 330
+
+    $default  reduce using rule 26 (jump)
+
+
+state 135
+
+   20 jump: TOK_JUMP cond . ',' TOK_IDENT
+   21     | TOK_JUMP cond . ',' TOK_NUMBER
+
+    ','  shift, and go to state 331
+
+
+state 136
+
+   22 jump: TOK_CALLN cond . ',' TOK_IDENT
+   23     | TOK_CALLN cond . ',' TOK_NUMBER
+
+    ','  shift, and go to state 332
+
+
+state 137
+
+   29 jump: TOK_CALL TOK_NUMBER .
+   33     | TOK_CALL TOK_NUMBER . '(' TOK_RT ')'
+
+    '('  shift, and go to state 333
+
+    $default  reduce using rule 29 (jump)
+
+
+state 138
+
+   28 jump: TOK_CALL TOK_IDENT .
+   32     | TOK_CALL TOK_IDENT . '(' TOK_RT ')'
+
+    '('  shift, and go to state 334
+
+    $default  reduce using rule 28 (jump)
+
+
+state 139
+
+   24 jump: TOK_CALL cond . ',' TOK_IDENT
+   25     | TOK_CALL cond . ',' TOK_NUMBER
+
+    ','  shift, and go to state 335
+
+
+state 140
+
+   50 litop: TOK_LIT '#' . TOK_NUMBER
+   51      | TOK_LIT '#' . TOK_IDENT
+
+    TOK_NUMBER  shift, and go to state 336
+    TOK_IDENT   shift, and go to state 337
+
+
+state 141
+
+   54 flgop: TOK_FLAG TOK_MASK . cin
+
+    ','  shift, and go to state 338
+
+    $default  reduce using rule 55 (cin)
+
+    cin  go to state 339
+
+
+state 142
+
+  411 regop: TOK_LDB TOK_SR .
+
+    $default  reduce using rule 411 (regop)
+
+
+state 143
+
+  210 regop: TOK_LDB TOK_RAL . '[' TOK_EA1 ']'
+  213      | TOK_LDB TOK_RAL . '[' TOK_EA2 ']'
+  217      | TOK_LDB TOK_RAL . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 340
+
+
+state 144
+
+  209 regop: TOK_LDB TOK_RDL . '[' TOK_EA1 ']'
+  212      | TOK_LDB TOK_RDL . '[' TOK_EA2 ']'
+  216      | TOK_LDB TOK_RDL . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 341
+
+
+state 145
+
+  225 regop: TOK_LDB TOK_RAH . '[' TOK_EA1 ']'
+  228      | TOK_LDB TOK_RAH . '[' TOK_EA2 ']'
+  232      | TOK_LDB TOK_RAH . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 342
+
+
+state 146
+
+  224 regop: TOK_LDB TOK_RDH . '[' TOK_EA1 ']'
+  227      | TOK_LDB TOK_RDH . '[' TOK_EA2 ']'
+  231      | TOK_LDB TOK_RDH . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 343
+
+
+state 147
+
+  211 regop: TOK_LDB TOK_RL . '[' TOK_EA1 ']'
+  214      | TOK_LDB TOK_RL . '[' TOK_EA2 ']'
+  215      | TOK_LDB TOK_RL . '[' TOK_CNT ']'
+  218      | TOK_LDB TOK_RL . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 344
+
+
+state 148
+
+  226 regop: TOK_LDB TOK_RH . '[' TOK_EA1 ']'
+  229      | TOK_LDB TOK_RH . '[' TOK_EA2 ']'
+  230      | TOK_LDB TOK_RH . '[' TOK_CNT ']'
+  233      | TOK_LDB TOK_RH . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 345
+
+
+state 149
+
+  222 regop: TOK_LDB TOK_USPL .
+
+    $default  reduce using rule 222 (regop)
+
+
+state 150
+
+  237 regop: TOK_LDB TOK_USPH .
+
+    $default  reduce using rule 237 (regop)
+
+
+state 151
+
+  223 regop: TOK_LDB TOK_SSPL .
+
+    $default  reduce using rule 223 (regop)
+
+
+state 152
+
+  238 regop: TOK_LDB TOK_SSPH .
+
+    $default  reduce using rule 238 (regop)
+
+
+state 153
+
+  220 regop: TOK_LDB TOK_TMP1L .
+
+    $default  reduce using rule 220 (regop)
+
+
+state 154
+
+  235 regop: TOK_LDB TOK_TMP1H .
+
+    $default  reduce using rule 235 (regop)
+
+
+state 155
+
+  221 regop: TOK_LDB TOK_TMP2L .
+
+    $default  reduce using rule 221 (regop)
+
+
+state 156
+
+  236 regop: TOK_LDB TOK_TMP2H .
+
+    $default  reduce using rule 236 (regop)
+
+
+state 157
+
+  219 regop: TOK_LDB TOK_VBRL .
+
+    $default  reduce using rule 219 (regop)
+
+
+state 158
+
+  234 regop: TOK_LDB TOK_VBRH .
+
+    $default  reduce using rule 234 (regop)
+
+
+state 159
+
+  150 memop: TOK_LDB '(' . TOK_EA1 ')'
+  151      | TOK_LDB '(' . TOK_EA1 ')' '+'
+  166      | TOK_LDB '(' . TOK_EA2 ')'
+  167      | TOK_LDB '(' . TOK_EA2 ')' '+'
+
+    TOK_EA1  shift, and go to state 346
+    TOK_EA2  shift, and go to state 347
+
+
+state 160
+
+  153 memop: TOK_LDB '+' . '(' TOK_EA1 ')'
+  169      | TOK_LDB '+' . '(' TOK_EA2 ')'
+
+    '('  shift, and go to state 348
+
+
+state 161
+
+  152 memop: TOK_LDB '-' . '(' TOK_EA1 ')'
+  168      | TOK_LDB '-' . '(' TOK_EA2 ')'
+
+    '('  shift, and go to state 349
+
+
+state 162
+
+  424 regop: TOK_STB TOK_SR .
+
+    $default  reduce using rule 424 (regop)
+
+
+state 163
+
+  272 regop: TOK_STB TOK_RAL . '[' TOK_EA1 ']'
+  275      | TOK_STB TOK_RAL . '[' TOK_EA2 ']'
+  279      | TOK_STB TOK_RAL . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 350
+
+
+state 164
+
+  271 regop: TOK_STB TOK_RDL . '[' TOK_EA1 ']'
+  274      | TOK_STB TOK_RDL . '[' TOK_EA2 ']'
+  278      | TOK_STB TOK_RDL . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 351
+
+
+state 165
+
+  287 regop: TOK_STB TOK_RAH . '[' TOK_EA1 ']'
+  290      | TOK_STB TOK_RAH . '[' TOK_EA2 ']'
+  294      | TOK_STB TOK_RAH . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 352
+
+
+state 166
+
+  286 regop: TOK_STB TOK_RDH . '[' TOK_EA1 ']'
+  289      | TOK_STB TOK_RDH . '[' TOK_EA2 ']'
+  293      | TOK_STB TOK_RDH . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 353
+
+
+state 167
+
+  273 regop: TOK_STB TOK_RL . '[' TOK_EA1 ']'
+  276      | TOK_STB TOK_RL . '[' TOK_EA2 ']'
+  277      | TOK_STB TOK_RL . '[' TOK_CNT ']'
+  280      | TOK_STB TOK_RL . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 354
+
+
+state 168
+
+  288 regop: TOK_STB TOK_RH . '[' TOK_EA1 ']'
+  291      | TOK_STB TOK_RH . '[' TOK_EA2 ']'
+  292      | TOK_STB TOK_RH . '[' TOK_CNT ']'
+  295      | TOK_STB TOK_RH . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 355
+
+
+state 169
+
+  284 regop: TOK_STB TOK_USPL .
+
+    $default  reduce using rule 284 (regop)
+
+
+state 170
+
+  299 regop: TOK_STB TOK_USPH .
+
+    $default  reduce using rule 299 (regop)
+
+
+state 171
+
+  285 regop: TOK_STB TOK_SSPL .
+
+    $default  reduce using rule 285 (regop)
+
+
+state 172
+
+  300 regop: TOK_STB TOK_SSPH .
+
+    $default  reduce using rule 300 (regop)
+
+
+state 173
+
+  282 regop: TOK_STB TOK_TMP1L .
+
+    $default  reduce using rule 282 (regop)
+
+
+state 174
+
+  297 regop: TOK_STB TOK_TMP1H .
+
+    $default  reduce using rule 297 (regop)
+
+
+state 175
+
+  283 regop: TOK_STB TOK_TMP2L .
+
+    $default  reduce using rule 283 (regop)
+
+
+state 176
+
+  298 regop: TOK_STB TOK_TMP2H .
+
+    $default  reduce using rule 298 (regop)
+
+
+state 177
+
+  281 regop: TOK_STB TOK_VBRL .
+
+    $default  reduce using rule 281 (regop)
+
+
+state 178
+
+  296 regop: TOK_STB TOK_VBRH .
+
+    $default  reduce using rule 296 (regop)
+
+
+state 179
+
+  174 memop: TOK_STB '(' . TOK_EA1 ')'
+  175      | TOK_STB '(' . TOK_EA1 ')' '+'
+  190      | TOK_STB '(' . TOK_EA2 ')'
+  191      | TOK_STB '(' . TOK_EA2 ')' '+'
+
+    TOK_EA1  shift, and go to state 356
+    TOK_EA2  shift, and go to state 357
+
+
+state 180
+
+  177 memop: TOK_STB '+' . '(' TOK_EA1 ')'
+  193      | TOK_STB '+' . '(' TOK_EA2 ')'
+
+    '('  shift, and go to state 358
+
+
+state 181
+
+  176 memop: TOK_STB '-' . '(' TOK_EA1 ')'
+  192      | TOK_STB '-' . '(' TOK_EA2 ')'
+
+    '('  shift, and go to state 359
+
+
+state 182
+
+  437 regop: TOK_WRB TOK_SR .
+
+    $default  reduce using rule 437 (regop)
+
+
+state 183
+
+  334 regop: TOK_WRB TOK_RAL . '[' TOK_EA1 ']'
+  337      | TOK_WRB TOK_RAL . '[' TOK_EA2 ']'
+  341      | TOK_WRB TOK_RAL . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 360
+
+
+state 184
+
+  333 regop: TOK_WRB TOK_RDL . '[' TOK_EA1 ']'
+  336      | TOK_WRB TOK_RDL . '[' TOK_EA2 ']'
+  340      | TOK_WRB TOK_RDL . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 361
+
+
+state 185
+
+  349 regop: TOK_WRB TOK_RAH . '[' TOK_EA1 ']'
+  352      | TOK_WRB TOK_RAH . '[' TOK_EA2 ']'
+  356      | TOK_WRB TOK_RAH . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 362
+
+
+state 186
+
+  348 regop: TOK_WRB TOK_RDH . '[' TOK_EA1 ']'
+  351      | TOK_WRB TOK_RDH . '[' TOK_EA2 ']'
+  355      | TOK_WRB TOK_RDH . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 363
+
+
+state 187
+
+  335 regop: TOK_WRB TOK_RL . '[' TOK_EA1 ']'
+  338      | TOK_WRB TOK_RL . '[' TOK_EA2 ']'
+  339      | TOK_WRB TOK_RL . '[' TOK_CNT ']'
+  342      | TOK_WRB TOK_RL . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 364
+
+
+state 188
+
+  350 regop: TOK_WRB TOK_RH . '[' TOK_EA1 ']'
+  353      | TOK_WRB TOK_RH . '[' TOK_EA2 ']'
+  354      | TOK_WRB TOK_RH . '[' TOK_CNT ']'
+  357      | TOK_WRB TOK_RH . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 365
+
+
+state 189
+
+  346 regop: TOK_WRB TOK_USPL .
+
+    $default  reduce using rule 346 (regop)
+
+
+state 190
+
+  361 regop: TOK_WRB TOK_USPH .
+
+    $default  reduce using rule 361 (regop)
+
+
+state 191
+
+  347 regop: TOK_WRB TOK_SSPL .
+
+    $default  reduce using rule 347 (regop)
+
+
+state 192
+
+  362 regop: TOK_WRB TOK_SSPH .
+
+    $default  reduce using rule 362 (regop)
+
+
+state 193
+
+  344 regop: TOK_WRB TOK_TMP1L .
+
+    $default  reduce using rule 344 (regop)
+
+
+state 194
+
+  359 regop: TOK_WRB TOK_TMP1H .
+
+    $default  reduce using rule 359 (regop)
+
+
+state 195
+
+  345 regop: TOK_WRB TOK_TMP2L .
+
+    $default  reduce using rule 345 (regop)
+
+
+state 196
+
+  360 regop: TOK_WRB TOK_TMP2H .
+
+    $default  reduce using rule 360 (regop)
+
+
+state 197
+
+  343 regop: TOK_WRB TOK_VBRL .
+
+    $default  reduce using rule 343 (regop)
+
+
+state 198
+
+  358 regop: TOK_WRB TOK_VBRH .
+
+    $default  reduce using rule 358 (regop)
+
+
+state 199
+
+  204 memop: TOK_FTW '(' . TOK_PC ')' '+'
+
+    TOK_PC  shift, and go to state 366
+
+
+state 200
+
+  395 regop: TOK_LDW TOK_EA1L .
+
+    $default  reduce using rule 395 (regop)
+
+
+state 201
+
+  396 regop: TOK_LDW TOK_EA1H .
+
+    $default  reduce using rule 396 (regop)
+
+
+state 202
+
+  397 regop: TOK_LDW TOK_EA2L .
+
+    $default  reduce using rule 397 (regop)
+
+
+state 203
+
+  398 regop: TOK_LDW TOK_EA2H .
+
+    $default  reduce using rule 398 (regop)
+
+
+state 204
+
+  399 regop: TOK_LDW TOK_PCL .
+
+    $default  reduce using rule 399 (regop)
+
+
+state 205
+
+  400 regop: TOK_LDW TOK_PCH .
+
+    $default  reduce using rule 400 (regop)
+
+
+state 206
+
+  401 regop: TOK_LDW TOK_VECL .
+
+    $default  reduce using rule 401 (regop)
+
+
+state 207
+
+  402 regop: TOK_LDW TOK_CPUS .
+
+    $default  reduce using rule 402 (regop)
+
+
+state 208
+
+  404 regop: TOK_LDW TOK_LSHR .
+
+    $default  reduce using rule 404 (regop)
+
+
+state 209
+
+  405 regop: TOK_LDW TOK_ACCL .
+
+    $default  reduce using rule 405 (regop)
+
+
+state 210
+
+  406 regop: TOK_LDW TOK_ACCH .
+
+    $default  reduce using rule 406 (regop)
+
+
+state 211
+
+  403 regop: TOK_LDW TOK_IMMR .
+
+    $default  reduce using rule 403 (regop)
+
+
+state 212
+
+  407 regop: TOK_LDW TOK_DECJ .
+
+    $default  reduce using rule 407 (regop)
+
+
+state 213
+
+  408 regop: TOK_LDW TOK_EA1J .
+
+    $default  reduce using rule 408 (regop)
+
+
+state 214
+
+  409 regop: TOK_LDW TOK_EA2J .
+
+    $default  reduce using rule 409 (regop)
+
+
+state 215
+
+  410 regop: TOK_LDW TOK_SR .
+
+    $default  reduce using rule 410 (regop)
+
+
+state 216
+
+  240 regop: TOK_LDW TOK_RAL . '[' TOK_EA1 ']'
+  244      | TOK_LDW TOK_RAL . '[' TOK_EA2 ']'
+  248      | TOK_LDW TOK_RAL . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 367
+
+
+state 217
+
+  239 regop: TOK_LDW TOK_RDL . '[' TOK_EA1 ']'
+  243      | TOK_LDW TOK_RDL . '[' TOK_EA2 ']'
+  247      | TOK_LDW TOK_RDL . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 368
+
+
+state 218
+
+  256 regop: TOK_LDW TOK_RAH . '[' TOK_EA1 ']'
+  260      | TOK_LDW TOK_RAH . '[' TOK_EA2 ']'
+  264      | TOK_LDW TOK_RAH . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 369
+
+
+state 219
+
+  255 regop: TOK_LDW TOK_RDH . '[' TOK_EA1 ']'
+  259      | TOK_LDW TOK_RDH . '[' TOK_EA2 ']'
+  263      | TOK_LDW TOK_RDH . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 370
+
+
+state 220
+
+  241 regop: TOK_LDW TOK_RL . '[' TOK_EA1 ']'
+  245      | TOK_LDW TOK_RL . '[' TOK_EA2 ']'
+  246      | TOK_LDW TOK_RL . '[' TOK_CNT ']'
+  249      | TOK_LDW TOK_RL . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 371
+
+
+state 221
+
+  257 regop: TOK_LDW TOK_RH . '[' TOK_EA1 ']'
+  261      | TOK_LDW TOK_RH . '[' TOK_EA2 ']'
+  262      | TOK_LDW TOK_RH . '[' TOK_CNT ']'
+  265      | TOK_LDW TOK_RH . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 372
+
+
+state 222
+
+  242 regop: TOK_LDW TOK_A7L .
+
+    $default  reduce using rule 242 (regop)
+
+
+state 223
+
+  258 regop: TOK_LDW TOK_A7H .
+
+    $default  reduce using rule 258 (regop)
+
+
+state 224
+
+  253 regop: TOK_LDW TOK_USPL .
+
+    $default  reduce using rule 253 (regop)
+
+
+state 225
+
+  269 regop: TOK_LDW TOK_USPH .
+
+    $default  reduce using rule 269 (regop)
+
+
+state 226
+
+  254 regop: TOK_LDW TOK_SSPL .
+
+    $default  reduce using rule 254 (regop)
+
+
+state 227
+
+  270 regop: TOK_LDW TOK_SSPH .
+
+    $default  reduce using rule 270 (regop)
+
+
+state 228
+
+  251 regop: TOK_LDW TOK_TMP1L .
+
+    $default  reduce using rule 251 (regop)
+
+
+state 229
+
+  267 regop: TOK_LDW TOK_TMP1H .
+
+    $default  reduce using rule 267 (regop)
+
+
+state 230
+
+  252 regop: TOK_LDW TOK_TMP2L .
+
+    $default  reduce using rule 252 (regop)
+
+
+state 231
+
+  268 regop: TOK_LDW TOK_TMP2H .
+
+    $default  reduce using rule 268 (regop)
+
+
+state 232
+
+  250 regop: TOK_LDW TOK_VBRL .
+
+    $default  reduce using rule 250 (regop)
+
+
+state 233
+
+  266 regop: TOK_LDW TOK_VBRH .
+
+    $default  reduce using rule 266 (regop)
+
+
+state 234
+
+  154 memop: TOK_LDW '(' . TOK_EA1 ')'
+  155      | TOK_LDW '(' . TOK_EA1 ')' '+'
+  170      | TOK_LDW '(' . TOK_EA2 ')'
+  171      | TOK_LDW '(' . TOK_EA2 ')' '+'
+  198      | TOK_LDW '(' . TOK_VEC ')' '+'
+  201      | TOK_LDW '(' . TOK_PC ')' '+'
+
+    TOK_PC   shift, and go to state 373
+    TOK_VEC  shift, and go to state 374
+    TOK_EA1  shift, and go to state 375
+    TOK_EA2  shift, and go to state 376
+
+
+state 235
+
+  157 memop: TOK_LDW '+' . '(' TOK_EA1 ')'
+  173      | TOK_LDW '+' . '(' TOK_EA2 ')'
+
+    '('  shift, and go to state 377
+
+
+state 236
+
+  156 memop: TOK_LDW '-' . '(' TOK_EA1 ')'
+  172      | TOK_LDW '-' . '(' TOK_EA2 ')'
+
+    '('  shift, and go to state 378
+
+
+state 237
+
+  412 regop: TOK_STW TOK_EA1L .
+
+    $default  reduce using rule 412 (regop)
+
+
+state 238
+
+  413 regop: TOK_STW TOK_EA1H .
+
+    $default  reduce using rule 413 (regop)
+
+
+state 239
+
+  414 regop: TOK_STW TOK_EA2L .
+
+    $default  reduce using rule 414 (regop)
+
+
+state 240
+
+  415 regop: TOK_STW TOK_EA2H .
+
+    $default  reduce using rule 415 (regop)
+
+
+state 241
+
+  416 regop: TOK_STW TOK_PCL .
+
+    $default  reduce using rule 416 (regop)
+
+
+state 242
+
+  417 regop: TOK_STW TOK_PCH .
+
+    $default  reduce using rule 417 (regop)
+
+
+state 243
+
+  418 regop: TOK_STW TOK_VECL .
+
+    $default  reduce using rule 418 (regop)
+
+
+state 244
+
+  419 regop: TOK_STW TOK_VECH .
+
+    $default  reduce using rule 419 (regop)
+
+
+state 245
+
+  420 regop: TOK_STW TOK_LSHR .
+
+    $default  reduce using rule 420 (regop)
+
+
+state 246
+
+  421 regop: TOK_STW TOK_ACCL .
+
+    $default  reduce using rule 421 (regop)
+
+
+state 247
+
+  422 regop: TOK_STW TOK_ACCH .
+
+    $default  reduce using rule 422 (regop)
+
+
+state 248
+
+  423 regop: TOK_STW TOK_SR .
+
+    $default  reduce using rule 423 (regop)
+
+
+state 249
+
+  302 regop: TOK_STW TOK_RAL . '[' TOK_EA1 ']'
+  306      | TOK_STW TOK_RAL . '[' TOK_EA2 ']'
+  310      | TOK_STW TOK_RAL . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 379
+
+
+state 250
+
+  301 regop: TOK_STW TOK_RDL . '[' TOK_EA1 ']'
+  305      | TOK_STW TOK_RDL . '[' TOK_EA2 ']'
+  309      | TOK_STW TOK_RDL . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 380
+
+
+state 251
+
+  318 regop: TOK_STW TOK_RAH . '[' TOK_EA1 ']'
+  322      | TOK_STW TOK_RAH . '[' TOK_EA2 ']'
+  326      | TOK_STW TOK_RAH . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 381
+
+
+state 252
+
+  317 regop: TOK_STW TOK_RDH . '[' TOK_EA1 ']'
+  321      | TOK_STW TOK_RDH . '[' TOK_EA2 ']'
+  325      | TOK_STW TOK_RDH . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 382
+
+
+state 253
+
+  303 regop: TOK_STW TOK_RL . '[' TOK_EA1 ']'
+  307      | TOK_STW TOK_RL . '[' TOK_EA2 ']'
+  308      | TOK_STW TOK_RL . '[' TOK_CNT ']'
+  311      | TOK_STW TOK_RL . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 383
+
+
+state 254
+
+  319 regop: TOK_STW TOK_RH . '[' TOK_EA1 ']'
+  323      | TOK_STW TOK_RH . '[' TOK_EA2 ']'
+  324      | TOK_STW TOK_RH . '[' TOK_CNT ']'
+  327      | TOK_STW TOK_RH . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 384
+
+
+state 255
+
+  304 regop: TOK_STW TOK_A7L .
+
+    $default  reduce using rule 304 (regop)
+
+
+state 256
+
+  320 regop: TOK_STW TOK_A7H .
+
+    $default  reduce using rule 320 (regop)
+
+
+state 257
+
+  315 regop: TOK_STW TOK_USPL .
+
+    $default  reduce using rule 315 (regop)
+
+
+state 258
+
+  331 regop: TOK_STW TOK_USPH .
+
+    $default  reduce using rule 331 (regop)
+
+
+state 259
+
+  316 regop: TOK_STW TOK_SSPL .
+
+    $default  reduce using rule 316 (regop)
+
+
+state 260
+
+  332 regop: TOK_STW TOK_SSPH .
+
+    $default  reduce using rule 332 (regop)
+
+
+state 261
+
+  313 regop: TOK_STW TOK_TMP1L .
+
+    $default  reduce using rule 313 (regop)
+
+
+state 262
+
+  329 regop: TOK_STW TOK_TMP1H .
+
+    $default  reduce using rule 329 (regop)
+
+
+state 263
+
+  314 regop: TOK_STW TOK_TMP2L .
+
+    $default  reduce using rule 314 (regop)
+
+
+state 264
+
+  330 regop: TOK_STW TOK_TMP2H .
+
+    $default  reduce using rule 330 (regop)
+
+
+state 265
+
+  312 regop: TOK_STW TOK_VBRL .
+
+    $default  reduce using rule 312 (regop)
+
+
+state 266
+
+  328 regop: TOK_STW TOK_VBRH .
+
+    $default  reduce using rule 328 (regop)
+
+
+state 267
+
+  178 memop: TOK_STW '(' . TOK_EA1 ')'
+  179      | TOK_STW '(' . TOK_EA1 ')' '+'
+  194      | TOK_STW '(' . TOK_EA2 ')'
+  195      | TOK_STW '(' . TOK_EA2 ')' '+'
+
+    TOK_EA1  shift, and go to state 385
+    TOK_EA2  shift, and go to state 386
+
+
+state 268
+
+  181 memop: TOK_STW '+' . '(' TOK_EA1 ')'
+  197      | TOK_STW '+' . '(' TOK_EA2 ')'
+
+    '('  shift, and go to state 387
+
+
+state 269
+
+  180 memop: TOK_STW '-' . '(' TOK_EA1 ')'
+  196      | TOK_STW '-' . '(' TOK_EA2 ')'
+
+    '('  shift, and go to state 388
+
+
+state 270
+
+  425 regop: TOK_WRW TOK_EA1L .
+
+    $default  reduce using rule 425 (regop)
+
+
+state 271
+
+  426 regop: TOK_WRW TOK_EA1H .
+
+    $default  reduce using rule 426 (regop)
+
+
+state 272
+
+  427 regop: TOK_WRW TOK_EA2L .
+
+    $default  reduce using rule 427 (regop)
+
+
+state 273
+
+  428 regop: TOK_WRW TOK_EA2H .
+
+    $default  reduce using rule 428 (regop)
+
+
+state 274
+
+  429 regop: TOK_WRW TOK_PCL .
+
+    $default  reduce using rule 429 (regop)
+
+
+state 275
+
+  430 regop: TOK_WRW TOK_PCH .
+
+    $default  reduce using rule 430 (regop)
+
+
+state 276
+
+  431 regop: TOK_WRW TOK_VECL .
+
+    $default  reduce using rule 431 (regop)
+
+
+state 277
+
+  432 regop: TOK_WRW TOK_VECH .
+
+    $default  reduce using rule 432 (regop)
+
+
+state 278
+
+  433 regop: TOK_WRW TOK_LSHR .
+
+    $default  reduce using rule 433 (regop)
+
+
+state 279
+
+  434 regop: TOK_WRW TOK_ACCL .
+
+    $default  reduce using rule 434 (regop)
+
+
+state 280
+
+  435 regop: TOK_WRW TOK_ACCH .
+
+    $default  reduce using rule 435 (regop)
+
+
+state 281
+
+  436 regop: TOK_WRW TOK_SR .
+
+    $default  reduce using rule 436 (regop)
+
+
+state 282
+
+  364 regop: TOK_WRW TOK_RAL . '[' TOK_EA1 ']'
+  368      | TOK_WRW TOK_RAL . '[' TOK_EA2 ']'
+  372      | TOK_WRW TOK_RAL . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 389
+
+
+state 283
+
+  363 regop: TOK_WRW TOK_RDL . '[' TOK_EA1 ']'
+  367      | TOK_WRW TOK_RDL . '[' TOK_EA2 ']'
+  371      | TOK_WRW TOK_RDL . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 390
+
+
+state 284
+
+  380 regop: TOK_WRW TOK_RAH . '[' TOK_EA1 ']'
+  384      | TOK_WRW TOK_RAH . '[' TOK_EA2 ']'
+  388      | TOK_WRW TOK_RAH . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 391
+
+
+state 285
+
+  379 regop: TOK_WRW TOK_RDH . '[' TOK_EA1 ']'
+  383      | TOK_WRW TOK_RDH . '[' TOK_EA2 ']'
+  387      | TOK_WRW TOK_RDH . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 392
+
+
+state 286
+
+  365 regop: TOK_WRW TOK_RL . '[' TOK_EA1 ']'
+  369      | TOK_WRW TOK_RL . '[' TOK_EA2 ']'
+  370      | TOK_WRW TOK_RL . '[' TOK_CNT ']'
+  373      | TOK_WRW TOK_RL . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 393
+
+
+state 287
+
+  381 regop: TOK_WRW TOK_RH . '[' TOK_EA1 ']'
+  385      | TOK_WRW TOK_RH . '[' TOK_EA2 ']'
+  386      | TOK_WRW TOK_RH . '[' TOK_CNT ']'
+  389      | TOK_WRW TOK_RH . '[' TOK_EXT ']'
+
+    '['  shift, and go to state 394
+
+
+state 288
+
+  366 regop: TOK_WRW TOK_A7L .
+
+    $default  reduce using rule 366 (regop)
+
+
+state 289
+
+  382 regop: TOK_WRW TOK_A7H .
+
+    $default  reduce using rule 382 (regop)
+
+
+state 290
+
+  377 regop: TOK_WRW TOK_USPL .
+
+    $default  reduce using rule 377 (regop)
+
+
+state 291
+
+  393 regop: TOK_WRW TOK_USPH .
+
+    $default  reduce using rule 393 (regop)
+
+
+state 292
+
+  378 regop: TOK_WRW TOK_SSPL .
+
+    $default  reduce using rule 378 (regop)
+
+
+state 293
+
+  394 regop: TOK_WRW TOK_SSPH .
+
+    $default  reduce using rule 394 (regop)
+
+
+state 294
+
+  375 regop: TOK_WRW TOK_TMP1L .
+
+    $default  reduce using rule 375 (regop)
+
+
+state 295
+
+  391 regop: TOK_WRW TOK_TMP1H .
+
+    $default  reduce using rule 391 (regop)
+
+
+state 296
+
+  376 regop: TOK_WRW TOK_TMP2L .
+
+    $default  reduce using rule 376 (regop)
+
+
+state 297
+
+  392 regop: TOK_WRW TOK_TMP2H .
+
+    $default  reduce using rule 392 (regop)
+
+
+state 298
+
+  374 regop: TOK_WRW TOK_VBRL .
+
+    $default  reduce using rule 374 (regop)
+
+
+state 299
+
+  390 regop: TOK_WRW TOK_VBRH .
+
+    $default  reduce using rule 390 (regop)
+
+
+state 300
+
+  199 memop: TOK_LDI '(' . TOK_PC ')' '+'
+
+    TOK_PC  shift, and go to state 395
+
+
+state 301
+
+  202 memop: TOK_FTI '(' . TOK_PC ')' '+'
+
+    TOK_PC  shift, and go to state 396
+
+
+state 302
+
+  200 memop: TOK_LDE '(' . TOK_PC ')' '+'
+
+    TOK_PC  shift, and go to state 397
+
+
+state 303
+
+  203 memop: TOK_FTE '(' . TOK_PC ')' '+'
+
+    TOK_PC  shift, and go to state 398
+
+
+state 304
+
+  162 memop: TOK_LDL '(' . TOK_EA1 ')'
+  163      | TOK_LDL '(' . TOK_EA1 ')' '+'
+
+    TOK_EA1  shift, and go to state 399
+
+
+state 305
+
+  165 memop: TOK_LDL '+' . '(' TOK_EA1 ')'
+
+    '('  shift, and go to state 400
+
+
+state 306
+
+  164 memop: TOK_LDL '-' . '(' TOK_EA1 ')'
+
+    '('  shift, and go to state 401
+
+
+state 307
+
+  186 memop: TOK_STL '(' . TOK_EA1 ')'
+  187      | TOK_STL '(' . TOK_EA1 ')' '+'
+
+    TOK_EA1  shift, and go to state 402
+
+
+state 308
+
+  189 memop: TOK_STL '+' . '(' TOK_EA1 ')'
+
+    '('  shift, and go to state 403
+
+
+state 309
+
+  188 memop: TOK_STL '-' . '(' TOK_EA1 ')'
+
+    '('  shift, and go to state 404
+
+
+state 310
+
+  158 memop: TOK_LDH '(' . TOK_EA1 ')'
+  159      | TOK_LDH '(' . TOK_EA1 ')' '+'
+
+    TOK_EA1  shift, and go to state 405
+
+
+state 311
+
+  161 memop: TOK_LDH '+' . '(' TOK_EA1 ')'
+
+    '('  shift, and go to state 406
+
+
+state 312
+
+  160 memop: TOK_LDH '-' . '(' TOK_EA1 ')'
+
+    '('  shift, and go to state 407
+
+
+state 313
+
+  182 memop: TOK_STH '(' . TOK_EA1 ')'
+  183      | TOK_STH '(' . TOK_EA1 ')' '+'
+
+    TOK_EA1  shift, and go to state 408
+
+
+state 314
+
+  185 memop: TOK_STH '+' . '(' TOK_EA1 ')'
+
+    '('  shift, and go to state 409
+
+
+state 315
+
+  184 memop: TOK_STH '-' . '(' TOK_EA1 ')'
+
+    '('  shift, and go to state 410
+
+
+state 316
+
+   15 label: TOK_IDENT ':' .
+
+    $default  reduce using rule 15 (label)
+
+
+state 317
+
+   17 org: TOK_ORG TOK_NUMBER .
+
+    $default  reduce using rule 17 (org)
+
+
+state 318
+
+   16 table: TOK_TABLE TOK_IDENT . ',' TOK_IDENT ',' TOK_IDENT ',' TOK_NUMBER
+
+    ','  shift, and go to state 411
+
+
+state 319
+
+    4 line: expr '\n' .
+
+    $default  reduce using rule 4 (line)
+
+
+state 320
+
+   48 lit: litop TOK_RTS .
+
+    $default  reduce using rule 48 (lit)
+
+
+state 321
+
+   52 flg: flgop TOK_RTS .
+
+    $default  reduce using rule 52 (flg)
+
+
+state 322
+
+   73 alu: aluop TOK_RTS .
+
+    $default  reduce using rule 73 (alu)
+
+
+state 323
+
+   72 alu: aluop '.' . TOK_RTS
+   74    | aluop '.' .
+
+    TOK_RTS  shift, and go to state 412
+
+    $default  reduce using rule 74 (alu)
+
+
+state 324
+
+  147 mem: memop TOK_RTS .
+
+    $default  reduce using rule 147 (mem)
+
+
+state 325
+
+  146 mem: memop '.' . TOK_RTS
+  148    | memop '.' .
+
+    TOK_RTS  shift, and go to state 413
+
+    $default  reduce using rule 148 (mem)
+
+
+state 326
+
+  206 reg: regop TOK_RTS .
+
+    $default  reduce using rule 206 (reg)
+
+
+state 327
+
+  205 reg: regop '.' . TOK_RTS
+  207    | regop '.' .
+
+    TOK_RTS  shift, and go to state 414
+
+    $default  reduce using rule 207 (reg)
+
+
+state 328
+
+   18 jump: TOK_JUMPN cond ',' . TOK_IDENT
+   19     | TOK_JUMPN cond ',' . TOK_NUMBER
+
+    TOK_NUMBER  shift, and go to state 415
+    TOK_IDENT   shift, and go to state 416
+
+
+state 329
+
+   31 jump: TOK_JUMP TOK_NUMBER '(' . TOK_RT ')'
+
+    TOK_RT  shift, and go to state 417
+
+
+state 330
+
+   30 jump: TOK_JUMP TOK_IDENT '(' . TOK_RT ')'
+
+    TOK_RT  shift, and go to state 418
+
+
+state 331
+
+   20 jump: TOK_JUMP cond ',' . TOK_IDENT
+   21     | TOK_JUMP cond ',' . TOK_NUMBER
+
+    TOK_NUMBER  shift, and go to state 419
+    TOK_IDENT   shift, and go to state 420
+
+
+state 332
+
+   22 jump: TOK_CALLN cond ',' . TOK_IDENT
+   23     | TOK_CALLN cond ',' . TOK_NUMBER
+
+    TOK_NUMBER  shift, and go to state 421
+    TOK_IDENT   shift, and go to state 422
+
+
+state 333
+
+   33 jump: TOK_CALL TOK_NUMBER '(' . TOK_RT ')'
+
+    TOK_RT  shift, and go to state 423
+
+
+state 334
+
+   32 jump: TOK_CALL TOK_IDENT '(' . TOK_RT ')'
+
+    TOK_RT  shift, and go to state 424
+
+
+state 335
+
+   24 jump: TOK_CALL cond ',' . TOK_IDENT
+   25     | TOK_CALL cond ',' . TOK_NUMBER
+
+    TOK_NUMBER  shift, and go to state 425
+    TOK_IDENT   shift, and go to state 426
+
+
+state 336
+
+   50 litop: TOK_LIT '#' TOK_NUMBER .
+
+    $default  reduce using rule 50 (litop)
+
+
+state 337
+
+   51 litop: TOK_LIT '#' TOK_IDENT .
+
+    $default  reduce using rule 51 (litop)
+
+
+state 338
+
+   56 cin: ',' . TOK_CIN '=' TOK_CLR
+   57    | ',' . TOK_CIN '=' TOK_C_ADD
+   58    | ',' . TOK_CIN '=' TOK_C_FLG
+   59    | ',' . TOK_CIN '=' TOK_X_SR
+   60    | ',' . TOK_CIN '=' TOK_N_B
+   61    | ',' . TOK_CIN '=' TOK_N_W
+   62    | ',' . TOK_CIN '=' TOK_N_SR
+   63    | ',' . TOK_CIN '=' TOK_T0
+   64    | ',' . TOK_CIN '=' TOK_T7
+   65    | ',' . TOK_CIN '=' TOK_T15
+   66    | ',' . TOK_CIN '=' TOK_N0
+   67    | ',' . TOK_CIN '=' TOK_N7
+   68    | ',' . TOK_CIN '=' TOK_N15
+
+    TOK_CIN  shift, and go to state 427
+
+
+state 339
+
+   54 flgop: TOK_FLAG TOK_MASK cin .
+
+    $default  reduce using rule 54 (flgop)
+
+
+state 340
+
+  210 regop: TOK_LDB TOK_RAL '[' . TOK_EA1 ']'
+  213      | TOK_LDB TOK_RAL '[' . TOK_EA2 ']'
+  217      | TOK_LDB TOK_RAL '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 428
+    TOK_EA2  shift, and go to state 429
+    TOK_EXT  shift, and go to state 430
+
+
+state 341
+
+  209 regop: TOK_LDB TOK_RDL '[' . TOK_EA1 ']'
+  212      | TOK_LDB TOK_RDL '[' . TOK_EA2 ']'
+  216      | TOK_LDB TOK_RDL '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 431
+    TOK_EA2  shift, and go to state 432
+    TOK_EXT  shift, and go to state 433
+
+
+state 342
+
+  225 regop: TOK_LDB TOK_RAH '[' . TOK_EA1 ']'
+  228      | TOK_LDB TOK_RAH '[' . TOK_EA2 ']'
+  232      | TOK_LDB TOK_RAH '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 434
+    TOK_EA2  shift, and go to state 435
+    TOK_EXT  shift, and go to state 436
+
+
+state 343
+
+  224 regop: TOK_LDB TOK_RDH '[' . TOK_EA1 ']'
+  227      | TOK_LDB TOK_RDH '[' . TOK_EA2 ']'
+  231      | TOK_LDB TOK_RDH '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 437
+    TOK_EA2  shift, and go to state 438
+    TOK_EXT  shift, and go to state 439
+
+
+state 344
+
+  211 regop: TOK_LDB TOK_RL '[' . TOK_EA1 ']'
+  214      | TOK_LDB TOK_RL '[' . TOK_EA2 ']'
+  215      | TOK_LDB TOK_RL '[' . TOK_CNT ']'
+  218      | TOK_LDB TOK_RL '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 440
+    TOK_EA2  shift, and go to state 441
+    TOK_CNT  shift, and go to state 442
+    TOK_EXT  shift, and go to state 443
+
+
+state 345
+
+  226 regop: TOK_LDB TOK_RH '[' . TOK_EA1 ']'
+  229      | TOK_LDB TOK_RH '[' . TOK_EA2 ']'
+  230      | TOK_LDB TOK_RH '[' . TOK_CNT ']'
+  233      | TOK_LDB TOK_RH '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 444
+    TOK_EA2  shift, and go to state 445
+    TOK_CNT  shift, and go to state 446
+    TOK_EXT  shift, and go to state 447
+
+
+state 346
+
+  150 memop: TOK_LDB '(' TOK_EA1 . ')'
+  151      | TOK_LDB '(' TOK_EA1 . ')' '+'
+
+    ')'  shift, and go to state 448
+
+
+state 347
+
+  166 memop: TOK_LDB '(' TOK_EA2 . ')'
+  167      | TOK_LDB '(' TOK_EA2 . ')' '+'
+
+    ')'  shift, and go to state 449
+
+
+state 348
+
+  153 memop: TOK_LDB '+' '(' . TOK_EA1 ')'
+  169      | TOK_LDB '+' '(' . TOK_EA2 ')'
+
+    TOK_EA1  shift, and go to state 450
+    TOK_EA2  shift, and go to state 451
+
+
+state 349
+
+  152 memop: TOK_LDB '-' '(' . TOK_EA1 ')'
+  168      | TOK_LDB '-' '(' . TOK_EA2 ')'
+
+    TOK_EA1  shift, and go to state 452
+    TOK_EA2  shift, and go to state 453
+
+
+state 350
+
+  272 regop: TOK_STB TOK_RAL '[' . TOK_EA1 ']'
+  275      | TOK_STB TOK_RAL '[' . TOK_EA2 ']'
+  279      | TOK_STB TOK_RAL '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 454
+    TOK_EA2  shift, and go to state 455
+    TOK_EXT  shift, and go to state 456
+
+
+state 351
+
+  271 regop: TOK_STB TOK_RDL '[' . TOK_EA1 ']'
+  274      | TOK_STB TOK_RDL '[' . TOK_EA2 ']'
+  278      | TOK_STB TOK_RDL '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 457
+    TOK_EA2  shift, and go to state 458
+    TOK_EXT  shift, and go to state 459
+
+
+state 352
+
+  287 regop: TOK_STB TOK_RAH '[' . TOK_EA1 ']'
+  290      | TOK_STB TOK_RAH '[' . TOK_EA2 ']'
+  294      | TOK_STB TOK_RAH '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 460
+    TOK_EA2  shift, and go to state 461
+    TOK_EXT  shift, and go to state 462
+
+
+state 353
+
+  286 regop: TOK_STB TOK_RDH '[' . TOK_EA1 ']'
+  289      | TOK_STB TOK_RDH '[' . TOK_EA2 ']'
+  293      | TOK_STB TOK_RDH '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 463
+    TOK_EA2  shift, and go to state 464
+    TOK_EXT  shift, and go to state 465
+
+
+state 354
+
+  273 regop: TOK_STB TOK_RL '[' . TOK_EA1 ']'
+  276      | TOK_STB TOK_RL '[' . TOK_EA2 ']'
+  277      | TOK_STB TOK_RL '[' . TOK_CNT ']'
+  280      | TOK_STB TOK_RL '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 466
+    TOK_EA2  shift, and go to state 467
+    TOK_CNT  shift, and go to state 468
+    TOK_EXT  shift, and go to state 469
+
+
+state 355
+
+  288 regop: TOK_STB TOK_RH '[' . TOK_EA1 ']'
+  291      | TOK_STB TOK_RH '[' . TOK_EA2 ']'
+  292      | TOK_STB TOK_RH '[' . TOK_CNT ']'
+  295      | TOK_STB TOK_RH '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 470
+    TOK_EA2  shift, and go to state 471
+    TOK_CNT  shift, and go to state 472
+    TOK_EXT  shift, and go to state 473
+
+
+state 356
+
+  174 memop: TOK_STB '(' TOK_EA1 . ')'
+  175      | TOK_STB '(' TOK_EA1 . ')' '+'
+
+    ')'  shift, and go to state 474
+
+
+state 357
+
+  190 memop: TOK_STB '(' TOK_EA2 . ')'
+  191      | TOK_STB '(' TOK_EA2 . ')' '+'
+
+    ')'  shift, and go to state 475
+
+
+state 358
+
+  177 memop: TOK_STB '+' '(' . TOK_EA1 ')'
+  193      | TOK_STB '+' '(' . TOK_EA2 ')'
+
+    TOK_EA1  shift, and go to state 476
+    TOK_EA2  shift, and go to state 477
+
+
+state 359
+
+  176 memop: TOK_STB '-' '(' . TOK_EA1 ')'
+  192      | TOK_STB '-' '(' . TOK_EA2 ')'
+
+    TOK_EA1  shift, and go to state 478
+    TOK_EA2  shift, and go to state 479
+
+
+state 360
+
+  334 regop: TOK_WRB TOK_RAL '[' . TOK_EA1 ']'
+  337      | TOK_WRB TOK_RAL '[' . TOK_EA2 ']'
+  341      | TOK_WRB TOK_RAL '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 480
+    TOK_EA2  shift, and go to state 481
+    TOK_EXT  shift, and go to state 482
+
+
+state 361
+
+  333 regop: TOK_WRB TOK_RDL '[' . TOK_EA1 ']'
+  336      | TOK_WRB TOK_RDL '[' . TOK_EA2 ']'
+  340      | TOK_WRB TOK_RDL '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 483
+    TOK_EA2  shift, and go to state 484
+    TOK_EXT  shift, and go to state 485
+
+
+state 362
+
+  349 regop: TOK_WRB TOK_RAH '[' . TOK_EA1 ']'
+  352      | TOK_WRB TOK_RAH '[' . TOK_EA2 ']'
+  356      | TOK_WRB TOK_RAH '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 486
+    TOK_EA2  shift, and go to state 487
+    TOK_EXT  shift, and go to state 488
+
+
+state 363
+
+  348 regop: TOK_WRB TOK_RDH '[' . TOK_EA1 ']'
+  351      | TOK_WRB TOK_RDH '[' . TOK_EA2 ']'
+  355      | TOK_WRB TOK_RDH '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 489
+    TOK_EA2  shift, and go to state 490
+    TOK_EXT  shift, and go to state 491
+
+
+state 364
+
+  335 regop: TOK_WRB TOK_RL '[' . TOK_EA1 ']'
+  338      | TOK_WRB TOK_RL '[' . TOK_EA2 ']'
+  339      | TOK_WRB TOK_RL '[' . TOK_CNT ']'
+  342      | TOK_WRB TOK_RL '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 492
+    TOK_EA2  shift, and go to state 493
+    TOK_CNT  shift, and go to state 494
+    TOK_EXT  shift, and go to state 495
+
+
+state 365
+
+  350 regop: TOK_WRB TOK_RH '[' . TOK_EA1 ']'
+  353      | TOK_WRB TOK_RH '[' . TOK_EA2 ']'
+  354      | TOK_WRB TOK_RH '[' . TOK_CNT ']'
+  357      | TOK_WRB TOK_RH '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 496
+    TOK_EA2  shift, and go to state 497
+    TOK_CNT  shift, and go to state 498
+    TOK_EXT  shift, and go to state 499
+
+
+state 366
+
+  204 memop: TOK_FTW '(' TOK_PC . ')' '+'
+
+    ')'  shift, and go to state 500
+
+
+state 367
+
+  240 regop: TOK_LDW TOK_RAL '[' . TOK_EA1 ']'
+  244      | TOK_LDW TOK_RAL '[' . TOK_EA2 ']'
+  248      | TOK_LDW TOK_RAL '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 501
+    TOK_EA2  shift, and go to state 502
+    TOK_EXT  shift, and go to state 503
+
+
+state 368
+
+  239 regop: TOK_LDW TOK_RDL '[' . TOK_EA1 ']'
+  243      | TOK_LDW TOK_RDL '[' . TOK_EA2 ']'
+  247      | TOK_LDW TOK_RDL '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 504
+    TOK_EA2  shift, and go to state 505
+    TOK_EXT  shift, and go to state 506
+
+
+state 369
+
+  256 regop: TOK_LDW TOK_RAH '[' . TOK_EA1 ']'
+  260      | TOK_LDW TOK_RAH '[' . TOK_EA2 ']'
+  264      | TOK_LDW TOK_RAH '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 507
+    TOK_EA2  shift, and go to state 508
+    TOK_EXT  shift, and go to state 509
+
+
+state 370
+
+  255 regop: TOK_LDW TOK_RDH '[' . TOK_EA1 ']'
+  259      | TOK_LDW TOK_RDH '[' . TOK_EA2 ']'
+  263      | TOK_LDW TOK_RDH '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 510
+    TOK_EA2  shift, and go to state 511
+    TOK_EXT  shift, and go to state 512
+
+
+state 371
+
+  241 regop: TOK_LDW TOK_RL '[' . TOK_EA1 ']'
+  245      | TOK_LDW TOK_RL '[' . TOK_EA2 ']'
+  246      | TOK_LDW TOK_RL '[' . TOK_CNT ']'
+  249      | TOK_LDW TOK_RL '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 513
+    TOK_EA2  shift, and go to state 514
+    TOK_CNT  shift, and go to state 515
+    TOK_EXT  shift, and go to state 516
+
+
+state 372
+
+  257 regop: TOK_LDW TOK_RH '[' . TOK_EA1 ']'
+  261      | TOK_LDW TOK_RH '[' . TOK_EA2 ']'
+  262      | TOK_LDW TOK_RH '[' . TOK_CNT ']'
+  265      | TOK_LDW TOK_RH '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 517
+    TOK_EA2  shift, and go to state 518
+    TOK_CNT  shift, and go to state 519
+    TOK_EXT  shift, and go to state 520
+
+
+state 373
+
+  201 memop: TOK_LDW '(' TOK_PC . ')' '+'
+
+    ')'  shift, and go to state 521
+
+
+state 374
+
+  198 memop: TOK_LDW '(' TOK_VEC . ')' '+'
+
+    ')'  shift, and go to state 522
+
+
+state 375
+
+  154 memop: TOK_LDW '(' TOK_EA1 . ')'
+  155      | TOK_LDW '(' TOK_EA1 . ')' '+'
+
+    ')'  shift, and go to state 523
+
+
+state 376
+
+  170 memop: TOK_LDW '(' TOK_EA2 . ')'
+  171      | TOK_LDW '(' TOK_EA2 . ')' '+'
+
+    ')'  shift, and go to state 524
+
+
+state 377
+
+  157 memop: TOK_LDW '+' '(' . TOK_EA1 ')'
+  173      | TOK_LDW '+' '(' . TOK_EA2 ')'
+
+    TOK_EA1  shift, and go to state 525
+    TOK_EA2  shift, and go to state 526
+
+
+state 378
+
+  156 memop: TOK_LDW '-' '(' . TOK_EA1 ')'
+  172      | TOK_LDW '-' '(' . TOK_EA2 ')'
+
+    TOK_EA1  shift, and go to state 527
+    TOK_EA2  shift, and go to state 528
+
+
+state 379
+
+  302 regop: TOK_STW TOK_RAL '[' . TOK_EA1 ']'
+  306      | TOK_STW TOK_RAL '[' . TOK_EA2 ']'
+  310      | TOK_STW TOK_RAL '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 529
+    TOK_EA2  shift, and go to state 530
+    TOK_EXT  shift, and go to state 531
+
+
+state 380
+
+  301 regop: TOK_STW TOK_RDL '[' . TOK_EA1 ']'
+  305      | TOK_STW TOK_RDL '[' . TOK_EA2 ']'
+  309      | TOK_STW TOK_RDL '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 532
+    TOK_EA2  shift, and go to state 533
+    TOK_EXT  shift, and go to state 534
+
+
+state 381
+
+  318 regop: TOK_STW TOK_RAH '[' . TOK_EA1 ']'
+  322      | TOK_STW TOK_RAH '[' . TOK_EA2 ']'
+  326      | TOK_STW TOK_RAH '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 535
+    TOK_EA2  shift, and go to state 536
+    TOK_EXT  shift, and go to state 537
+
+
+state 382
+
+  317 regop: TOK_STW TOK_RDH '[' . TOK_EA1 ']'
+  321      | TOK_STW TOK_RDH '[' . TOK_EA2 ']'
+  325      | TOK_STW TOK_RDH '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 538
+    TOK_EA2  shift, and go to state 539
+    TOK_EXT  shift, and go to state 540
+
+
+state 383
+
+  303 regop: TOK_STW TOK_RL '[' . TOK_EA1 ']'
+  307      | TOK_STW TOK_RL '[' . TOK_EA2 ']'
+  308      | TOK_STW TOK_RL '[' . TOK_CNT ']'
+  311      | TOK_STW TOK_RL '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 541
+    TOK_EA2  shift, and go to state 542
+    TOK_CNT  shift, and go to state 543
+    TOK_EXT  shift, and go to state 544
+
+
+state 384
+
+  319 regop: TOK_STW TOK_RH '[' . TOK_EA1 ']'
+  323      | TOK_STW TOK_RH '[' . TOK_EA2 ']'
+  324      | TOK_STW TOK_RH '[' . TOK_CNT ']'
+  327      | TOK_STW TOK_RH '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 545
+    TOK_EA2  shift, and go to state 546
+    TOK_CNT  shift, and go to state 547
+    TOK_EXT  shift, and go to state 548
+
+
+state 385
+
+  178 memop: TOK_STW '(' TOK_EA1 . ')'
+  179      | TOK_STW '(' TOK_EA1 . ')' '+'
+
+    ')'  shift, and go to state 549
+
+
+state 386
+
+  194 memop: TOK_STW '(' TOK_EA2 . ')'
+  195      | TOK_STW '(' TOK_EA2 . ')' '+'
+
+    ')'  shift, and go to state 550
+
+
+state 387
+
+  181 memop: TOK_STW '+' '(' . TOK_EA1 ')'
+  197      | TOK_STW '+' '(' . TOK_EA2 ')'
+
+    TOK_EA1  shift, and go to state 551
+    TOK_EA2  shift, and go to state 552
+
+
+state 388
+
+  180 memop: TOK_STW '-' '(' . TOK_EA1 ')'
+  196      | TOK_STW '-' '(' . TOK_EA2 ')'
+
+    TOK_EA1  shift, and go to state 553
+    TOK_EA2  shift, and go to state 554
+
+
+state 389
+
+  364 regop: TOK_WRW TOK_RAL '[' . TOK_EA1 ']'
+  368      | TOK_WRW TOK_RAL '[' . TOK_EA2 ']'
+  372      | TOK_WRW TOK_RAL '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 555
+    TOK_EA2  shift, and go to state 556
+    TOK_EXT  shift, and go to state 557
+
+
+state 390
+
+  363 regop: TOK_WRW TOK_RDL '[' . TOK_EA1 ']'
+  367      | TOK_WRW TOK_RDL '[' . TOK_EA2 ']'
+  371      | TOK_WRW TOK_RDL '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 558
+    TOK_EA2  shift, and go to state 559
+    TOK_EXT  shift, and go to state 560
+
+
+state 391
+
+  380 regop: TOK_WRW TOK_RAH '[' . TOK_EA1 ']'
+  384      | TOK_WRW TOK_RAH '[' . TOK_EA2 ']'
+  388      | TOK_WRW TOK_RAH '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 561
+    TOK_EA2  shift, and go to state 562
+    TOK_EXT  shift, and go to state 563
+
+
+state 392
+
+  379 regop: TOK_WRW TOK_RDH '[' . TOK_EA1 ']'
+  383      | TOK_WRW TOK_RDH '[' . TOK_EA2 ']'
+  387      | TOK_WRW TOK_RDH '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 564
+    TOK_EA2  shift, and go to state 565
+    TOK_EXT  shift, and go to state 566
+
+
+state 393
+
+  365 regop: TOK_WRW TOK_RL '[' . TOK_EA1 ']'
+  369      | TOK_WRW TOK_RL '[' . TOK_EA2 ']'
+  370      | TOK_WRW TOK_RL '[' . TOK_CNT ']'
+  373      | TOK_WRW TOK_RL '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 567
+    TOK_EA2  shift, and go to state 568
+    TOK_CNT  shift, and go to state 569
+    TOK_EXT  shift, and go to state 570
+
+
+state 394
+
+  381 regop: TOK_WRW TOK_RH '[' . TOK_EA1 ']'
+  385      | TOK_WRW TOK_RH '[' . TOK_EA2 ']'
+  386      | TOK_WRW TOK_RH '[' . TOK_CNT ']'
+  389      | TOK_WRW TOK_RH '[' . TOK_EXT ']'
+
+    TOK_EA1  shift, and go to state 571
+    TOK_EA2  shift, and go to state 572
+    TOK_CNT  shift, and go to state 573
+    TOK_EXT  shift, and go to state 574
+
+
+state 395
+
+  199 memop: TOK_LDI '(' TOK_PC . ')' '+'
+
+    ')'  shift, and go to state 575
+
+
+state 396
+
+  202 memop: TOK_FTI '(' TOK_PC . ')' '+'
+
+    ')'  shift, and go to state 576
+
+
+state 397
+
+  200 memop: TOK_LDE '(' TOK_PC . ')' '+'
+
+    ')'  shift, and go to state 577
+
+
+state 398
+
+  203 memop: TOK_FTE '(' TOK_PC . ')' '+'
+
+    ')'  shift, and go to state 578
+
+
+state 399
+
+  162 memop: TOK_LDL '(' TOK_EA1 . ')'
+  163      | TOK_LDL '(' TOK_EA1 . ')' '+'
+
+    ')'  shift, and go to state 579
+
+
+state 400
+
+  165 memop: TOK_LDL '+' '(' . TOK_EA1 ')'
+
+    TOK_EA1  shift, and go to state 580
+
+
+state 401
+
+  164 memop: TOK_LDL '-' '(' . TOK_EA1 ')'
+
+    TOK_EA1  shift, and go to state 581
+
+
+state 402
+
+  186 memop: TOK_STL '(' TOK_EA1 . ')'
+  187      | TOK_STL '(' TOK_EA1 . ')' '+'
+
+    ')'  shift, and go to state 582
+
+
+state 403
+
+  189 memop: TOK_STL '+' '(' . TOK_EA1 ')'
+
+    TOK_EA1  shift, and go to state 583
+
+
+state 404
+
+  188 memop: TOK_STL '-' '(' . TOK_EA1 ')'
+
+    TOK_EA1  shift, and go to state 584
+
+
+state 405
+
+  158 memop: TOK_LDH '(' TOK_EA1 . ')'
+  159      | TOK_LDH '(' TOK_EA1 . ')' '+'
+
+    ')'  shift, and go to state 585
+
+
+state 406
+
+  161 memop: TOK_LDH '+' '(' . TOK_EA1 ')'
+
+    TOK_EA1  shift, and go to state 586
+
+
+state 407
+
+  160 memop: TOK_LDH '-' '(' . TOK_EA1 ')'
+
+    TOK_EA1  shift, and go to state 587
+
+
+state 408
+
+  182 memop: TOK_STH '(' TOK_EA1 . ')'
+  183      | TOK_STH '(' TOK_EA1 . ')' '+'
+
+    ')'  shift, and go to state 588
+
+
+state 409
+
+  185 memop: TOK_STH '+' '(' . TOK_EA1 ')'
+
+    TOK_EA1  shift, and go to state 589
+
+
+state 410
+
+  184 memop: TOK_STH '-' '(' . TOK_EA1 ')'
+
+    TOK_EA1  shift, and go to state 590
+
+
+state 411
+
+   16 table: TOK_TABLE TOK_IDENT ',' . TOK_IDENT ',' TOK_IDENT ',' TOK_NUMBER
+
+    TOK_IDENT  shift, and go to state 591
+
+
+state 412
+
+   72 alu: aluop '.' TOK_RTS .
+
+    $default  reduce using rule 72 (alu)
+
+
+state 413
+
+  146 mem: memop '.' TOK_RTS .
+
+    $default  reduce using rule 146 (mem)
+
+
+state 414
+
+  205 reg: regop '.' TOK_RTS .
+
+    $default  reduce using rule 205 (reg)
+
+
+state 415
+
+   19 jump: TOK_JUMPN cond ',' TOK_NUMBER .
+
+    $default  reduce using rule 19 (jump)
+
+
+state 416
+
+   18 jump: TOK_JUMPN cond ',' TOK_IDENT .
+
+    $default  reduce using rule 18 (jump)
+
+
+state 417
+
+   31 jump: TOK_JUMP TOK_NUMBER '(' TOK_RT . ')'
+
+    ')'  shift, and go to state 592
+
+
+state 418
+
+   30 jump: TOK_JUMP TOK_IDENT '(' TOK_RT . ')'
+
+    ')'  shift, and go to state 593
+
+
+state 419
+
+   21 jump: TOK_JUMP cond ',' TOK_NUMBER .
+
+    $default  reduce using rule 21 (jump)
+
+
+state 420
+
+   20 jump: TOK_JUMP cond ',' TOK_IDENT .
+
+    $default  reduce using rule 20 (jump)
+
+
+state 421
+
+   23 jump: TOK_CALLN cond ',' TOK_NUMBER .
+
+    $default  reduce using rule 23 (jump)
+
+
+state 422
+
+   22 jump: TOK_CALLN cond ',' TOK_IDENT .
+
+    $default  reduce using rule 22 (jump)
+
+
+state 423
+
+   33 jump: TOK_CALL TOK_NUMBER '(' TOK_RT . ')'
+
+    ')'  shift, and go to state 594
+
+
+state 424
+
+   32 jump: TOK_CALL TOK_IDENT '(' TOK_RT . ')'
+
+    ')'  shift, and go to state 595
+
+
+state 425
+
+   25 jump: TOK_CALL cond ',' TOK_NUMBER .
+
+    $default  reduce using rule 25 (jump)
+
+
+state 426
+
+   24 jump: TOK_CALL cond ',' TOK_IDENT .
+
+    $default  reduce using rule 24 (jump)
+
+
+state 427
+
+   56 cin: ',' TOK_CIN . '=' TOK_CLR
+   57    | ',' TOK_CIN . '=' TOK_C_ADD
+   58    | ',' TOK_CIN . '=' TOK_C_FLG
+   59    | ',' TOK_CIN . '=' TOK_X_SR
+   60    | ',' TOK_CIN . '=' TOK_N_B
+   61    | ',' TOK_CIN . '=' TOK_N_W
+   62    | ',' TOK_CIN . '=' TOK_N_SR
+   63    | ',' TOK_CIN . '=' TOK_T0
+   64    | ',' TOK_CIN . '=' TOK_T7
+   65    | ',' TOK_CIN . '=' TOK_T15
+   66    | ',' TOK_CIN . '=' TOK_N0
+   67    | ',' TOK_CIN . '=' TOK_N7
+   68    | ',' TOK_CIN . '=' TOK_N15
+
+    '='  shift, and go to state 596
+
+
+state 428
+
+  210 regop: TOK_LDB TOK_RAL '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 597
+
+
+state 429
+
+  213 regop: TOK_LDB TOK_RAL '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 598
+
+
+state 430
+
+  217 regop: TOK_LDB TOK_RAL '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 599
+
+
+state 431
+
+  209 regop: TOK_LDB TOK_RDL '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 600
+
+
+state 432
+
+  212 regop: TOK_LDB TOK_RDL '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 601
+
+
+state 433
+
+  216 regop: TOK_LDB TOK_RDL '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 602
+
+
+state 434
+
+  225 regop: TOK_LDB TOK_RAH '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 603
+
+
+state 435
+
+  228 regop: TOK_LDB TOK_RAH '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 604
+
+
+state 436
+
+  232 regop: TOK_LDB TOK_RAH '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 605
+
+
+state 437
+
+  224 regop: TOK_LDB TOK_RDH '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 606
+
+
+state 438
+
+  227 regop: TOK_LDB TOK_RDH '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 607
+
+
+state 439
+
+  231 regop: TOK_LDB TOK_RDH '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 608
+
+
+state 440
+
+  211 regop: TOK_LDB TOK_RL '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 609
+
+
+state 441
+
+  214 regop: TOK_LDB TOK_RL '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 610
+
+
+state 442
+
+  215 regop: TOK_LDB TOK_RL '[' TOK_CNT . ']'
+
+    ']'  shift, and go to state 611
+
+
+state 443
+
+  218 regop: TOK_LDB TOK_RL '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 612
+
+
+state 444
+
+  226 regop: TOK_LDB TOK_RH '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 613
+
+
+state 445
+
+  229 regop: TOK_LDB TOK_RH '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 614
+
+
+state 446
+
+  230 regop: TOK_LDB TOK_RH '[' TOK_CNT . ']'
+
+    ']'  shift, and go to state 615
+
+
+state 447
+
+  233 regop: TOK_LDB TOK_RH '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 616
+
+
+state 448
+
+  150 memop: TOK_LDB '(' TOK_EA1 ')' .
+  151      | TOK_LDB '(' TOK_EA1 ')' . '+'
+
+    '+'  shift, and go to state 617
+
+    $default  reduce using rule 150 (memop)
+
+
+state 449
+
+  166 memop: TOK_LDB '(' TOK_EA2 ')' .
+  167      | TOK_LDB '(' TOK_EA2 ')' . '+'
+
+    '+'  shift, and go to state 618
+
+    $default  reduce using rule 166 (memop)
+
+
+state 450
+
+  153 memop: TOK_LDB '+' '(' TOK_EA1 . ')'
+
+    ')'  shift, and go to state 619
+
+
+state 451
+
+  169 memop: TOK_LDB '+' '(' TOK_EA2 . ')'
+
+    ')'  shift, and go to state 620
+
+
+state 452
+
+  152 memop: TOK_LDB '-' '(' TOK_EA1 . ')'
+
+    ')'  shift, and go to state 621
+
+
+state 453
+
+  168 memop: TOK_LDB '-' '(' TOK_EA2 . ')'
+
+    ')'  shift, and go to state 622
+
+
+state 454
+
+  272 regop: TOK_STB TOK_RAL '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 623
+
+
+state 455
+
+  275 regop: TOK_STB TOK_RAL '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 624
+
+
+state 456
+
+  279 regop: TOK_STB TOK_RAL '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 625
+
+
+state 457
+
+  271 regop: TOK_STB TOK_RDL '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 626
+
+
+state 458
+
+  274 regop: TOK_STB TOK_RDL '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 627
+
+
+state 459
+
+  278 regop: TOK_STB TOK_RDL '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 628
+
+
+state 460
+
+  287 regop: TOK_STB TOK_RAH '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 629
+
+
+state 461
+
+  290 regop: TOK_STB TOK_RAH '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 630
+
+
+state 462
+
+  294 regop: TOK_STB TOK_RAH '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 631
+
+
+state 463
+
+  286 regop: TOK_STB TOK_RDH '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 632
+
+
+state 464
+
+  289 regop: TOK_STB TOK_RDH '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 633
+
+
+state 465
+
+  293 regop: TOK_STB TOK_RDH '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 634
+
+
+state 466
+
+  273 regop: TOK_STB TOK_RL '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 635
+
+
+state 467
+
+  276 regop: TOK_STB TOK_RL '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 636
+
+
+state 468
+
+  277 regop: TOK_STB TOK_RL '[' TOK_CNT . ']'
+
+    ']'  shift, and go to state 637
+
+
+state 469
+
+  280 regop: TOK_STB TOK_RL '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 638
+
+
+state 470
+
+  288 regop: TOK_STB TOK_RH '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 639
+
+
+state 471
+
+  291 regop: TOK_STB TOK_RH '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 640
+
+
+state 472
+
+  292 regop: TOK_STB TOK_RH '[' TOK_CNT . ']'
+
+    ']'  shift, and go to state 641
+
+
+state 473
+
+  295 regop: TOK_STB TOK_RH '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 642
+
+
+state 474
+
+  174 memop: TOK_STB '(' TOK_EA1 ')' .
+  175      | TOK_STB '(' TOK_EA1 ')' . '+'
+
+    '+'  shift, and go to state 643
+
+    $default  reduce using rule 174 (memop)
+
+
+state 475
+
+  190 memop: TOK_STB '(' TOK_EA2 ')' .
+  191      | TOK_STB '(' TOK_EA2 ')' . '+'
+
+    '+'  shift, and go to state 644
+
+    $default  reduce using rule 190 (memop)
+
+
+state 476
+
+  177 memop: TOK_STB '+' '(' TOK_EA1 . ')'
+
+    ')'  shift, and go to state 645
+
+
+state 477
+
+  193 memop: TOK_STB '+' '(' TOK_EA2 . ')'
+
+    ')'  shift, and go to state 646
+
+
+state 478
+
+  176 memop: TOK_STB '-' '(' TOK_EA1 . ')'
+
+    ')'  shift, and go to state 647
+
+
+state 479
+
+  192 memop: TOK_STB '-' '(' TOK_EA2 . ')'
+
+    ')'  shift, and go to state 648
+
+
+state 480
+
+  334 regop: TOK_WRB TOK_RAL '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 649
+
+
+state 481
+
+  337 regop: TOK_WRB TOK_RAL '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 650
+
+
+state 482
+
+  341 regop: TOK_WRB TOK_RAL '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 651
+
+
+state 483
+
+  333 regop: TOK_WRB TOK_RDL '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 652
+
+
+state 484
+
+  336 regop: TOK_WRB TOK_RDL '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 653
+
+
+state 485
+
+  340 regop: TOK_WRB TOK_RDL '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 654
+
+
+state 486
+
+  349 regop: TOK_WRB TOK_RAH '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 655
+
+
+state 487
+
+  352 regop: TOK_WRB TOK_RAH '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 656
+
+
+state 488
+
+  356 regop: TOK_WRB TOK_RAH '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 657
+
+
+state 489
+
+  348 regop: TOK_WRB TOK_RDH '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 658
+
+
+state 490
+
+  351 regop: TOK_WRB TOK_RDH '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 659
+
+
+state 491
+
+  355 regop: TOK_WRB TOK_RDH '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 660
+
+
+state 492
+
+  335 regop: TOK_WRB TOK_RL '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 661
+
+
+state 493
+
+  338 regop: TOK_WRB TOK_RL '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 662
+
+
+state 494
+
+  339 regop: TOK_WRB TOK_RL '[' TOK_CNT . ']'
+
+    ']'  shift, and go to state 663
+
+
+state 495
+
+  342 regop: TOK_WRB TOK_RL '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 664
+
+
+state 496
+
+  350 regop: TOK_WRB TOK_RH '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 665
+
+
+state 497
+
+  353 regop: TOK_WRB TOK_RH '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 666
+
+
+state 498
+
+  354 regop: TOK_WRB TOK_RH '[' TOK_CNT . ']'
+
+    ']'  shift, and go to state 667
+
+
+state 499
+
+  357 regop: TOK_WRB TOK_RH '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 668
+
+
+state 500
+
+  204 memop: TOK_FTW '(' TOK_PC ')' . '+'
+
+    '+'  shift, and go to state 669
+
+
+state 501
+
+  240 regop: TOK_LDW TOK_RAL '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 670
+
+
+state 502
+
+  244 regop: TOK_LDW TOK_RAL '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 671
+
+
+state 503
+
+  248 regop: TOK_LDW TOK_RAL '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 672
+
+
+state 504
+
+  239 regop: TOK_LDW TOK_RDL '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 673
+
+
+state 505
+
+  243 regop: TOK_LDW TOK_RDL '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 674
+
+
+state 506
+
+  247 regop: TOK_LDW TOK_RDL '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 675
+
+
+state 507
+
+  256 regop: TOK_LDW TOK_RAH '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 676
+
+
+state 508
+
+  260 regop: TOK_LDW TOK_RAH '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 677
+
+
+state 509
+
+  264 regop: TOK_LDW TOK_RAH '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 678
+
+
+state 510
+
+  255 regop: TOK_LDW TOK_RDH '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 679
+
+
+state 511
+
+  259 regop: TOK_LDW TOK_RDH '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 680
+
+
+state 512
+
+  263 regop: TOK_LDW TOK_RDH '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 681
+
+
+state 513
+
+  241 regop: TOK_LDW TOK_RL '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 682
+
+
+state 514
+
+  245 regop: TOK_LDW TOK_RL '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 683
+
+
+state 515
+
+  246 regop: TOK_LDW TOK_RL '[' TOK_CNT . ']'
+
+    ']'  shift, and go to state 684
+
+
+state 516
+
+  249 regop: TOK_LDW TOK_RL '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 685
+
+
+state 517
+
+  257 regop: TOK_LDW TOK_RH '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 686
+
+
+state 518
+
+  261 regop: TOK_LDW TOK_RH '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 687
+
+
+state 519
+
+  262 regop: TOK_LDW TOK_RH '[' TOK_CNT . ']'
+
+    ']'  shift, and go to state 688
+
+
+state 520
+
+  265 regop: TOK_LDW TOK_RH '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 689
+
+
+state 521
+
+  201 memop: TOK_LDW '(' TOK_PC ')' . '+'
+
+    '+'  shift, and go to state 690
+
+
+state 522
+
+  198 memop: TOK_LDW '(' TOK_VEC ')' . '+'
+
+    '+'  shift, and go to state 691
+
+
+state 523
+
+  154 memop: TOK_LDW '(' TOK_EA1 ')' .
+  155      | TOK_LDW '(' TOK_EA1 ')' . '+'
+
+    '+'  shift, and go to state 692
+
+    $default  reduce using rule 154 (memop)
+
+
+state 524
+
+  170 memop: TOK_LDW '(' TOK_EA2 ')' .
+  171      | TOK_LDW '(' TOK_EA2 ')' . '+'
+
+    '+'  shift, and go to state 693
+
+    $default  reduce using rule 170 (memop)
+
+
+state 525
+
+  157 memop: TOK_LDW '+' '(' TOK_EA1 . ')'
+
+    ')'  shift, and go to state 694
+
+
+state 526
+
+  173 memop: TOK_LDW '+' '(' TOK_EA2 . ')'
+
+    ')'  shift, and go to state 695
+
+
+state 527
+
+  156 memop: TOK_LDW '-' '(' TOK_EA1 . ')'
+
+    ')'  shift, and go to state 696
+
+
+state 528
+
+  172 memop: TOK_LDW '-' '(' TOK_EA2 . ')'
+
+    ')'  shift, and go to state 697
+
+
+state 529
+
+  302 regop: TOK_STW TOK_RAL '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 698
+
+
+state 530
+
+  306 regop: TOK_STW TOK_RAL '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 699
+
+
+state 531
+
+  310 regop: TOK_STW TOK_RAL '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 700
+
+
+state 532
+
+  301 regop: TOK_STW TOK_RDL '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 701
+
+
+state 533
+
+  305 regop: TOK_STW TOK_RDL '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 702
+
+
+state 534
+
+  309 regop: TOK_STW TOK_RDL '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 703
+
+
+state 535
+
+  318 regop: TOK_STW TOK_RAH '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 704
+
+
+state 536
+
+  322 regop: TOK_STW TOK_RAH '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 705
+
+
+state 537
+
+  326 regop: TOK_STW TOK_RAH '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 706
+
+
+state 538
+
+  317 regop: TOK_STW TOK_RDH '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 707
+
+
+state 539
+
+  321 regop: TOK_STW TOK_RDH '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 708
+
+
+state 540
+
+  325 regop: TOK_STW TOK_RDH '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 709
+
+
+state 541
+
+  303 regop: TOK_STW TOK_RL '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 710
+
+
+state 542
+
+  307 regop: TOK_STW TOK_RL '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 711
+
+
+state 543
+
+  308 regop: TOK_STW TOK_RL '[' TOK_CNT . ']'
+
+    ']'  shift, and go to state 712
+
+
+state 544
+
+  311 regop: TOK_STW TOK_RL '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 713
+
+
+state 545
+
+  319 regop: TOK_STW TOK_RH '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 714
+
+
+state 546
+
+  323 regop: TOK_STW TOK_RH '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 715
+
+
+state 547
+
+  324 regop: TOK_STW TOK_RH '[' TOK_CNT . ']'
+
+    ']'  shift, and go to state 716
+
+
+state 548
+
+  327 regop: TOK_STW TOK_RH '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 717
+
+
+state 549
+
+  178 memop: TOK_STW '(' TOK_EA1 ')' .
+  179      | TOK_STW '(' TOK_EA1 ')' . '+'
+
+    '+'  shift, and go to state 718
+
+    $default  reduce using rule 178 (memop)
+
+
+state 550
+
+  194 memop: TOK_STW '(' TOK_EA2 ')' .
+  195      | TOK_STW '(' TOK_EA2 ')' . '+'
+
+    '+'  shift, and go to state 719
+
+    $default  reduce using rule 194 (memop)
+
+
+state 551
+
+  181 memop: TOK_STW '+' '(' TOK_EA1 . ')'
+
+    ')'  shift, and go to state 720
+
+
+state 552
+
+  197 memop: TOK_STW '+' '(' TOK_EA2 . ')'
+
+    ')'  shift, and go to state 721
+
+
+state 553
+
+  180 memop: TOK_STW '-' '(' TOK_EA1 . ')'
+
+    ')'  shift, and go to state 722
+
+
+state 554
+
+  196 memop: TOK_STW '-' '(' TOK_EA2 . ')'
+
+    ')'  shift, and go to state 723
+
+
+state 555
+
+  364 regop: TOK_WRW TOK_RAL '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 724
+
+
+state 556
+
+  368 regop: TOK_WRW TOK_RAL '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 725
+
+
+state 557
+
+  372 regop: TOK_WRW TOK_RAL '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 726
+
+
+state 558
+
+  363 regop: TOK_WRW TOK_RDL '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 727
+
+
+state 559
+
+  367 regop: TOK_WRW TOK_RDL '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 728
+
+
+state 560
+
+  371 regop: TOK_WRW TOK_RDL '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 729
+
+
+state 561
+
+  380 regop: TOK_WRW TOK_RAH '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 730
+
+
+state 562
+
+  384 regop: TOK_WRW TOK_RAH '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 731
+
+
+state 563
+
+  388 regop: TOK_WRW TOK_RAH '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 732
+
+
+state 564
+
+  379 regop: TOK_WRW TOK_RDH '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 733
+
+
+state 565
+
+  383 regop: TOK_WRW TOK_RDH '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 734
+
+
+state 566
+
+  387 regop: TOK_WRW TOK_RDH '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 735
+
+
+state 567
+
+  365 regop: TOK_WRW TOK_RL '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 736
+
+
+state 568
+
+  369 regop: TOK_WRW TOK_RL '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 737
+
+
+state 569
+
+  370 regop: TOK_WRW TOK_RL '[' TOK_CNT . ']'
+
+    ']'  shift, and go to state 738
+
+
+state 570
+
+  373 regop: TOK_WRW TOK_RL '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 739
+
+
+state 571
+
+  381 regop: TOK_WRW TOK_RH '[' TOK_EA1 . ']'
+
+    ']'  shift, and go to state 740
+
+
+state 572
+
+  385 regop: TOK_WRW TOK_RH '[' TOK_EA2 . ']'
+
+    ']'  shift, and go to state 741
+
+
+state 573
+
+  386 regop: TOK_WRW TOK_RH '[' TOK_CNT . ']'
+
+    ']'  shift, and go to state 742
+
+
+state 574
+
+  389 regop: TOK_WRW TOK_RH '[' TOK_EXT . ']'
+
+    ']'  shift, and go to state 743
+
+
+state 575
+
+  199 memop: TOK_LDI '(' TOK_PC ')' . '+'
+
+    '+'  shift, and go to state 744
+
+
+state 576
+
+  202 memop: TOK_FTI '(' TOK_PC ')' . '+'
+
+    '+'  shift, and go to state 745
+
+
+state 577
+
+  200 memop: TOK_LDE '(' TOK_PC ')' . '+'
+
+    '+'  shift, and go to state 746
+
+
+state 578
+
+  203 memop: TOK_FTE '(' TOK_PC ')' . '+'
+
+    '+'  shift, and go to state 747
+
+
+state 579
+
+  162 memop: TOK_LDL '(' TOK_EA1 ')' .
+  163      | TOK_LDL '(' TOK_EA1 ')' . '+'
+
+    '+'  shift, and go to state 748
+
+    $default  reduce using rule 162 (memop)
+
+
+state 580
+
+  165 memop: TOK_LDL '+' '(' TOK_EA1 . ')'
+
+    ')'  shift, and go to state 749
+
+
+state 581
+
+  164 memop: TOK_LDL '-' '(' TOK_EA1 . ')'
+
+    ')'  shift, and go to state 750
+
+
+state 582
+
+  186 memop: TOK_STL '(' TOK_EA1 ')' .
+  187      | TOK_STL '(' TOK_EA1 ')' . '+'
+
+    '+'  shift, and go to state 751
+
+    $default  reduce using rule 186 (memop)
+
+
+state 583
+
+  189 memop: TOK_STL '+' '(' TOK_EA1 . ')'
+
+    ')'  shift, and go to state 752
+
+
+state 584
+
+  188 memop: TOK_STL '-' '(' TOK_EA1 . ')'
+
+    ')'  shift, and go to state 753
+
+
+state 585
+
+  158 memop: TOK_LDH '(' TOK_EA1 ')' .
+  159      | TOK_LDH '(' TOK_EA1 ')' . '+'
+
+    '+'  shift, and go to state 754
+
+    $default  reduce using rule 158 (memop)
+
+
+state 586
+
+  161 memop: TOK_LDH '+' '(' TOK_EA1 . ')'
+
+    ')'  shift, and go to state 755
+
+
+state 587
+
+  160 memop: TOK_LDH '-' '(' TOK_EA1 . ')'
+
+    ')'  shift, and go to state 756
+
+
+state 588
+
+  182 memop: TOK_STH '(' TOK_EA1 ')' .
+  183      | TOK_STH '(' TOK_EA1 ')' . '+'
+
+    '+'  shift, and go to state 757
+
+    $default  reduce using rule 182 (memop)
+
+
+state 589
+
+  185 memop: TOK_STH '+' '(' TOK_EA1 . ')'
+
+    ')'  shift, and go to state 758
+
+
+state 590
+
+  184 memop: TOK_STH '-' '(' TOK_EA1 . ')'
+
+    ')'  shift, and go to state 759
+
+
+state 591
+
+   16 table: TOK_TABLE TOK_IDENT ',' TOK_IDENT . ',' TOK_IDENT ',' TOK_NUMBER
+
+    ','  shift, and go to state 760
+
+
+state 592
+
+   31 jump: TOK_JUMP TOK_NUMBER '(' TOK_RT ')' .
+
+    $default  reduce using rule 31 (jump)
+
+
+state 593
+
+   30 jump: TOK_JUMP TOK_IDENT '(' TOK_RT ')' .
+
+    $default  reduce using rule 30 (jump)
+
+
+state 594
+
+   33 jump: TOK_CALL TOK_NUMBER '(' TOK_RT ')' .
+
+    $default  reduce using rule 33 (jump)
+
+
+state 595
+
+   32 jump: TOK_CALL TOK_IDENT '(' TOK_RT ')' .
+
+    $default  reduce using rule 32 (jump)
+
+
+state 596
+
+   56 cin: ',' TOK_CIN '=' . TOK_CLR
+   57    | ',' TOK_CIN '=' . TOK_C_ADD
+   58    | ',' TOK_CIN '=' . TOK_C_FLG
+   59    | ',' TOK_CIN '=' . TOK_X_SR
+   60    | ',' TOK_CIN '=' . TOK_N_B
+   61    | ',' TOK_CIN '=' . TOK_N_W
+   62    | ',' TOK_CIN '=' . TOK_N_SR
+   63    | ',' TOK_CIN '=' . TOK_T0
+   64    | ',' TOK_CIN '=' . TOK_T7
+   65    | ',' TOK_CIN '=' . TOK_T15
+   66    | ',' TOK_CIN '=' . TOK_N0
+   67    | ',' TOK_CIN '=' . TOK_N7
+   68    | ',' TOK_CIN '=' . TOK_N15
+
+    TOK_X_SR   shift, and go to state 761
+    TOK_N_SR   shift, and go to state 762
+    TOK_CLR    shift, and go to state 763
+    TOK_C_ADD  shift, and go to state 764
+    TOK_C_FLG  shift, and go to state 765
+    TOK_N_B    shift, and go to state 766
+    TOK_N_W    shift, and go to state 767
+    TOK_T0     shift, and go to state 768
+    TOK_T7     shift, and go to state 769
+    TOK_T15    shift, and go to state 770
+    TOK_N0     shift, and go to state 771
+    TOK_N7     shift, and go to state 772
+    TOK_N15    shift, and go to state 773
+
+
+state 597
+
+  210 regop: TOK_LDB TOK_RAL '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 210 (regop)
+
+
+state 598
+
+  213 regop: TOK_LDB TOK_RAL '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 213 (regop)
+
+
+state 599
+
+  217 regop: TOK_LDB TOK_RAL '[' TOK_EXT ']' .
+
+    $default  reduce using rule 217 (regop)
+
+
+state 600
+
+  209 regop: TOK_LDB TOK_RDL '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 209 (regop)
+
+
+state 601
+
+  212 regop: TOK_LDB TOK_RDL '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 212 (regop)
+
+
+state 602
+
+  216 regop: TOK_LDB TOK_RDL '[' TOK_EXT ']' .
+
+    $default  reduce using rule 216 (regop)
+
+
+state 603
+
+  225 regop: TOK_LDB TOK_RAH '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 225 (regop)
+
+
+state 604
+
+  228 regop: TOK_LDB TOK_RAH '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 228 (regop)
+
+
+state 605
+
+  232 regop: TOK_LDB TOK_RAH '[' TOK_EXT ']' .
+
+    $default  reduce using rule 232 (regop)
+
+
+state 606
+
+  224 regop: TOK_LDB TOK_RDH '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 224 (regop)
+
+
+state 607
+
+  227 regop: TOK_LDB TOK_RDH '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 227 (regop)
+
+
+state 608
+
+  231 regop: TOK_LDB TOK_RDH '[' TOK_EXT ']' .
+
+    $default  reduce using rule 231 (regop)
+
+
+state 609
+
+  211 regop: TOK_LDB TOK_RL '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 211 (regop)
+
+
+state 610
+
+  214 regop: TOK_LDB TOK_RL '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 214 (regop)
+
+
+state 611
+
+  215 regop: TOK_LDB TOK_RL '[' TOK_CNT ']' .
+
+    $default  reduce using rule 215 (regop)
+
+
+state 612
+
+  218 regop: TOK_LDB TOK_RL '[' TOK_EXT ']' .
+
+    $default  reduce using rule 218 (regop)
+
+
+state 613
+
+  226 regop: TOK_LDB TOK_RH '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 226 (regop)
+
+
+state 614
+
+  229 regop: TOK_LDB TOK_RH '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 229 (regop)
+
+
+state 615
+
+  230 regop: TOK_LDB TOK_RH '[' TOK_CNT ']' .
+
+    $default  reduce using rule 230 (regop)
+
+
+state 616
+
+  233 regop: TOK_LDB TOK_RH '[' TOK_EXT ']' .
+
+    $default  reduce using rule 233 (regop)
+
+
+state 617
+
+  151 memop: TOK_LDB '(' TOK_EA1 ')' '+' .
+
+    $default  reduce using rule 151 (memop)
+
+
+state 618
+
+  167 memop: TOK_LDB '(' TOK_EA2 ')' '+' .
+
+    $default  reduce using rule 167 (memop)
+
+
+state 619
+
+  153 memop: TOK_LDB '+' '(' TOK_EA1 ')' .
+
+    $default  reduce using rule 153 (memop)
+
+
+state 620
+
+  169 memop: TOK_LDB '+' '(' TOK_EA2 ')' .
+
+    $default  reduce using rule 169 (memop)
+
+
+state 621
+
+  152 memop: TOK_LDB '-' '(' TOK_EA1 ')' .
+
+    $default  reduce using rule 152 (memop)
+
+
+state 622
+
+  168 memop: TOK_LDB '-' '(' TOK_EA2 ')' .
+
+    $default  reduce using rule 168 (memop)
+
+
+state 623
+
+  272 regop: TOK_STB TOK_RAL '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 272 (regop)
+
+
+state 624
+
+  275 regop: TOK_STB TOK_RAL '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 275 (regop)
+
+
+state 625
+
+  279 regop: TOK_STB TOK_RAL '[' TOK_EXT ']' .
+
+    $default  reduce using rule 279 (regop)
+
+
+state 626
+
+  271 regop: TOK_STB TOK_RDL '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 271 (regop)
+
+
+state 627
+
+  274 regop: TOK_STB TOK_RDL '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 274 (regop)
+
+
+state 628
+
+  278 regop: TOK_STB TOK_RDL '[' TOK_EXT ']' .
+
+    $default  reduce using rule 278 (regop)
+
+
+state 629
+
+  287 regop: TOK_STB TOK_RAH '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 287 (regop)
+
+
+state 630
+
+  290 regop: TOK_STB TOK_RAH '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 290 (regop)
+
+
+state 631
+
+  294 regop: TOK_STB TOK_RAH '[' TOK_EXT ']' .
+
+    $default  reduce using rule 294 (regop)
+
+
+state 632
+
+  286 regop: TOK_STB TOK_RDH '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 286 (regop)
+
+
+state 633
+
+  289 regop: TOK_STB TOK_RDH '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 289 (regop)
+
+
+state 634
+
+  293 regop: TOK_STB TOK_RDH '[' TOK_EXT ']' .
+
+    $default  reduce using rule 293 (regop)
+
+
+state 635
+
+  273 regop: TOK_STB TOK_RL '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 273 (regop)
+
+
+state 636
+
+  276 regop: TOK_STB TOK_RL '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 276 (regop)
+
+
+state 637
+
+  277 regop: TOK_STB TOK_RL '[' TOK_CNT ']' .
+
+    $default  reduce using rule 277 (regop)
+
+
+state 638
+
+  280 regop: TOK_STB TOK_RL '[' TOK_EXT ']' .
+
+    $default  reduce using rule 280 (regop)
+
+
+state 639
+
+  288 regop: TOK_STB TOK_RH '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 288 (regop)
+
+
+state 640
+
+  291 regop: TOK_STB TOK_RH '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 291 (regop)
+
+
+state 641
+
+  292 regop: TOK_STB TOK_RH '[' TOK_CNT ']' .
+
+    $default  reduce using rule 292 (regop)
+
+
+state 642
+
+  295 regop: TOK_STB TOK_RH '[' TOK_EXT ']' .
+
+    $default  reduce using rule 295 (regop)
+
+
+state 643
+
+  175 memop: TOK_STB '(' TOK_EA1 ')' '+' .
+
+    $default  reduce using rule 175 (memop)
+
+
+state 644
+
+  191 memop: TOK_STB '(' TOK_EA2 ')' '+' .
+
+    $default  reduce using rule 191 (memop)
+
+
+state 645
+
+  177 memop: TOK_STB '+' '(' TOK_EA1 ')' .
+
+    $default  reduce using rule 177 (memop)
+
+
+state 646
+
+  193 memop: TOK_STB '+' '(' TOK_EA2 ')' .
+
+    $default  reduce using rule 193 (memop)
+
+
+state 647
+
+  176 memop: TOK_STB '-' '(' TOK_EA1 ')' .
+
+    $default  reduce using rule 176 (memop)
+
+
+state 648
+
+  192 memop: TOK_STB '-' '(' TOK_EA2 ')' .
+
+    $default  reduce using rule 192 (memop)
+
+
+state 649
+
+  334 regop: TOK_WRB TOK_RAL '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 334 (regop)
+
+
+state 650
+
+  337 regop: TOK_WRB TOK_RAL '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 337 (regop)
+
+
+state 651
+
+  341 regop: TOK_WRB TOK_RAL '[' TOK_EXT ']' .
+
+    $default  reduce using rule 341 (regop)
+
+
+state 652
+
+  333 regop: TOK_WRB TOK_RDL '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 333 (regop)
+
+
+state 653
+
+  336 regop: TOK_WRB TOK_RDL '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 336 (regop)
+
+
+state 654
+
+  340 regop: TOK_WRB TOK_RDL '[' TOK_EXT ']' .
+
+    $default  reduce using rule 340 (regop)
+
+
+state 655
+
+  349 regop: TOK_WRB TOK_RAH '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 349 (regop)
+
+
+state 656
+
+  352 regop: TOK_WRB TOK_RAH '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 352 (regop)
+
+
+state 657
+
+  356 regop: TOK_WRB TOK_RAH '[' TOK_EXT ']' .
+
+    $default  reduce using rule 356 (regop)
+
+
+state 658
+
+  348 regop: TOK_WRB TOK_RDH '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 348 (regop)
+
+
+state 659
+
+  351 regop: TOK_WRB TOK_RDH '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 351 (regop)
+
+
+state 660
+
+  355 regop: TOK_WRB TOK_RDH '[' TOK_EXT ']' .
+
+    $default  reduce using rule 355 (regop)
+
+
+state 661
+
+  335 regop: TOK_WRB TOK_RL '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 335 (regop)
+
+
+state 662
+
+  338 regop: TOK_WRB TOK_RL '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 338 (regop)
+
+
+state 663
+
+  339 regop: TOK_WRB TOK_RL '[' TOK_CNT ']' .
+
+    $default  reduce using rule 339 (regop)
+
+
+state 664
+
+  342 regop: TOK_WRB TOK_RL '[' TOK_EXT ']' .
+
+    $default  reduce using rule 342 (regop)
+
+
+state 665
+
+  350 regop: TOK_WRB TOK_RH '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 350 (regop)
+
+
+state 666
+
+  353 regop: TOK_WRB TOK_RH '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 353 (regop)
+
+
+state 667
+
+  354 regop: TOK_WRB TOK_RH '[' TOK_CNT ']' .
+
+    $default  reduce using rule 354 (regop)
+
+
+state 668
+
+  357 regop: TOK_WRB TOK_RH '[' TOK_EXT ']' .
+
+    $default  reduce using rule 357 (regop)
+
+
+state 669
+
+  204 memop: TOK_FTW '(' TOK_PC ')' '+' .
+
+    $default  reduce using rule 204 (memop)
+
+
+state 670
+
+  240 regop: TOK_LDW TOK_RAL '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 240 (regop)
+
+
+state 671
+
+  244 regop: TOK_LDW TOK_RAL '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 244 (regop)
+
+
+state 672
+
+  248 regop: TOK_LDW TOK_RAL '[' TOK_EXT ']' .
+
+    $default  reduce using rule 248 (regop)
+
+
+state 673
+
+  239 regop: TOK_LDW TOK_RDL '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 239 (regop)
+
+
+state 674
+
+  243 regop: TOK_LDW TOK_RDL '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 243 (regop)
+
+
+state 675
+
+  247 regop: TOK_LDW TOK_RDL '[' TOK_EXT ']' .
+
+    $default  reduce using rule 247 (regop)
+
+
+state 676
+
+  256 regop: TOK_LDW TOK_RAH '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 256 (regop)
+
+
+state 677
+
+  260 regop: TOK_LDW TOK_RAH '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 260 (regop)
+
+
+state 678
+
+  264 regop: TOK_LDW TOK_RAH '[' TOK_EXT ']' .
+
+    $default  reduce using rule 264 (regop)
+
+
+state 679
+
+  255 regop: TOK_LDW TOK_RDH '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 255 (regop)
+
+
+state 680
+
+  259 regop: TOK_LDW TOK_RDH '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 259 (regop)
+
+
+state 681
+
+  263 regop: TOK_LDW TOK_RDH '[' TOK_EXT ']' .
+
+    $default  reduce using rule 263 (regop)
+
+
+state 682
+
+  241 regop: TOK_LDW TOK_RL '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 241 (regop)
+
+
+state 683
+
+  245 regop: TOK_LDW TOK_RL '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 245 (regop)
+
+
+state 684
+
+  246 regop: TOK_LDW TOK_RL '[' TOK_CNT ']' .
+
+    $default  reduce using rule 246 (regop)
+
+
+state 685
+
+  249 regop: TOK_LDW TOK_RL '[' TOK_EXT ']' .
+
+    $default  reduce using rule 249 (regop)
+
+
+state 686
+
+  257 regop: TOK_LDW TOK_RH '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 257 (regop)
+
+
+state 687
+
+  261 regop: TOK_LDW TOK_RH '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 261 (regop)
+
+
+state 688
+
+  262 regop: TOK_LDW TOK_RH '[' TOK_CNT ']' .
+
+    $default  reduce using rule 262 (regop)
+
+
+state 689
+
+  265 regop: TOK_LDW TOK_RH '[' TOK_EXT ']' .
+
+    $default  reduce using rule 265 (regop)
+
+
+state 690
+
+  201 memop: TOK_LDW '(' TOK_PC ')' '+' .
+
+    $default  reduce using rule 201 (memop)
+
+
+state 691
+
+  198 memop: TOK_LDW '(' TOK_VEC ')' '+' .
+
+    $default  reduce using rule 198 (memop)
+
+
+state 692
+
+  155 memop: TOK_LDW '(' TOK_EA1 ')' '+' .
+
+    $default  reduce using rule 155 (memop)
+
+
+state 693
+
+  171 memop: TOK_LDW '(' TOK_EA2 ')' '+' .
+
+    $default  reduce using rule 171 (memop)
+
+
+state 694
+
+  157 memop: TOK_LDW '+' '(' TOK_EA1 ')' .
+
+    $default  reduce using rule 157 (memop)
+
+
+state 695
+
+  173 memop: TOK_LDW '+' '(' TOK_EA2 ')' .
+
+    $default  reduce using rule 173 (memop)
+
+
+state 696
+
+  156 memop: TOK_LDW '-' '(' TOK_EA1 ')' .
+
+    $default  reduce using rule 156 (memop)
+
+
+state 697
+
+  172 memop: TOK_LDW '-' '(' TOK_EA2 ')' .
+
+    $default  reduce using rule 172 (memop)
+
+
+state 698
+
+  302 regop: TOK_STW TOK_RAL '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 302 (regop)
+
+
+state 699
+
+  306 regop: TOK_STW TOK_RAL '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 306 (regop)
+
+
+state 700
+
+  310 regop: TOK_STW TOK_RAL '[' TOK_EXT ']' .
+
+    $default  reduce using rule 310 (regop)
+
+
+state 701
+
+  301 regop: TOK_STW TOK_RDL '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 301 (regop)
+
+
+state 702
+
+  305 regop: TOK_STW TOK_RDL '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 305 (regop)
+
+
+state 703
+
+  309 regop: TOK_STW TOK_RDL '[' TOK_EXT ']' .
+
+    $default  reduce using rule 309 (regop)
+
+
+state 704
+
+  318 regop: TOK_STW TOK_RAH '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 318 (regop)
+
+
+state 705
+
+  322 regop: TOK_STW TOK_RAH '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 322 (regop)
+
+
+state 706
+
+  326 regop: TOK_STW TOK_RAH '[' TOK_EXT ']' .
+
+    $default  reduce using rule 326 (regop)
+
+
+state 707
+
+  317 regop: TOK_STW TOK_RDH '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 317 (regop)
+
+
+state 708
+
+  321 regop: TOK_STW TOK_RDH '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 321 (regop)
+
+
+state 709
+
+  325 regop: TOK_STW TOK_RDH '[' TOK_EXT ']' .
+
+    $default  reduce using rule 325 (regop)
+
+
+state 710
+
+  303 regop: TOK_STW TOK_RL '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 303 (regop)
+
+
+state 711
+
+  307 regop: TOK_STW TOK_RL '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 307 (regop)
+
+
+state 712
+
+  308 regop: TOK_STW TOK_RL '[' TOK_CNT ']' .
+
+    $default  reduce using rule 308 (regop)
+
+
+state 713
+
+  311 regop: TOK_STW TOK_RL '[' TOK_EXT ']' .
+
+    $default  reduce using rule 311 (regop)
+
+
+state 714
+
+  319 regop: TOK_STW TOK_RH '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 319 (regop)
+
+
+state 715
+
+  323 regop: TOK_STW TOK_RH '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 323 (regop)
+
+
+state 716
+
+  324 regop: TOK_STW TOK_RH '[' TOK_CNT ']' .
+
+    $default  reduce using rule 324 (regop)
+
+
+state 717
+
+  327 regop: TOK_STW TOK_RH '[' TOK_EXT ']' .
+
+    $default  reduce using rule 327 (regop)
+
+
+state 718
+
+  179 memop: TOK_STW '(' TOK_EA1 ')' '+' .
+
+    $default  reduce using rule 179 (memop)
+
+
+state 719
+
+  195 memop: TOK_STW '(' TOK_EA2 ')' '+' .
+
+    $default  reduce using rule 195 (memop)
+
+
+state 720
+
+  181 memop: TOK_STW '+' '(' TOK_EA1 ')' .
+
+    $default  reduce using rule 181 (memop)
+
+
+state 721
+
+  197 memop: TOK_STW '+' '(' TOK_EA2 ')' .
+
+    $default  reduce using rule 197 (memop)
+
+
+state 722
+
+  180 memop: TOK_STW '-' '(' TOK_EA1 ')' .
+
+    $default  reduce using rule 180 (memop)
+
+
+state 723
+
+  196 memop: TOK_STW '-' '(' TOK_EA2 ')' .
+
+    $default  reduce using rule 196 (memop)
+
+
+state 724
+
+  364 regop: TOK_WRW TOK_RAL '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 364 (regop)
+
+
+state 725
+
+  368 regop: TOK_WRW TOK_RAL '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 368 (regop)
+
+
+state 726
+
+  372 regop: TOK_WRW TOK_RAL '[' TOK_EXT ']' .
+
+    $default  reduce using rule 372 (regop)
+
+
+state 727
+
+  363 regop: TOK_WRW TOK_RDL '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 363 (regop)
+
+
+state 728
+
+  367 regop: TOK_WRW TOK_RDL '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 367 (regop)
+
+
+state 729
+
+  371 regop: TOK_WRW TOK_RDL '[' TOK_EXT ']' .
+
+    $default  reduce using rule 371 (regop)
+
+
+state 730
+
+  380 regop: TOK_WRW TOK_RAH '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 380 (regop)
+
+
+state 731
+
+  384 regop: TOK_WRW TOK_RAH '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 384 (regop)
+
+
+state 732
+
+  388 regop: TOK_WRW TOK_RAH '[' TOK_EXT ']' .
+
+    $default  reduce using rule 388 (regop)
+
+
+state 733
+
+  379 regop: TOK_WRW TOK_RDH '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 379 (regop)
+
+
+state 734
+
+  383 regop: TOK_WRW TOK_RDH '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 383 (regop)
+
+
+state 735
+
+  387 regop: TOK_WRW TOK_RDH '[' TOK_EXT ']' .
+
+    $default  reduce using rule 387 (regop)
+
+
+state 736
+
+  365 regop: TOK_WRW TOK_RL '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 365 (regop)
+
+
+state 737
+
+  369 regop: TOK_WRW TOK_RL '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 369 (regop)
+
+
+state 738
+
+  370 regop: TOK_WRW TOK_RL '[' TOK_CNT ']' .
+
+    $default  reduce using rule 370 (regop)
+
+
+state 739
+
+  373 regop: TOK_WRW TOK_RL '[' TOK_EXT ']' .
+
+    $default  reduce using rule 373 (regop)
+
+
+state 740
+
+  381 regop: TOK_WRW TOK_RH '[' TOK_EA1 ']' .
+
+    $default  reduce using rule 381 (regop)
+
+
+state 741
+
+  385 regop: TOK_WRW TOK_RH '[' TOK_EA2 ']' .
+
+    $default  reduce using rule 385 (regop)
+
+
+state 742
+
+  386 regop: TOK_WRW TOK_RH '[' TOK_CNT ']' .
+
+    $default  reduce using rule 386 (regop)
+
+
+state 743
+
+  389 regop: TOK_WRW TOK_RH '[' TOK_EXT ']' .
+
+    $default  reduce using rule 389 (regop)
+
+
+state 744
+
+  199 memop: TOK_LDI '(' TOK_PC ')' '+' .
+
+    $default  reduce using rule 199 (memop)
+
+
+state 745
+
+  202 memop: TOK_FTI '(' TOK_PC ')' '+' .
+
+    $default  reduce using rule 202 (memop)
+
+
+state 746
+
+  200 memop: TOK_LDE '(' TOK_PC ')' '+' .
+
+    $default  reduce using rule 200 (memop)
+
+
+state 747
+
+  203 memop: TOK_FTE '(' TOK_PC ')' '+' .
+
+    $default  reduce using rule 203 (memop)
+
+
+state 748
+
+  163 memop: TOK_LDL '(' TOK_EA1 ')' '+' .
+
+    $default  reduce using rule 163 (memop)
+
+
+state 749
+
+  165 memop: TOK_LDL '+' '(' TOK_EA1 ')' .
+
+    $default  reduce using rule 165 (memop)
+
+
+state 750
+
+  164 memop: TOK_LDL '-' '(' TOK_EA1 ')' .
+
+    $default  reduce using rule 164 (memop)
+
+
+state 751
+
+  187 memop: TOK_STL '(' TOK_EA1 ')' '+' .
+
+    $default  reduce using rule 187 (memop)
+
+
+state 752
+
+  189 memop: TOK_STL '+' '(' TOK_EA1 ')' .
+
+    $default  reduce using rule 189 (memop)
+
+
+state 753
+
+  188 memop: TOK_STL '-' '(' TOK_EA1 ')' .
+
+    $default  reduce using rule 188 (memop)
+
+
+state 754
+
+  159 memop: TOK_LDH '(' TOK_EA1 ')' '+' .
+
+    $default  reduce using rule 159 (memop)
+
+
+state 755
+
+  161 memop: TOK_LDH '+' '(' TOK_EA1 ')' .
+
+    $default  reduce using rule 161 (memop)
+
+
+state 756
+
+  160 memop: TOK_LDH '-' '(' TOK_EA1 ')' .
+
+    $default  reduce using rule 160 (memop)
+
+
+state 757
+
+  183 memop: TOK_STH '(' TOK_EA1 ')' '+' .
+
+    $default  reduce using rule 183 (memop)
+
+
+state 758
+
+  185 memop: TOK_STH '+' '(' TOK_EA1 ')' .
+
+    $default  reduce using rule 185 (memop)
+
+
+state 759
+
+  184 memop: TOK_STH '-' '(' TOK_EA1 ')' .
+
+    $default  reduce using rule 184 (memop)
+
+
+state 760
+
+   16 table: TOK_TABLE TOK_IDENT ',' TOK_IDENT ',' . TOK_IDENT ',' TOK_NUMBER
+
+    TOK_IDENT  shift, and go to state 774
+
+
+state 761
+
+   59 cin: ',' TOK_CIN '=' TOK_X_SR .
+
+    $default  reduce using rule 59 (cin)
+
+
+state 762
+
+   62 cin: ',' TOK_CIN '=' TOK_N_SR .
+
+    $default  reduce using rule 62 (cin)
+
+
+state 763
+
+   56 cin: ',' TOK_CIN '=' TOK_CLR .
+
+    $default  reduce using rule 56 (cin)
+
+
+state 764
+
+   57 cin: ',' TOK_CIN '=' TOK_C_ADD .
+
+    $default  reduce using rule 57 (cin)
+
+
+state 765
+
+   58 cin: ',' TOK_CIN '=' TOK_C_FLG .
+
+    $default  reduce using rule 58 (cin)
+
+
+state 766
+
+   60 cin: ',' TOK_CIN '=' TOK_N_B .
+
+    $default  reduce using rule 60 (cin)
+
+
+state 767
+
+   61 cin: ',' TOK_CIN '=' TOK_N_W .
+
+    $default  reduce using rule 61 (cin)
+
+
+state 768
+
+   63 cin: ',' TOK_CIN '=' TOK_T0 .
+
+    $default  reduce using rule 63 (cin)
+
+
+state 769
+
+   64 cin: ',' TOK_CIN '=' TOK_T7 .
+
+    $default  reduce using rule 64 (cin)
+
+
+state 770
+
+   65 cin: ',' TOK_CIN '=' TOK_T15 .
+
+    $default  reduce using rule 65 (cin)
+
+
+state 771
+
+   66 cin: ',' TOK_CIN '=' TOK_N0 .
+
+    $default  reduce using rule 66 (cin)
+
+
+state 772
+
+   67 cin: ',' TOK_CIN '=' TOK_N7 .
+
+    $default  reduce using rule 67 (cin)
+
+
+state 773
+
+   68 cin: ',' TOK_CIN '=' TOK_N15 .
+
+    $default  reduce using rule 68 (cin)
+
+
+state 774
+
+   16 table: TOK_TABLE TOK_IDENT ',' TOK_IDENT ',' TOK_IDENT . ',' TOK_NUMBER
+
+    ','  shift, and go to state 775
+
+
+state 775
+
+   16 table: TOK_TABLE TOK_IDENT ',' TOK_IDENT ',' TOK_IDENT ',' . TOK_NUMBER
+
+    TOK_NUMBER  shift, and go to state 776
+
+
+state 776
+
+   16 table: TOK_TABLE TOK_IDENT ',' TOK_IDENT ',' TOK_IDENT ',' TOK_NUMBER .
+
+    $default  reduce using rule 16 (table)

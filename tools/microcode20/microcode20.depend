@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1498548249 source:f:\repo_ip_core\ip_cpu_j68\tool\microcode20\microcode.l
+	<stdio.h>
+	<string.h>
+	"microcode.parser.h"
+
+1498548286 f:\repo_ip_core\ip_cpu_j68\tool\microcode20\microcode.parser.h
+
+1498548141 source:f:\repo_ip_core\ip_cpu_j68\tool\microcode20\microcode.y
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
